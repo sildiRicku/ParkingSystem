@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TrainingApplication {
 @GetMapping("/hello")
 public String helloWorld(){
-	return "Hello World";
+	return "Hello World ";
 }
 @PostMapping("/hellow")
 public String helloWorldi(@RequestParam(value = "name", defaultValue = "World") String name) {
