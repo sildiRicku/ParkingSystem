@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TrainingApplication {
 @GetMapping("/hello")
-public String helloWorld(){
-	return "Hello World ";
-}
+
 @PostMapping("/hellow")
 public String helloWorldi(@RequestParam(value = "name", defaultValue = "World") String name) {
 		return "Hello " + name + "!";
