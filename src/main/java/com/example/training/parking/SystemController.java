@@ -1,3 +1,4 @@
+/*
 package com.example.training.parking;
 
 import com.example.training.rule.Rule;
@@ -37,6 +38,7 @@ public class SystemController {
         return result;
     }
 
+
     @GetMapping("/transactions")
     public String showTransaction() {
         return "The transaction value of Parking System 1 is: " + p1.getTransaction().getValue();
@@ -49,3 +51,4 @@ public class SystemController {
     }
 
 }
+*/
