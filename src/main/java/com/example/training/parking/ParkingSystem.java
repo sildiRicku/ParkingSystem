@@ -1,35 +1,79 @@
-/*
 package com.example.training.parking;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.util.Date;
+import java.util.List;
+
+import jakarta.persistence.*;
 
 import com.example.training.rule.Rule;
-import com.example.training.transaction.Transactionss;
+import com.example.training.transaction.Transactions;
 
-import java.util.Date;
-
-@Entity(name = "ParkingSystem")
+@Entity
+@Table(name = "parking_system")
 public class ParkingSystem {
+
     @Id
-    private String id;
+    @SequenceGenerator(name = "SEQ_ParkingID", sequenceName = "SEQ_ParkingID", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ParkingID")
+    private int id;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "working_status")
     private String workingStatus;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "first_install_date")
     private Date firstInstallDate;
+
+    @Column(name = "last_update")
     private String lastUpdate;
+
+    @Column(name = "total_money")
     private double totalMoney;
+
+    @Column(name = "firmware_version")
     private String firmwareVersion;
-private Rule rule;
-    private Transactionss transaction;
+
+    @OneToMany(mappedBy = "parkingSystem")
+    private List<Transactions> transactions;
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "parking_system_rule",
+            joinColumns = {@JoinColumn(name = "parking_system_id")},
+            inverseJoinColumns = {@JoinColumn(name = "rule_id")}
+    )
+    private List<Rule> rules;
 
 
-    public ParkingSystem(String id, double totalMoney, String firmwareVersion, Rule rule, Transaction transaction) {
+    public ParkingSystem() {
+
+    }
+
+    public List<Transactions> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transactions> transactions) {
+        this.transactions = transactions;
+    }
+
+    public List<Rule> getRules() {
+        return rules;
+    }
+
+    public void setRules(List<Rule> rules) {
+        this.rules = rules;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
-        this.totalMoney = totalMoney;
-        this.firmwareVersion = firmwareVersion;
-   this.rule = rule;
-        this.transaction = transaction;
-
     }
 
     public String getAddress() {
@@ -64,25 +108,6 @@ private Rule rule;
         this.lastUpdate = lastUpdate;
     }
 
-  public Transaction getTransaction() {
-        return transaction;
-    }
-
-
-    public void setTransaction(Transaction transaction) {
-        this.transaction = transaction;
-    }
-
-
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public double getTotalMoney() {
         return totalMoney;
     }
@@ -99,21 +124,17 @@ private Rule rule;
         this.firmwareVersion = firmwareVersion;
     }
 
- public Rule getRule() {
-        return rule;
-    }
-
-    public void setRule(Rule rule) {
-        this.rule = rule;
-    }
-
-
-    public ParkingSystem() {
-    }
 
     @Override
     public String toString() {
-        return "ParkingSystem{" + "id='" + id + '\'' + ", total_money=" + totalMoney + ", firmware_version='" + firmwareVersion + '\'' + '}';
+        return "ParkingSystem{" +
+                "id='" + id + '\'' +
+                ", address='" + address + '\'' +
+                ", workingStatus='" + workingStatus + '\'' +
+                ", firstInstallDate=" + firstInstallDate +
+                ", lastUpdate='" + lastUpdate + '\'' +
+                ", totalMoney=" + totalMoney +
+                ", firmwareVersion='" + firmwareVersion + '\'' +
+                '}';
     }
 }
-*/

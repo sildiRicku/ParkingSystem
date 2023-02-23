@@ -1,13 +1,17 @@
 package com.example.training.transaction;
 
 
+import com.example.training.parking.ParkingSystem;
 import jakarta.persistence.*;
 
 import java.util.Date;
 
 @Entity
-public class Transactionss {
+@Table(name = "Transactions")
+public class Transactions {
     @Id
+    @SequenceGenerator(name = "SEQ_TransactionId", sequenceName = "SEQ_TransactionId", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TransactionId")
     private int transId;
     @Column(name = "paymentType")
     private String paymentType;
@@ -16,20 +20,36 @@ public class Transactionss {
     @Column(name = "dateOfTransaction")
     private Date dateOfTransaction;
     @Column(name = "value")
-
     private double transactionValue;
     @Column(name = "transactionStatus")
-
     private String transactionStatus;
+    @ManyToOne
+    @JoinColumn(name = "parking_system_id")
+    private ParkingSystem parkingSystem;
 
-    public Transactionss() {
+    public Transactions() {
+
     }
 
-    public Transactionss(int id, String paymentType, String plateNumber, Date dateOfTransaction, double value, String transactionStatus) {
-        this.transId = id;
+    public ParkingSystem getParkingSystem() {
+        return parkingSystem;
+    }
+
+    public void setParkingSystem(ParkingSystem parkingSystem) {
+        this.parkingSystem = parkingSystem;
+    }
+
+    public int getTransId() {
+        return transId;
+    }
+
+    public void setTransId(int transId) {
+        this.transId = transId;
+    }
+
+    public Transactions(String paymentType, String plateNumber, double value, String transactionStatus) {
         this.paymentType = paymentType;
         this.plateNumber = plateNumber;
-        this.dateOfTransaction = dateOfTransaction;
         this.transactionValue = value;
         this.transactionStatus = transactionStatus;
     }
@@ -66,28 +86,13 @@ public class Transactionss {
         this.transactionStatus = transactionStatus;
     }
 
-    public Transactionss(double value) {
-        this.transactionValue = value;
-    }
 
-    public int getId() {
-        return transId;
-    }
-
-    public void setId(int id) {
-        this.transId = id;
-    }
-
-    public double getValue() {
+    public double getTransactionValue() {
         return transactionValue;
     }
 
-    public void setValue(double value) {
-        this.transactionValue = value;
+    public void setTransactionValue(double transactionValue) {
+        this.transactionValue = transactionValue;
     }
 
-    @Override
-    public String toString() {
-        return "Transaction value" + transactionValue;
-    }
 }

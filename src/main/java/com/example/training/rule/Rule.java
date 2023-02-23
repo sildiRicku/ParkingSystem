@@ -1,19 +1,35 @@
 package com.example.training.rule;
 
+import jakarta.persistence.*;
 
+@Entity
 public class Rule {
-    private String id;
-    private String name ;
+
+
+    @Id
+    @SequenceGenerator(name = "SEQ_RuleID", sequenceName = "SEQ_RuleID", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_RuleID")
+    private int id;
+    private String name;
     private String details;
     private double cost;
     private String startTime;
     private String endTime;
 
-    public Rule(String id) {
+    public Rule(int id) {
         this.id = id;
     }
 
     public Rule() {
+    }
+
+    public Rule(String name, String details, double cost, String startTime, String endTime) {
+
+        this.name = name;
+        this.details = details;
+        this.cost = cost;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public String getDetails() {
@@ -48,11 +64,11 @@ public class Rule {
         this.endTime = endTime;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
