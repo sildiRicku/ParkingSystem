@@ -1,6 +1,9 @@
 package com.example.training.rule;
 
+import com.example.training.period.Period;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Rule {
@@ -16,6 +19,10 @@ public class Rule {
     private String startTime;
     private String endTime;
 
+    /*@OneToOne(mappedBy = "periodId")
+    private Period period;*/
+
+
     public Rule(int id) {
         this.id = id;
     }
@@ -23,14 +30,6 @@ public class Rule {
     public Rule() {
     }
 
-    public Rule(String name, String details, double cost, String startTime, String endTime) {
-
-        this.name = name;
-        this.details = details;
-        this.cost = cost;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
 
     public String getDetails() {
         return details;

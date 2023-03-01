@@ -47,13 +47,6 @@ public class Transactions {
         this.transId = transId;
     }
 
-    public Transactions(String paymentType, String plateNumber, double value, String transactionStatus) {
-        this.paymentType = paymentType;
-        this.plateNumber = plateNumber;
-        this.transactionValue = value;
-        this.transactionStatus = transactionStatus;
-    }
-
     public String getPaymentType() {
         return paymentType;
     }
