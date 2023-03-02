@@ -3,9 +3,9 @@ package com.example.training.rule;
 import com.example.training.period.Period;
 import jakarta.persistence.*;
 
-import java.util.List;
 
 @Entity
+@Table(name = "rule")
 public class Rule {
 
 
@@ -19,8 +19,9 @@ public class Rule {
     private String startTime;
     private String endTime;
 
-    /*@OneToOne(mappedBy = "periodId")
-    private Period period;*/
+    @OneToOne(cascade = CascadeType.ALL)
+
+    private Period period;
 
 
     public Rule(int id) {

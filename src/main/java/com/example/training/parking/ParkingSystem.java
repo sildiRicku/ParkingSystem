@@ -13,8 +13,8 @@ import com.example.training.transaction.Transactions;
 public class ParkingSystem {
 
     @Id
-    @SequenceGenerator(name = "SEQ_ParkingID", sequenceName = "SEQ_ParkingID", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ParkingID")
+    @SequenceGenerator(name = "SEQ_Parking_ID", sequenceName = "SEQ_Parking_ID", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_Parking_ID")
     private int id;
 
     @Column(name = "address")

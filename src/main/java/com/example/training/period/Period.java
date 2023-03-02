@@ -1,14 +1,16 @@
 package com.example.training.period;
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.training.rule.Rule;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "period")
 public class Period {
     @EmbeddedId
-    private PeriodId perioId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_periodId")
+    @SequenceGenerator(name="SEQ_perioId", sequenceName = "SEQ_periodId", allocationSize=1)
+    private PeriodId periodId;
+    @OneToOne(mappedBy = "period")
+    private Rule rule;
 
 }
