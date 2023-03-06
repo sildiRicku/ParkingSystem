@@ -1,13 +1,12 @@
-package com.example.training.rule;
+package com.example.system.entities;
 
-import com.example.training.period.Period;
 import jakarta.persistence.*;
 
+import java.sql.Time;
 
 @Entity
 @Table(name = "rule")
 public class Rule {
-
 
     @Id
     @SequenceGenerator(name = "SEQ_RuleID", sequenceName = "SEQ_RuleID", allocationSize = 1)
@@ -16,8 +15,8 @@ public class Rule {
     private String name;
     private String details;
     private double cost;
-    private String startTime;
-    private String endTime;
+    private Time startTime;
+    private Time endTime;
 
     @OneToOne(cascade = CascadeType.ALL)
 
@@ -48,19 +47,19 @@ public class Rule {
         this.cost = cost;
     }
 
-    public String getStartTime() {
+    public Time getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Time startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Time getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Time endTime) {
         this.endTime = endTime;
     }
 

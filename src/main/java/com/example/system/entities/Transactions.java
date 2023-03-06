@@ -1,7 +1,6 @@
-package com.example.training.transaction;
+package com.example.system.entities;
 
 
-import com.example.training.parking.ParkingSystem;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -13,16 +12,18 @@ public class Transactions {
     @SequenceGenerator(name = "SEQ_TransactionId", sequenceName = "SEQ_TransactionId", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TransactionId")
     private int transId;
+    @Enumerated(EnumType.STRING)
     @Column(name = "paymentType")
-    private String paymentType;
+    private PaymentType paymentType;
     @Column(name = "platenumber")
     private String plateNumber;
     @Column(name = "dateOfTransaction")
     private Date dateOfTransaction;
     @Column(name = "value")
     private double transactionValue;
+    @Enumerated(EnumType.STRING)
     @Column(name = "transactionStatus")
-    private String transactionStatus;
+    private TransactionStatus transactionStatus;
     @ManyToOne
     @JoinColumn(name = "parking_system_id")
     private ParkingSystem parkingSystem;
@@ -47,11 +48,11 @@ public class Transactions {
         this.transId = transId;
     }
 
-    public String getPaymentType() {
+    public PaymentType getPaymentType() {
         return paymentType;
     }
 
-    public void setPaymentType(String paymentType) {
+    public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
     }
 
@@ -71,11 +72,11 @@ public class Transactions {
         this.dateOfTransaction = dateOfTransaction;
     }
 
-    public String getTransactionStatus() {
+    public TransactionStatus getTransactionStatus() {
         return transactionStatus;
     }
 
-    public void setTransactionStatus(String transactionStatus) {
+    public void setTransactionStatus(TransactionStatus transactionStatus) {
         this.transactionStatus = transactionStatus;
     }
 
@@ -88,4 +89,17 @@ public class Transactions {
         this.transactionValue = transactionValue;
     }
 
+    public enum PaymentType {
+        CASH,
+        CARD,
+        MOBILE_WALLET
+    }
+
+    public enum TransactionStatus {
+        READY,
+        PROCESSING,
+        ERROR,
+        SUCCESS,
+        DONE
+    }
 }

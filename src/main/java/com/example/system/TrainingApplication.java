@@ -1,4 +1,4 @@
-package com.example.training;
+package com.example.system;
 
 
 import org.springframework.boot.SpringApplication;

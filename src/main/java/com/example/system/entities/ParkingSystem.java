@@ -1,12 +1,9 @@
-package com.example.training.parking;
+package com.example.system.entities;
 
 import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
-
-import com.example.training.rule.Rule;
-import com.example.training.transaction.Transactions;
 
 @Entity
 @Table(name = "parking_system")

@@ -1,6 +1,5 @@
-package com.example.training.period;
+package com.example.system.entities;
 
-import com.example.training.rule.Rule;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,9 +7,8 @@ import jakarta.persistence.*;
 public class Period {
     @EmbeddedId
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_periodId")
-    @SequenceGenerator(name="SEQ_periodId", sequenceName = "SEQ_periodId", allocationSize=1)
+    @SequenceGenerator(name = "SEQ_periodId", sequenceName = "SEQ_periodId", allocationSize = 1)
     private PeriodId periodId;
     @OneToOne(mappedBy = "period")
     private Rule rule;
-
 }
