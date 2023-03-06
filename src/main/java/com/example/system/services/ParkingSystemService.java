@@ -24,6 +24,5 @@ public class ParkingSystemService {
     public Optional<ParkingSystem> getParkingSystemById(int id) {
         return parkingSystemRepo.findById(id);
     }
-
-
+    
 }
