@@ -1,7 +1,6 @@
 package com.example.system.controllers;
 
 import com.example.system.entities.ParkingSystem;
-import com.example.system.repositories.ParkingSystemRepo;
 import com.example.system.services.ParkingSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +28,5 @@ public class ParkingSystemController {
     public List<ParkingSystem> getAllParkingSystems() {
         return parkingSystemService.getAllParkingSystems();
     }
-    
+
 }

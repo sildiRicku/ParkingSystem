@@ -1,10 +1,19 @@
 package com.example.system.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
+@Table(name = "Holiday")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Holiday {
     @Id
     @SequenceGenerator(name = "seq_holidayId", sequenceName = "seq_holidayId", allocationSize = 1)

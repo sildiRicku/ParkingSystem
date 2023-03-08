@@ -3,10 +3,19 @@ package com.example.system.entities;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "parking_system")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class ParkingSystem {
 
     @Id
@@ -34,6 +43,7 @@ public class ParkingSystem {
     private String firmwareVersion;
 
     @OneToMany(mappedBy = "parkingSystem")
+    @JsonIgnoreProperties
     private List<Transactions> transactions;
 
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -42,99 +52,8 @@ public class ParkingSystem {
             joinColumns = {@JoinColumn(name = "parking_system_id")},
             inverseJoinColumns = {@JoinColumn(name = "rule_id")}
     )
+    @JsonIgnoreProperties
     private List<Rule> rules;
-
-
-    public ParkingSystem() {
-
-    }
-
-   /* public List<Transactions> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(List<Transactions> transactions) {
-        this.transactions = transactions;
-    }
-
-    public List<Rule> getRules() {
-        return rules;
-    }
-
-    public void setRules(List<Rule> rules) {
-        this.rules = rules;
-    }*/
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public workingStatus getWorkingStatus() {
-        return workingStatus;
-    }
-
-    public void setWorkingStatus(workingStatus workingStatus) {
-        this.workingStatus = workingStatus;
-    }
-
-    public Date getFirstInstallDate() {
-        return firstInstallDate;
-    }
-
-    public void setFirstInstallDate(Date firstInstallDate) {
-        this.firstInstallDate = firstInstallDate;
-    }
-
-    public String getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public void setLastUpdate(String lastUpdate) {
-        this.lastUpdate = lastUpdate;
-    }
-
-    public double getTotalMoney() {
-        return totalMoney;
-    }
-
-    public void setTotalMoney(double totalMoney) {
-        this.totalMoney = totalMoney;
-    }
-
-    public String getFirmwareVersion() {
-        return firmwareVersion;
-    }
-
-    public void setFirmwareVersion(String firmwareVersion) {
-        this.firmwareVersion = firmwareVersion;
-    }
-
-
-    @Override
-    public String toString() {
-        return "ParkingSystem{" +
-                "id='" + id + '\'' +
-                ", address='" + address + '\'' +
-                ", workingStatus='" + workingStatus + '\'' +
-                ", firstInstallDate=" + firstInstallDate +
-                ", lastUpdate='" + lastUpdate + '\'' +
-                ", totalMoney=" + totalMoney +
-                ", firmwareVersion='" + firmwareVersion + '\'' +
-                '}';
-
-    }
 
     public enum workingStatus {
         Working,

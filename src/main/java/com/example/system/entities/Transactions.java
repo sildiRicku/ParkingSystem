@@ -1,12 +1,21 @@
 package com.example.system.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "Transactions")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Transactions {
     @Id
     @SequenceGenerator(name = "SEQ_TransactionId", sequenceName = "SEQ_TransactionId", allocationSize = 1)
@@ -27,68 +36,9 @@ public class Transactions {
     private TransactionStatus transactionStatus;
     @ManyToOne
     @JoinColumn(name = "parking_system_id")
+    @JsonIgnore
     private ParkingSystem parkingSystem;
 
-    public Transactions() {
-
-    }
-
-    public ParkingSystem getParkingSystem() {
-        return parkingSystem;
-    }
-
-    public void setParkingSystem(ParkingSystem parkingSystem) {
-        this.parkingSystem = parkingSystem;
-    }
-
-    public int getTransId() {
-        return transId;
-    }
-
-    public void setTransId(int transId) {
-        this.transId = transId;
-    }
-
-    public PaymentType getPaymentType() {
-        return paymentType;
-    }
-
-    public void setPaymentType(PaymentType paymentType) {
-        this.paymentType = paymentType;
-    }
-
-    public String getPlateNumber() {
-        return plateNumber;
-    }
-
-    public void setPlateNumber(String plateNumber) {
-        this.plateNumber = plateNumber;
-    }
-
-    public Date getDateOfTransaction() {
-        return dateOfTransaction;
-    }
-
-    public void setDateOfTransaction(Date dateOfTransaction) {
-        this.dateOfTransaction = dateOfTransaction;
-    }
-
-    public TransactionStatus getTransactionStatus() {
-        return transactionStatus;
-    }
-
-    public void setTransactionStatus(TransactionStatus transactionStatus) {
-        this.transactionStatus = transactionStatus;
-    }
-
-
-    public double getTransactionValue() {
-        return transactionValue;
-    }
-
-    public void setTransactionValue(double transactionValue) {
-        this.transactionValue = transactionValue;
-    }
 
     public enum PaymentType {
         CASH,
