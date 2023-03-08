@@ -7,8 +7,8 @@ import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-
+@Getter
+@Setter
 public class HolidayDTO {
 
     private int holidayId;

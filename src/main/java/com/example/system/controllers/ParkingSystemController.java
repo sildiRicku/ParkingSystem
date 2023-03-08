@@ -1,9 +1,12 @@
 package com.example.system.controllers;
 
 import com.example.system.entities.ParkingSystem;
+import com.example.system.repositories.ParkingSystemRepo;
 import com.example.system.services.ParkingSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/parking-system")
@@ -18,7 +21,13 @@ public class ParkingSystemController {
 
     @GetMapping("/{id}")
     public ParkingSystem getParkingSystemById(@PathVariable int id) {
-        return parkingSystemService.getParkingSystemById(id)
-                .orElseThrow(() -> new RuntimeException("Parking system not found"));
+        return parkingSystemService.getParkingSystemById(id).orElse(null);
+
     }
+
+    @GetMapping("/all")
+    public List<ParkingSystem> getAllParkingSystems() {
+        return parkingSystemService.getAllParkingSystems();
+    }
+    
 }

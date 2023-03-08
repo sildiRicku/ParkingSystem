@@ -16,9 +16,9 @@ public class ParkingSystem {
 
     @Column(name = "address")
     private String address;
-
+    @Enumerated(EnumType.STRING)
     @Column(name = "working_status")
-    private String workingStatus;
+    private workingStatus workingStatus;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "first_install_date")
@@ -49,7 +49,7 @@ public class ParkingSystem {
 
     }
 
-    public List<Transactions> getTransactions() {
+   /* public List<Transactions> getTransactions() {
         return transactions;
     }
 
@@ -63,7 +63,7 @@ public class ParkingSystem {
 
     public void setRules(List<Rule> rules) {
         this.rules = rules;
-    }
+    }*/
 
     public int getId() {
         return id;
@@ -81,11 +81,11 @@ public class ParkingSystem {
         this.address = address;
     }
 
-    public String getWorkingStatus() {
+    public workingStatus getWorkingStatus() {
         return workingStatus;
     }
 
-    public void setWorkingStatus(String workingStatus) {
+    public void setWorkingStatus(workingStatus workingStatus) {
         this.workingStatus = workingStatus;
     }
 
@@ -133,5 +133,13 @@ public class ParkingSystem {
                 ", totalMoney=" + totalMoney +
                 ", firmwareVersion='" + firmwareVersion + '\'' +
                 '}';
+
+    }
+
+    public enum workingStatus {
+        Working,
+        Fail,
+        Money_full,
+        No_paper
     }
 }

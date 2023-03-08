@@ -14,5 +14,6 @@ public class Holiday {
     @Column(name = "holiday_name")
     private String holidayName;
     @Column(name = "holiday_date")
+    @Temporal(TemporalType.DATE)
     private Date holidayDate;
 }

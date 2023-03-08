@@ -1,15 +1,15 @@
 package com.example.system.dto;
 
 import com.example.system.entities.Period;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Time;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+
 public class RuleDTO {
     private int id;
     private String name;

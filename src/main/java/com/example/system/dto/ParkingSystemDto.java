@@ -1,23 +1,23 @@
 package com.example.system.dto;
 
+import com.example.system.entities.ParkingSystem.workingStatus;
 import com.example.system.entities.Rule;
 import com.example.system.entities.Transactions;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class ParkingSystemDto {
     private int id;
 
     private String address;
 
-    private String workingStatus;
+    private workingStatus workingStatus;
 
     private Date firstInstallDate;
 

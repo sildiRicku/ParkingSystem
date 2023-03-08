@@ -17,6 +17,7 @@ public class Transactions {
     private PaymentType paymentType;
     @Column(name = "platenumber")
     private String plateNumber;
+    @Temporal(TemporalType.DATE)
     @Column(name = "dateOfTransaction")
     private Date dateOfTransaction;
     @Column(name = "value")
