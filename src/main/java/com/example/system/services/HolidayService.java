@@ -47,17 +47,12 @@ public class HolidayService {
         }
     }
 
-    public HolidayDTO addHoliday(HolidayDTO holidayDTO) {
+    public Holiday addHoliday(HolidayDTO holidayDTO) {
         Holiday holiday = new Holiday();
         holiday.setHolidayDate(holidayDTO.getHolidayDate());
         holiday.setHolidayName(holidayDTO.getHolidayName());
         holiday.setHolidayId(holidayDTO.getHolidayId());
-        Holiday savedHoliday = holidayRepo.save(holiday);
-        HolidayDTO savedholidayDTO = new HolidayDTO();
-        savedholidayDTO.setHolidayId(savedHoliday.getHolidayId());
-        savedholidayDTO.setHolidayName(savedHoliday.getHolidayName());
-        savedholidayDTO.setHolidayDate(savedHoliday.getHolidayDate());
-        return savedholidayDTO;
+        return holidayRepo.save(holiday);
     }
 
 }
