@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PeriodDto {
+public class PeriodDTO {
     private PeriodKey periodId;
     private Rule rule;
 }

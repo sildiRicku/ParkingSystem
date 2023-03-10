@@ -1,5 +1,6 @@
 package com.example.system.controllers;
 
+import com.example.system.dto.HolidayDTO;
 import com.example.system.entities.Holiday;
 import com.example.system.services.HolidayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class HolidayController {
     }
 
     @GetMapping("/all")
-    public List<Holiday> getAllHolidays() {
-        return holidayService.getAllHolidays();
+    public List<HolidayDTO> getAllHolidayDTOs() {
+        return holidayService.getAllHolidayDTOs();
     }
 
     @PostMapping("/new")

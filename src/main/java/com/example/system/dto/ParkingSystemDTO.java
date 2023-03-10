@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ParkingSystemDto {
+public class ParkingSystemDTO {
     private int id;
 
     private String address;
