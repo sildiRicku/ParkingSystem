@@ -34,12 +34,30 @@ public class HolidayService {
         return holidayDTOS;
     }
 
-    public Optional<Holiday> getHolidayById(int id) {
-        return holidayRepo.findById(id);
+    public Optional<HolidayDTO> getHolidayById(int id) {
+        Optional<Holiday> holiday = holidayRepo.findById(id);
+        if (holiday.isPresent()) {
+            HolidayDTO holidayDTO = new HolidayDTO();
+            holidayDTO.setHolidayDate(holiday.get().getHolidayDate());
+            holidayDTO.setHolidayName(holiday.get().getHolidayName());
+            holidayDTO.setHolidayId(holiday.get().getHolidayId());
+            return Optional.of(holidayDTO);
+        } else {
+            return Optional.empty();
+        }
     }
 
-    public Holiday addHoliday(Holiday holiday) {
-        return holidayRepo.save(holiday);
+    public HolidayDTO addHoliday(HolidayDTO holidayDTO) {
+        Holiday holiday = new Holiday();
+        holiday.setHolidayDate(holidayDTO.getHolidayDate());
+        holiday.setHolidayName(holidayDTO.getHolidayName());
+        holiday.setHolidayId(holidayDTO.getHolidayId());
+        Holiday savedHoliday = holidayRepo.save(holiday);
+        HolidayDTO savedholidayDTO = new HolidayDTO();
+        savedholidayDTO.setHolidayId(savedHoliday.getHolidayId());
+        savedholidayDTO.setHolidayName(savedHoliday.getHolidayName());
+        savedholidayDTO.setHolidayDate(savedHoliday.getHolidayDate());
+        return savedholidayDTO;
     }
 
 }
