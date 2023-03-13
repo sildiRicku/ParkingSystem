@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.DayOfWeek;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,5 +18,5 @@ public class PeriodKey implements Serializable {
     @Column(name = "period_id")
     private int periodId;
     @Column(name = "day_number")
-    private int dayNumber;
+    private DayOfWeek dayNumber;
 }

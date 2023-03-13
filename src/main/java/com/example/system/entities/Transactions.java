@@ -35,7 +35,8 @@ public class Transactions {
     @Column(name = "transactionStatus")
     private TransactionStatus transactionStatus;
     @ManyToOne
-    @JoinColumn(name = "parking_system_id")
+    @JoinColumn(name = "parking_system_id", referencedColumnName = "id")
+
     @JsonIgnore
     private ParkingSystem parkingSystem;
 

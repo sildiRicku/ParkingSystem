@@ -1,12 +1,10 @@
 package com.example.system.dto;
 
 import com.example.system.entities.ParkingSystem.workingStatus;
-import com.example.system.entities.Rule;
-import com.example.system.entities.Transactions;
+
 import lombok.*;
 
 import java.util.Date;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,7 +25,4 @@ public class ParkingSystemDTO {
 
     private String firmwareVersion;
 
-    private List<Transactions> transactions;
-
-    private List<Rule> rules;
 }

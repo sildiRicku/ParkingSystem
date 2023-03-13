@@ -47,6 +47,7 @@ public class ParkingSystem {
     private List<Transactions> transactions;
 
     @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "rule_id", referencedColumnName = "id")
     @JoinTable(
             name = "parking_system_rule",
             joinColumns = {@JoinColumn(name = "parking_system_id")},

@@ -1,7 +1,8 @@
 package com.example.system.dto;
 
-import jakarta.persistence.Column;
 import lombok.*;
+
+import java.time.DayOfWeek;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -9,5 +10,5 @@ import lombok.*;
 @Setter
 public class PeriodKeyDTO {
     private int periodId;
-    private int dayNumber;
+    private DayOfWeek dayNumber;
 }

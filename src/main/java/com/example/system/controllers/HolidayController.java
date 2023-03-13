@@ -23,8 +23,8 @@ public class HolidayController {
     }
 
     @GetMapping("/all")
-    public List<HolidayDTO> getAllHolidayDTOs() {
-        return holidayService.getAllHolidayDTOs();
+    public List<HolidayDTO> getAllHolidays() {
+        return holidayService.getAllHolidays();
     }
 
     @GetMapping("/{id}")

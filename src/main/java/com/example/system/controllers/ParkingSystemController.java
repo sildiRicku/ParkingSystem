@@ -1,5 +1,6 @@
 package com.example.system.controllers;
 
+import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.entities.ParkingSystem;
 import com.example.system.services.ParkingSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,4 +30,8 @@ public class ParkingSystemController {
         return parkingSystemService.getAllParkingSystems();
     }
 
+    @PostMapping("/new")
+    public ParkingSystem addParkingSystem(@RequestBody ParkingSystemDTO parkingSystemDTO) {
+        return parkingSystemService.addParkingSystem(parkingSystemDTO);
+    }
 }
