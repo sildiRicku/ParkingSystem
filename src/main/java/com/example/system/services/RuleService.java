@@ -1,26 +1,50 @@
 package com.example.system.services;
 
+import com.example.system.dto.RuleDTO;
 import com.example.system.entities.Rule;
 import com.example.system.repositories.RuleRepo;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class RuleService {
     private final RuleRepo ruleRepo;
+    private final ModelMapper modelMapper;
 
-    public RuleService(RuleRepo ruleRepo) {
+    @Autowired
+    public RuleService(RuleRepo ruleRepo, ModelMapper modelMapper) {
         this.ruleRepo = ruleRepo;
+        this.modelMapper = modelMapper;
     }
 
-    public List<Rule> getAllRules() {
-        return ruleRepo.findAll();
+    public List<RuleDTO> getAllRules() {
+        List<Rule> rules = ruleRepo.findAll();
+        List<RuleDTO> ruleDTOS = new ArrayList<>();
+        for (Rule rule : rules) {
+            RuleDTO ruleDTO = modelMapper.map(rule, RuleDTO.class);
+            ruleDTOS.add(ruleDTO);
+        }
+
+        return ruleDTOS;
     }
 
-    public Optional<Rule> getRuleById(int id) {
-        return ruleRepo.findById(id);
+    public Optional<RuleDTO> getRuleById(int id) {
+        Optional<Rule> rule = ruleRepo.findById(id);
+        if (rule.isPresent()) {
+            RuleDTO ruleDTO = modelMapper.map(rule, RuleDTO.class);
+            return Optional.of(ruleDTO);
+        } else {
+            return Optional.empty();
+        }
     }
 
+    public Rule addRule(RuleDTO ruleDTO) {
+        Rule rule = modelMapper.map(ruleDTO, Rule.class);
+        return ruleRepo.save(rule);
+    }
 }

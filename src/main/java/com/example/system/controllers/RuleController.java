@@ -1,12 +1,10 @@
 package com.example.system.controllers;
 
+import com.example.system.dto.RuleDTO;
 import com.example.system.entities.Rule;
 import com.example.system.services.RuleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,12 +19,17 @@ public class RuleController {
     }
 
     @GetMapping("/all")
-    public List<Rule> getAllRules() {
+    public List<RuleDTO> getAllRules() {
         return ruleService.getAllRules();
     }
 
     @GetMapping("/{id}")
-    public Rule getRuleById(@PathVariable int id) {
+    public RuleDTO getRuleById(@PathVariable int id) {
         return ruleService.getRuleById(id).orElse(null);
+    }
+
+    @PostMapping("/new")
+    public Rule addRule(RuleDTO ruleDTO) {
+        return ruleService.addRule(ruleDTO);
     }
 }

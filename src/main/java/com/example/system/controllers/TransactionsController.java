@@ -1,5 +1,6 @@
 package com.example.system.controllers;
 
+import com.example.system.dto.TransactionDTO;
 import com.example.system.entities.Transactions;
 import com.example.system.services.TransactionsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,17 @@ public class TransactionsController {
     }
 
     @GetMapping("/all")
-    public List<Transactions> getAllTransactions() {
+    public List<TransactionDTO> getAllTransactions() {
         return transactionsService.getAllTransactions();
     }
 
     @GetMapping("/{id}")
-    public Transactions getTransactionsById(@PathVariable int id) {
+    public TransactionDTO getTransactionsById(@PathVariable int id) {
         return transactionsService.getTransactionsById(id).orElse(null);
     }
 
     @PostMapping("/new")
-    public Transactions addTransactions(@RequestBody Transactions transactions) {
-        return transactionsService.addTransactions(transactions);
+    public Transactions addTransactions(@RequestBody TransactionDTO transactionDTO) {
+        return transactionsService.addTransactions(transactionDTO);
     }
 }

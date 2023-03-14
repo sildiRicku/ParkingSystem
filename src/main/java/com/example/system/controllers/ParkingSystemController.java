@@ -20,13 +20,13 @@ public class ParkingSystemController {
     }
 
     @GetMapping("/{id}")
-    public ParkingSystem getParkingSystemById(@PathVariable int id) {
+    public ParkingSystemDTO getParkingSystemById(@PathVariable int id) {
         return parkingSystemService.getParkingSystemById(id).orElse(null);
 
     }
 
     @GetMapping("/all")
-    public List<ParkingSystem> getAllParkingSystems() {
+    public List<ParkingSystemDTO> getAllParkingSystems() {
         return parkingSystemService.getAllParkingSystems();
     }
 

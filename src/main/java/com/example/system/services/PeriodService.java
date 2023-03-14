@@ -3,6 +3,7 @@ package com.example.system.services;
 import com.example.system.entities.Period;
 import com.example.system.entities.PeriodKey;
 import com.example.system.repositories.PeriodRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Optional;
 public class PeriodService {
     private final PeriodRepo periodRepo;
 
+    @Autowired
     public PeriodService(PeriodRepo periodRepo) {
         this.periodRepo = periodRepo;
     }
