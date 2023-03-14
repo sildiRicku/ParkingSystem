@@ -57,9 +57,9 @@ public class ParkingSystem {
     private List<Rule> rules;
 
     public enum workingStatus {
-        Working,
-        Fail,
-        Money_full,
-        No_paper
+        WORKING,
+        FAIL,
+        MONEY_FULL,
+        NO_PAPER
     }
 }

@@ -1,11 +1,8 @@
 package com.example.system.services;
 
-//import com.example.system.dto.TransactionDTO;
-//import com.example.system.entities.Rule;
 
 import com.example.system.entities.Transactions;
 import com.example.system.repositories.TransactionsRepo;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
