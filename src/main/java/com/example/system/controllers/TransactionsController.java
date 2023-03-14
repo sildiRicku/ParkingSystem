@@ -3,10 +3,7 @@ package com.example.system.controllers;
 import com.example.system.entities.Transactions;
 import com.example.system.services.TransactionsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +25,10 @@ public class TransactionsController {
     @GetMapping("/{id}")
     public Transactions getTransactionsById(@PathVariable int id) {
         return transactionsService.getTransactionsById(id).orElse(null);
+    }
+
+    @PostMapping("/new")
+    public Transactions addTransactions(@RequestBody Transactions transactions) {
+        return transactionsService.addTransactions(transactions);
     }
 }

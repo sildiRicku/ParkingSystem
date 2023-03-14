@@ -3,10 +3,8 @@ package com.example.system.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 
 import java.util.Date;
 
@@ -18,8 +16,8 @@ import java.util.Date;
 @Setter
 public class Transactions {
     @Id
-    @SequenceGenerator(name = "SEQ_TransactionId", sequenceName = "SEQ_TransactionId", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TransactionId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int transId;
     @Enumerated(EnumType.STRING)
     @Column(name = "paymentType")
@@ -34,8 +32,9 @@ public class Transactions {
     @Enumerated(EnumType.STRING)
     @Column(name = "transactionStatus")
     private TransactionStatus transactionStatus;
+
     @ManyToOne
-    @JoinColumn(name = "parking_system_id", referencedColumnName = "id")
+    @JoinColumn(name = "parking_system_id", referencedColumnName = "systemId")
 
     @JsonIgnore
     private ParkingSystem parkingSystem;

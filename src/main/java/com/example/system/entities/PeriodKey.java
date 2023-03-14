@@ -18,5 +18,5 @@ public class PeriodKey implements Serializable {
     @Column(name = "period_id")
     private int periodId;
     @Column(name = "day_number")
-    private DayOfWeek dayNumber;
+    private DayOfWeek dayOfWeek;
 }

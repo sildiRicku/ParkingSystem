@@ -40,12 +40,10 @@ public class HolidayService {
         } else {
             return Optional.empty();
         }
-
     }
 
     public Holiday addHoliday(HolidayDTO holidayDTO) {
         Holiday holiday = modelMapper.map(holidayDTO, Holiday.class);
         return holidayRepo.save(holiday);
     }
-
 }

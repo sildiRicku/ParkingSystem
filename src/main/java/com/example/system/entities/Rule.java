@@ -17,9 +17,9 @@ import java.sql.Time;
 public class Rule {
 
     @Id
-    @SequenceGenerator(name = "SEQ_RuleID", sequenceName = "SEQ_RuleID", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_RuleID")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    private int ruleId;
     @Column(name = "name")
     private String name;
     @Column(name = "details")
@@ -30,8 +30,7 @@ public class Rule {
     private Time startTime;
     @Column(name = "end_time")
     private Time endTime;
-
+    
     @OneToOne(cascade = CascadeType.ALL)
     private Period period;
-
 }
