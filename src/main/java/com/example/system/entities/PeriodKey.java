@@ -1,6 +1,6 @@
 package com.example.system.entities;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +13,12 @@ import java.time.DayOfWeek;
 @AllArgsConstructor
 @Getter
 @Setter
+@Embeddable
 public class PeriodKey implements Serializable {
 
     @Column(name = "period_id")
     private int periodId;
+
     @Column(name = "day_number")
     private DayOfWeek dayOfWeek;
 }

@@ -44,16 +44,7 @@ public class TransactionsService {
     }
 
     public Transactions addTransactions(TransactionDTO transactionDTO) {
-//        Transactions transactions2 = processTransaction(transactions, ruleService.getRuleById(1).get());
         Transactions transactions = modelMapper.map(transactionDTO, Transactions.class);
         return transactionsRepo.save(transactions);
     }
-
-//    public Transactions processTransaction(Transactions transactions, Rule rule) {
-//        if (rule.getPeriod().getPeriodId().getDayOfWeek().getValue() == 6) {
-//            transactions.setTransactionValue(0);
-//        } else
-//            transactions.setTransactionValue(rule.getCost());
-//        return transactionsRepo.save(transactions);
-//    }
 }

@@ -1,5 +1,6 @@
 package com.example.system.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Time;
+import java.util.List;
 
 @Entity
 @Table(name = "rule")
@@ -30,7 +32,8 @@ public class Rule {
     private Time startTime;
     @Column(name = "end_time")
     private Time endTime;
-    
-    @OneToOne(cascade = CascadeType.ALL)
-    private Period period;
+
+    @OneToMany(mappedBy = "rule")
+    @JsonIgnoreProperties
+    private List<Period> periods;
 }
