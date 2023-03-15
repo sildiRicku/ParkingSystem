@@ -1,15 +1,15 @@
 use parkingdb;
 #insert into parking system#
-INSERT INTO parkingdb.parking_system (system_id, address, firmware_version, first_install_date, last_update, total_money, working_status) VALUES ('1', 'City Center', '1.6', '2023-01-01', 'never', '1000', 'WORKING');
-INSERT INTO parkingdb.parking_system (system_id, address, firmware_version, first_install_date, last_update, total_money, working_status) VALUES ('2', 'Main Street', '1.0', '2022-05-10', 'never', '1500', 'WORKING');
+INSERT INTO parkingdb.parking_system ( address, firmware_version, first_install_date, last_update, total_money, working_status) VALUES ( 'City Center', '1.6', '2023-01-01', 'never', '1000', 'WORKING');
+INSERT INTO parkingdb.parking_system ( address, firmware_version, first_install_date, last_update, total_money, working_status) VALUES ( 'Main Street', '1.0', '2022-05-10', 'never', '1500', 'WORKING');
 #Delete from parking system#
 DELETE FROM parkingdb.parking_system WHERE system_id=1;
 DELETE FROM parkingdb.parking_system WHERE system_id=2;
 
 #insert into rule #
-INSERT INTO parkingdb.rule(rule_id, cost, details, name) VALUES ('1', '0', 'Free on Weekend', 'R1');
-INSERT INTO parkingdb.rule (rule_id, cost, details,end_time, name, start_time) VALUES ('2', '1', '1 euro/hour weekday', '20:00','R2','08:00');
-INSERT INTO parkingdb.rule (rule_id, cost, details,end_time, name, start_time) VALUES ('3', '1', '1 euro/hour everyday', '20:00','R3','08:00' );
+INSERT INTO parkingdb.rule( cost, details, name) VALUES ( '0', 'Free on Weekend', 'R1');
+INSERT INTO parkingdb.rule ( cost, details,end_time, name, start_time) VALUES ( '1', '1 euro/hour weekday', '20:00','R2','08:00');
+INSERT INTO parkingdb.rule ( cost, details,end_time, name, start_time) VALUES ( '1', '1 euro/hour everyday', '20:00','R3','08:00' );
 #delete rule#
 DELETE FROM parkingdb.rule WHERE rule_id=1;
 DELETE FROM parkingdb.rule WHERE rule_id=2;
