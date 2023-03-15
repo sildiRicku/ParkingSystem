@@ -4,9 +4,12 @@ import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.entities.ParkingSystem;
 import com.example.system.services.ParkingSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/parking-system")
@@ -20,8 +23,14 @@ public class ParkingSystemController {
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public ParkingSystemDTO getParkingSystemById(@PathVariable int id) {
-        return parkingSystemService.getParkingSystemById(id).orElse(null);
+        Optional<ParkingSystemDTO> parkingSystemDTO = parkingSystemService.getParkingSystemById(id);
+        if (parkingSystemDTO.isPresent()) {
+            return parkingSystemDTO.get();
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
 
     }
 

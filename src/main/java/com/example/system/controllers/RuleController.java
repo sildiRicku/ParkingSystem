@@ -4,9 +4,12 @@ import com.example.system.dto.RuleDTO;
 import com.example.system.entities.Rule;
 import com.example.system.services.RuleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/rule")
@@ -25,7 +28,11 @@ public class RuleController {
 
     @GetMapping("/{id}")
     public RuleDTO getRuleById(@PathVariable int id) {
-        return ruleService.getRuleById(id).orElse(null);
+        Optional<RuleDTO> ruleDTO = ruleService.getRuleById(id);
+        if (ruleDTO.isPresent()) {
+            return ruleDTO.get();
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/new")

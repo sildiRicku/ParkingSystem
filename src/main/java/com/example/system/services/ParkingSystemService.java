@@ -37,7 +37,7 @@ public class ParkingSystemService {
     public Optional<ParkingSystemDTO> getParkingSystemById(int id) {
         Optional<ParkingSystem> parkingSystem = parkingSystemRepo.findById(id);
         if (parkingSystem.isPresent()) {
-            ParkingSystemDTO parkingSystemDTO = modelMapper.map(parkingSystem, ParkingSystemDTO.class);
+            ParkingSystemDTO parkingSystemDTO = modelMapper.map(parkingSystem.get(), ParkingSystemDTO.class);
             return Optional.of(parkingSystemDTO);
         } else {
             return Optional.empty();

@@ -36,7 +36,7 @@ public class RuleService {
     public Optional<RuleDTO> getRuleById(int id) {
         Optional<Rule> rule = ruleRepo.findById(id);
         if (rule.isPresent()) {
-            RuleDTO ruleDTO = modelMapper.map(rule, RuleDTO.class);
+            RuleDTO ruleDTO = modelMapper.map(rule.get(), RuleDTO.class);
             return Optional.of(ruleDTO);
         } else {
             return Optional.empty();

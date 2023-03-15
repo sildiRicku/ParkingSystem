@@ -36,7 +36,7 @@ public class TransactionsService {
     public Optional<TransactionDTO> getTransactionsById(int id) {
         Optional<Transactions> transactions = transactionsRepo.findById(id);
         if (transactions.isPresent()) {
-            TransactionDTO transactionDTO = modelMapper.map(transactions, TransactionDTO.class);
+            TransactionDTO transactionDTO = modelMapper.map(transactions.get(), TransactionDTO.class);
             return Optional.of(transactionDTO);
         } else {
             return Optional.empty();

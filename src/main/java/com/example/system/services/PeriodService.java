@@ -36,7 +36,7 @@ public class PeriodService {
     public Optional<PeriodDTO> getPeriodById(PeriodKey id) {
         Optional<Period> period = periodRepo.findById(id);
         if (period.isPresent()) {
-            PeriodDTO periodDTO = modelMapper.map(period, PeriodDTO.class);
+            PeriodDTO periodDTO = modelMapper.map(period.get(), PeriodDTO.class);
             return Optional.of(periodDTO);
         } else {
             return Optional.empty();
