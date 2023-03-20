@@ -1,7 +1,6 @@
 package com.example.system.controllers;
 
 import com.example.system.dto.RuleDTO;
-import com.example.system.entities.Rule;
 import com.example.system.services.RuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +35,7 @@ public class RuleController {
     }
 
     @PostMapping("/new")
-    public Rule addRule(RuleDTO ruleDTO) {
+    public RuleDTO addRule(RuleDTO ruleDTO) {
         return ruleService.addRule(ruleDTO);
     }
 }

@@ -44,8 +44,10 @@ public class ParkingSystemService {
         }
     }
 
-    public ParkingSystem addParkingSystem(ParkingSystemDTO parkingSystemDTO) {
+    public ParkingSystemDTO addParkingSystem(ParkingSystemDTO parkingSystemDTO) {
         ParkingSystem parkingSystem = modelMapper.map(parkingSystemDTO, ParkingSystem.class);
-        return parkingSystemRepo.save(parkingSystem);
+        parkingSystemRepo.save(parkingSystem);
+        parkingSystemDTO = modelMapper.map(parkingSystem, ParkingSystemDTO.class);
+        return parkingSystemDTO;
     }
 }

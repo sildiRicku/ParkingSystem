@@ -43,8 +43,10 @@ public class TransactionsService {
         }
     }
 
-    public Transactions addTransactions(TransactionDTO transactionDTO) {
+    public TransactionDTO addTransactions(TransactionDTO transactionDTO) {
         Transactions transactions = modelMapper.map(transactionDTO, Transactions.class);
-        return transactionsRepo.save(transactions);
+        transactionsRepo.save(transactions);
+        transactionDTO = modelMapper.map(transactions, TransactionDTO.class);
+        return transactionDTO;
     }
 }

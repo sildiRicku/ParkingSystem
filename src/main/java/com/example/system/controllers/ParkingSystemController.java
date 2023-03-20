@@ -1,7 +1,6 @@
 package com.example.system.controllers;
 
 import com.example.system.dto.ParkingSystemDTO;
-import com.example.system.entities.ParkingSystem;
 import com.example.system.services.ParkingSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +39,7 @@ public class ParkingSystemController {
     }
 
     @PostMapping("/new")
-    public ParkingSystem addParkingSystem(@RequestBody ParkingSystemDTO parkingSystemDTO) {
+    public ParkingSystemDTO addParkingSystem(@RequestBody ParkingSystemDTO parkingSystemDTO) {
         return parkingSystemService.addParkingSystem(parkingSystemDTO);
     }
 }

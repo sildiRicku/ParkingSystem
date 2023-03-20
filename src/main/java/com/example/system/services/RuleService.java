@@ -43,8 +43,10 @@ public class RuleService {
         }
     }
 
-    public Rule addRule(RuleDTO ruleDTO) {
+    public RuleDTO addRule(RuleDTO ruleDTO) {
         Rule rule = modelMapper.map(ruleDTO, Rule.class);
-        return ruleRepo.save(rule);
+        ruleRepo.save(rule);
+        ruleDTO = modelMapper.map(rule, RuleDTO.class);
+        return ruleDTO;
     }
 }
