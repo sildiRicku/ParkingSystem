@@ -42,8 +42,11 @@ public class HolidayService {
         }
     }
 
-    public Holiday addHoliday(HolidayDTO holidayDTO) {
+    public HolidayDTO addHoliday(HolidayDTO holidayDTO) {
         Holiday holiday = modelMapper.map(holidayDTO, Holiday.class);
-        return holidayRepo.save(holiday);
+        holiday = holidayRepo.save(holiday);
+        holidayDTO = modelMapper.map(holiday, HolidayDTO.class);
+        return holidayDTO;
+
     }
 }

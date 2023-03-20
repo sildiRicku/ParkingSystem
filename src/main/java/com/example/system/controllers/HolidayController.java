@@ -1,7 +1,6 @@
 package com.example.system.controllers;
 
 import com.example.system.dto.HolidayDTO;
-import com.example.system.entities.Holiday;
 import com.example.system.services.HolidayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +37,7 @@ public class HolidayController {
     }
 
     @PostMapping("/new")
-    public Holiday add(@RequestBody HolidayDTO holidayDTO) {
+    public HolidayDTO add(@RequestBody HolidayDTO holidayDTO) {
         return holidayService.addHoliday(holidayDTO);
     }
 }
