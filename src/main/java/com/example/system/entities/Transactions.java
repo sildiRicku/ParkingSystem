@@ -39,7 +39,7 @@ public class Transactions {
     @JsonIgnore
     private ParkingSystem parkingSystem;
 
-    private int age;
+    private int ag;
 
     public enum PaymentType {
         CASH,
