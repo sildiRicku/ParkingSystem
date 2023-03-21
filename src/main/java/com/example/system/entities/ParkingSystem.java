@@ -47,7 +47,7 @@ public class ParkingSystem {
     @JsonIgnoreProperties
     private List<Transactions> transactions;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "parking_system_rule",
             joinColumns = {@JoinColumn(name = "parking_system_id")},

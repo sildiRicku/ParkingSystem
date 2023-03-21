@@ -58,5 +58,8 @@ public class ParkingSystemController {
         }
         ParkingSystem parkingSystem = modelMapper.map(parkingSystemDTO, ParkingSystem.class);
         return ruleService.getHoursForMoney(money, parkingSystem);
+
     }
 }
+
+
