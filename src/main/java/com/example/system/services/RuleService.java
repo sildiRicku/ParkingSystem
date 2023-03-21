@@ -1,16 +1,17 @@
 package com.example.system.services;
 
+import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.dto.RuleDTO;
-import com.example.system.entities.ParkingSystem;
 import com.example.system.entities.Rule;
 import com.example.system.repositories.RuleRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,13 +54,13 @@ public class RuleService {
         return ruleDTO;
     }
 
-    public String getHoursForMoney(int money, ParkingSystem parkingSystem) {
+    public String getHoursForMoney(int money, ParkingSystemDTO parkingSystem) {
         Rule activeRule = null;
         for (Rule rule : parkingSystem.getRules()) {
-            Date now = new Date();
-            Time startTime = rule.getStartTime();
-            Time endTime = rule.getEndTime();
-            if (now.after(startTime) && now.before(endTime)) {
+            LocalDateTime now = LocalDateTime.now();
+            LocalTime startTime = rule.getStartTime().toLocalTime();
+            LocalTime endTime = rule.getEndTime().toLocalTime();
+            if (now.toLocalTime().isAfter(startTime) && now.toLocalTime().isBefore(endTime)) {
                 activeRule = rule;
                 break;
             }
@@ -71,8 +72,10 @@ public class RuleService {
 
         double costPerHour = activeRule.getCost();
         double hours = money / costPerHour;
+        LocalTime endingTime = LocalTime.now().plusHours((long) hours);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-        return "You can park for " + hours + " hour(s)";
+        return "You can park until " + endingTime.format(formatter);
     }
 
 }

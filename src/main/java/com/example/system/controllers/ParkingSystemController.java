@@ -1,10 +1,8 @@
 package com.example.system.controllers;
 
 import com.example.system.dto.ParkingSystemDTO;
-import com.example.system.entities.ParkingSystem;
 import com.example.system.services.ParkingSystemService;
 import com.example.system.services.RuleService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +17,11 @@ public class ParkingSystemController {
 
     private final ParkingSystemService parkingSystemService;
     private final RuleService ruleService;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public ParkingSystemController(ParkingSystemService parkingSystemService, RuleService ruleService, ModelMapper modelMapper) {
+    public ParkingSystemController(ParkingSystemService parkingSystemService, RuleService ruleService) {
         this.parkingSystemService = parkingSystemService;
         this.ruleService = ruleService;
-        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/{id}")
@@ -36,7 +32,6 @@ public class ParkingSystemController {
             return parkingSystemDTO.get();
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-
 
     }
 
@@ -56,8 +51,7 @@ public class ParkingSystemController {
         if (parkingSystemDTO.isEmpty()) {
             return "Parking system with id " + parkingId + " is not found";
         }
-        ParkingSystem parkingSystem = modelMapper.map(parkingSystemDTO, ParkingSystem.class);
-        return ruleService.getHoursForMoney(money, parkingSystem);
+        return ruleService.getHoursForMoney(money, parkingSystemDTO.get());
 
     }
 }

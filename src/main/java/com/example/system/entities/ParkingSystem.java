@@ -3,7 +3,6 @@ package com.example.system.entities;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -53,7 +52,7 @@ public class ParkingSystem {
             joinColumns = {@JoinColumn(name = "parking_system_id")},
             inverseJoinColumns = {@JoinColumn(name = "rule_id")}
     )
-    @JsonIgnore
+
     private List<Rule> rules;
 
     public enum workingStatus {
