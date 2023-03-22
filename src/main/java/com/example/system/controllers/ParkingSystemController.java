@@ -46,7 +46,7 @@ public class ParkingSystemController {
     }
 
     @GetMapping("/hours")
-    public String getHoursForMoney(@RequestParam("money") int money, @RequestParam("id") int parkingId) {
+    public String getHoursForMoney(@RequestParam("money") double money, @RequestParam("id") int parkingId) {
         Optional<ParkingSystemDTO> parkingSystemDTO = parkingSystemService.getParkingSystemById(parkingId);
         if (parkingSystemDTO.isEmpty()) {
             return "Parking system with id " + parkingId + " is not found";
