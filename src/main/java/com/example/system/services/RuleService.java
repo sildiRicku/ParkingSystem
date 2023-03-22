@@ -63,6 +63,7 @@ public class RuleService {
             return "Technical error";
         }
         LocalTime now = LocalTime.now();
+//        LocalTime now = LocalTime.of(20, 0, 0); use this as Time = 20:00
         LocalTime startTime = activeRule.getStartTime().toLocalTime();
         LocalTime endTime = activeRule.getEndTime().toLocalTime();
 
