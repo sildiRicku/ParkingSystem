@@ -1,6 +1,6 @@
 package com.example.system.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +34,6 @@ public class Rule {
     private LocalTime endTime;
 
     @OneToMany(mappedBy = "rule")
-    @JsonIgnoreProperties
+    @JsonIgnore
     private List<Period> periods;
 }

@@ -1,6 +1,7 @@
 package com.example.system.controllers;
 
 import com.example.system.dto.ParkingSystemDTO;
+import com.example.system.entities.TransactionPaymentType;
 import com.example.system.services.ParkingSystemService;
 import com.example.system.services.RuleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +46,13 @@ public class ParkingSystemController {
         return parkingSystemService.addParkingSystem(parkingSystemDTO);
     }
 
-    @GetMapping("/hours")
-    public String getHoursForMoney(@RequestParam("money") double money, @RequestParam("id") int parkingId) {
+    @GetMapping("/parking-time")
+    public String getHoursForMoney(@RequestParam("money") double money, @RequestParam("id") int parkingId, @RequestParam("transactionPaymentType") TransactionPaymentType transactionPaymentType) {
         Optional<ParkingSystemDTO> parkingSystemDTO = parkingSystemService.getParkingSystemById(parkingId);
         if (parkingSystemDTO.isEmpty()) {
             return "Parking system with id " + parkingId + " is not found";
         }
-        return ruleService.getHoursForMoney(money, parkingSystemDTO.get());
+        return ruleService.getHoursForMoney(money, parkingSystemDTO.get(), transactionPaymentType);
 
     }
 }
