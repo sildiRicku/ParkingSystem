@@ -63,22 +63,22 @@ public class RuleService {
             return "Technical error";
         }
         LocalTime now = LocalTime.now();
-//        LocalTime now = LocalTime.of(20, 0, 0); use this as Time = 20:00
-        LocalTime startTime = activeRule.getStartTime().toLocalTime();
-        LocalTime endTime = activeRule.getEndTime().toLocalTime();
+//        LocalTime now = LocalTime.of(20, 0, 0);         use this as Time = 20:00
+        LocalTime startTime = activeRule.getStartTime();
+        LocalTime endTime = activeRule.getEndTime();
 
         double costPerHour = activeRule.getCost();
         double hours = money / costPerHour;
         long minutes = (long) (hours * 60);
-        LocalTime endingTime = now.plusMinutes(minutes);
-        if (endingTime.isAfter(endTime)) {
-            Duration duration = Duration.between(activeRule.getEndTime().toLocalTime(), endingTime);
+        LocalTime exitTime = now.plusMinutes(minutes);
+        if (exitTime.isAfter(endTime)) {
+            Duration duration = Duration.between(endTime, exitTime);
             long difference = duration.toMinutes();
-            endingTime = startTime.plusMinutes(difference);
+            exitTime = startTime.plusMinutes(difference);
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        return "You can park until " + endingTime.format(formatter);
+        return "You can park until " + exitTime.format(formatter);
     }
 
 }
