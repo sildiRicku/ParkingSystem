@@ -58,14 +58,14 @@ public class RuleService {
     }
 
     public String getHoursForMoney(double money, ParkingSystemDTO parkingSystemDTO, TransactionPaymentType transactionPaymentType) {
+        Rule activeRule = null;
+        for (Rule rule : parkingSystemDTO.getRules()) {
+            activeRule = rule;
+        }
+        if (activeRule == null) {
+            return "Technical error";
+        }
         if (transactionPaymentType == CASH) {
-            Rule activeRule = null;
-            for (Rule rule : parkingSystemDTO.getRules()) {
-                activeRule = rule;
-            }
-            if (activeRule == null) {
-                return "Technical error";
-            }
             LocalTime now = LocalTime.now();
 //        LocalTime now = LocalTime.of(20, 0, 0);         use this as Time = 20:00
             LocalTime startTime = activeRule.getStartTime();
@@ -83,6 +83,7 @@ public class RuleService {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
             return "You can park until " + exitTime.format(formatter);
+
         } else return "This type of payment is not available";
 
     }
