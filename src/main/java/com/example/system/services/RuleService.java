@@ -1,15 +1,22 @@
 package com.example.system.services;
 
+import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.dto.RuleDTO;
+import com.example.system.entities.TransactionPaymentType;
 import com.example.system.entities.Rule;
 import com.example.system.repositories.RuleRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.example.system.entities.TransactionPaymentType.CASH;
 
 @Service
 public class RuleService {
@@ -49,4 +56,36 @@ public class RuleService {
         ruleDTO = modelMapper.map(rule, RuleDTO.class);
         return ruleDTO;
     }
+
+    public String getHoursForMoney(double money, ParkingSystemDTO parkingSystemDTO, TransactionPaymentType transactionPaymentType) {
+        Rule activeRule = null;
+        for (Rule rule : parkingSystemDTO.getRules()) {
+            activeRule = rule;
+        }
+        if (activeRule == null) {
+            return "Technical error";
+        }
+        if (transactionPaymentType == CASH) {
+            LocalTime now = LocalTime.now();
+//        LocalTime now = LocalTime.of(20, 0, 0);         use this as Time = 20:00
+            LocalTime startTime = activeRule.getStartTime();
+            LocalTime endTime = activeRule.getEndTime();
+
+            double costPerHour = activeRule.getCost();
+            double hours = money / costPerHour;
+            long minutes = (long) (hours * 60);
+            LocalTime exitTime = now.plusMinutes(minutes);
+            if (exitTime.isAfter(endTime)) {
+                Duration duration = Duration.between(endTime, exitTime);
+                long difference = duration.toMinutes();
+                exitTime = startTime.plusMinutes(difference);
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            return "You can park until " + exitTime.format(formatter);
+
+        } else return "This type of payment is not available";
+
+    }
+
 }

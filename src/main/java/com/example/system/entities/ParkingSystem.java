@@ -3,7 +3,6 @@ package com.example.system.entities;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -47,13 +46,13 @@ public class ParkingSystem {
     @JsonIgnoreProperties
     private List<Transactions> transactions;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "parking_system_rule",
             joinColumns = {@JoinColumn(name = "parking_system_id")},
             inverseJoinColumns = {@JoinColumn(name = "rule_id")}
     )
-    @JsonIgnore
+
     private List<Rule> rules;
 
     public enum workingStatus {

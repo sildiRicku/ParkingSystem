@@ -2,9 +2,12 @@ package com.example.system.dto;
 
 import com.example.system.entities.ParkingSystem.workingStatus;
 
+import com.example.system.entities.Rule;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,5 +27,6 @@ public class ParkingSystemDTO {
     private double totalMoney;
 
     private String firmwareVersion;
-
+    @JsonIgnore
+    private List<Rule> rules;
 }

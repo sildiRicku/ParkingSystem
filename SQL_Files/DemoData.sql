@@ -21,7 +21,7 @@ VALUES ('1', '1 euro/hour everyday', '20:00', 'R3', '08:00');
 INSERT INTO parkingdb.parking_system_rule(parking_system_id, rule_id)
 values ('1', '1');
 INSERT INTO parkingdb.parking_system_rule(parking_system_id, rule_id)
-values ('2', '2');
+values ('1', '2');
 INSERT INTO parkingdb.parking_system_rule(parking_system_id, rule_id)
 values ('2', '3');
 

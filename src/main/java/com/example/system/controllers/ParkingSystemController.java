@@ -1,7 +1,9 @@
 package com.example.system.controllers;
 
 import com.example.system.dto.ParkingSystemDTO;
+import com.example.system.entities.TransactionPaymentType;
 import com.example.system.services.ParkingSystemService;
+import com.example.system.services.RuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +17,12 @@ import java.util.Optional;
 public class ParkingSystemController {
 
     private final ParkingSystemService parkingSystemService;
+    private final RuleService ruleService;
 
     @Autowired
-    public ParkingSystemController(ParkingSystemService parkingSystemService) {
+    public ParkingSystemController(ParkingSystemService parkingSystemService, RuleService ruleService) {
         this.parkingSystemService = parkingSystemService;
+        this.ruleService = ruleService;
     }
 
     @GetMapping("/{id}")
@@ -29,7 +33,6 @@ public class ParkingSystemController {
             return parkingSystemDTO.get();
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-
 
     }
 
@@ -42,4 +45,16 @@ public class ParkingSystemController {
     public ParkingSystemDTO addParkingSystem(@RequestBody ParkingSystemDTO parkingSystemDTO) {
         return parkingSystemService.addParkingSystem(parkingSystemDTO);
     }
+
+    @GetMapping("/parking-time")
+    public String getHoursForMoney(@RequestParam("money") double money, @RequestParam("id") int parkingId, @RequestParam("transactionPaymentType") TransactionPaymentType transactionPaymentType) {
+        Optional<ParkingSystemDTO> parkingSystemDTO = parkingSystemService.getParkingSystemById(parkingId);
+        if (parkingSystemDTO.isEmpty()) {
+            return "Parking system with id " + parkingId + " is not found";
+        }
+        return ruleService.getHoursForMoney(money, parkingSystemDTO.get(), transactionPaymentType);
+
+    }
 }
+
+

@@ -21,7 +21,7 @@ public class Transactions {
     private int transId;
     @Enumerated(EnumType.STRING)
     @Column(name = "paymentType")
-    private PaymentType paymentType;
+    private TransactionPaymentType transactionPaymentType;
     @Column(name = "platenumber")
     private String plateNumber;
     @Temporal(TemporalType.DATE)
@@ -35,23 +35,8 @@ public class Transactions {
 
     @ManyToOne
     @JoinColumn(name = "parking_system_id", referencedColumnName = "systemId")
-
     @JsonIgnore
     private ParkingSystem parkingSystem;
 
-    private int ag;
 
-    public enum PaymentType {
-        CASH,
-        CARD,
-        MOBILE_WALLET
-    }
-
-    public enum TransactionStatus {
-        READY,
-        PROCESSING,
-        ERROR,
-        SUCCESS,
-        DONE
-    }
 }

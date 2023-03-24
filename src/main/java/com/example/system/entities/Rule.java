@@ -1,13 +1,13 @@
 package com.example.system.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -29,11 +29,11 @@ public class Rule {
     @Column(name = "cost")
     private double cost;
     @Column(name = "start_time")
-    private Time startTime;
+    private LocalTime startTime;
     @Column(name = "end_time")
-    private Time endTime;
+    private LocalTime endTime;
 
     @OneToMany(mappedBy = "rule")
-    @JsonIgnoreProperties
+    @JsonIgnore
     private List<Period> periods;
 }
