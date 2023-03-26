@@ -91,10 +91,9 @@ public class RuleService {
             }
 
             LocalDateTime exitDateTime = LocalDateTime.now();
-            long totalSeconds = (long) (money / activeRule.getCost() * 3600);
             long secondsLeftInDay = Duration.between(exitDateTime.toLocalTime(), LocalTime.MAX).getSeconds();
-            long secondsLeft = totalSeconds % (24 * 3600);
-            long daysToAdd = (totalSeconds - secondsLeft + secondsLeftInDay) / (24 * 3600);
+            long secondsLeft = seconds % (24 * 3600);
+            long daysToAdd = (seconds - secondsLeft + secondsLeftInDay) / (24 * 3600);
 
             exitDateTime = exitDateTime.plusDays(daysToAdd);
             if (exitTime.isBefore(now)) {
