@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -63,29 +64,49 @@ public class RuleService {
             activeRule = rule;
         }
         if (activeRule == null) {
-            return "Technical error";
+            return null;
         }
         if (transactionPaymentType == CASH) {
             LocalTime now = LocalTime.now();
-//        LocalTime now = LocalTime.of(20, 0, 0);         use this as Time = 20:00
             LocalTime startTime = activeRule.getStartTime();
             LocalTime endTime = activeRule.getEndTime();
+            LocalTime midnight = LocalTime.of(0, 0, 0);
 
             double costPerHour = activeRule.getCost();
             double hours = money / costPerHour;
-            long minutes = (long) (hours * 60);
-            LocalTime exitTime = now.plusMinutes(minutes);
+            long seconds = (long) (hours * 3600);
+            LocalTime exitTime = now.plusSeconds(seconds);
+
+            if (exitTime.isAfter(midnight) && exitTime.isBefore(startTime)) {
+                Duration duration = Duration.between(midnight, exitTime);
+                Duration durationUntilMid = Duration.between(endTime, LocalTime.MAX);
+                long difference = duration.getSeconds();
+                long differenceUntilMid = durationUntilMid.getSeconds();
+                exitTime = startTime.plusSeconds(difference).plusSeconds(differenceUntilMid);
+            }
             if (exitTime.isAfter(endTime)) {
-                Duration duration = Duration.between(endTime, exitTime);
-                long difference = duration.toMinutes();
-                exitTime = startTime.plusMinutes(difference);
+                Duration duration1 = Duration.between(endTime, exitTime);
+                long difference = duration1.getSeconds();
+                exitTime = startTime.plusSeconds(difference);
             }
 
+            LocalDateTime exitDateTime = LocalDateTime.now();
+            long totalSeconds = (long) (money / activeRule.getCost() * 3600);
+            long secondsLeftInDay = Duration.between(exitDateTime.toLocalTime(), LocalTime.MAX).getSeconds();
+            long secondsLeft = totalSeconds % (24 * 3600);
+            long daysToAdd = (totalSeconds - secondsLeft + secondsLeftInDay) / (24 * 3600);
+
+            exitDateTime = exitDateTime.plusDays(daysToAdd);
+            if (exitTime.isBefore(now)) {
+                exitDateTime = exitDateTime.plusDays(1);
+            }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-            return "You can park until " + exitTime.format(formatter);
+            return "You can park until " + exitTime.format(formatter) + " of Date: " + exitDateTime.toLocalDate();
 
-        } else return "This type of payment is not available";
-
+        } else {
+            return "This payment type is not available";
+        }
     }
+
 
 }

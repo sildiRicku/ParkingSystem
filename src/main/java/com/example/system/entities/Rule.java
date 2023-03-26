@@ -30,6 +30,7 @@ public class Rule {
     private double cost;
     @Column(name = "start_time")
     private LocalTime startTime;
+
     @Column(name = "end_time")
     private LocalTime endTime;
 

@@ -1,7 +1,7 @@
 use parkingdb;
 #insert into parking system#
-INSERT INTO parkingdb.parking_system (address, firmware_version, first_install_date, last_update, total_money,
-                                      working_status)
+INSERT INTO parkingdb.parking_system(address, firmware_version, first_install_date, last_update, total_money,
+                                     working_status)
 VALUES ('City Center', '1.6', '2023-01-01', 'never', '1000', 'WORKING');
 INSERT INTO parkingdb.parking_system (address, firmware_version, first_install_date, last_update, total_money,
                                       working_status)
