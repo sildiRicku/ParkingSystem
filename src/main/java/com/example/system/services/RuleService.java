@@ -78,15 +78,15 @@ public class RuleService {
             LocalTime exitTime = now.plusSeconds(seconds);
 
             if (exitTime.isAfter(midnight) && exitTime.isBefore(startTime)) {
-                Duration duration = Duration.between(midnight, exitTime);
+                Duration durationAfterMid = Duration.between(midnight, exitTime);
                 Duration durationUntilMid = Duration.between(endTime, LocalTime.MAX);
-                long difference = duration.getSeconds();
+                long difference = durationAfterMid.getSeconds();
                 long differenceUntilMid = durationUntilMid.getSeconds();
                 exitTime = startTime.plusSeconds(difference).plusSeconds(differenceUntilMid);
             }
             if (exitTime.isAfter(endTime)) {
-                Duration duration1 = Duration.between(endTime, exitTime);
-                long difference = duration1.getSeconds();
+                Duration duration = Duration.between(endTime, exitTime);
+                long difference = duration.getSeconds();
                 exitTime = startTime.plusSeconds(difference);
             }
 
