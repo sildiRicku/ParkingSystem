@@ -92,7 +92,7 @@ public class RuleService {
 
             LocalDateTime exitDateTime = LocalDateTime.now();
             long secondsLeftInDay = Duration.between(exitDateTime.toLocalTime(), LocalTime.MAX).getSeconds();
-            long secondsLeft = seconds % (24 * 3600);
+            long secondsLeft = seconds % (24 * 3600); //seconds that do not complete a day
             long daysToAdd = (seconds - secondsLeft + secondsLeftInDay) / (24 * 3600);
 
             exitDateTime = exitDateTime.plusDays(daysToAdd);

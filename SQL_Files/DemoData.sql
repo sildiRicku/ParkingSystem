@@ -12,9 +12,9 @@ VALUES ('Main Street', '1.0', '2022-05-10', 'never', '1500', 'WORKING');
 INSERT INTO parkingdb.rule(cost, details, name)
 VALUES ('0', 'Free on Weekend', 'R1');
 INSERT INTO parkingdb.rule (cost, details, end_time, name, start_time)
-VALUES ('1', '1 euro/hour weekday', '20:00', 'R2', '08:00');
+VALUES ('1', 'Payment on Weekday', '20:00', 'R2', '08:00');
 INSERT INTO parkingdb.rule (cost, details, end_time, name, start_time)
-VALUES ('1', '1 euro/hour everyday', '20:00', 'R3', '08:00');
+VALUES ('1', 'Payment Everyday', '20:00', 'R3', '08:00');
 
 
 #assign rule to parking system#
