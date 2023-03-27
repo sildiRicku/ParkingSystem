@@ -90,21 +90,20 @@ public class RuleService {
                 exitTime = startTime.plusSeconds(difference);
             }
 
-//            LocalDateTime exitDateTime = LocalDateTime.now();
-//            long secondsLeftInDay = Duration.between(exitDateTime.toLocalTime(), LocalTime.MAX).getSeconds();
-//            long secondsLeft = seconds % (24 * 3600); //seconds that do not complete a day
-//            long daysToAdd = (seconds - secondsLeft + secondsLeftInDay) / (24 * 3600);
-//
-//            exitDateTime = exitDateTime.plusDays(daysToAdd);
-//            if (exitTime.isBefore(now)) {
-//                exitDateTime = exitDateTime.plusDays(1);
+            LocalDateTime exitDateTime = LocalDateTime.now();
+            long secondsLeftInDay = Duration.between(exitDateTime.toLocalTime(), LocalTime.MAX).getSeconds();
+            long secondsLeft = seconds % (24 * 3600); //seconds that do not complete a day
+            long daysToAdd = (seconds - secondsLeft + secondsLeftInDay) / (24 * 3600);
+
+            exitDateTime = exitDateTime.plusDays(daysToAdd);
+            if (exitTime.isBefore(now)) {
+                exitDateTime = exitDateTime.plusDays(1);
+
+            }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-            return "You can park until " + exitTime.format(formatter) /*+ " of Date: " + exitDateTime.toLocalDate()*/;
+            return "You can park until " + exitTime.format(formatter) + " of Date: " + exitDateTime.toLocalDate();
         } else {
             return "This payment type is not available";
         }
     }
 }
-
-
-//}
