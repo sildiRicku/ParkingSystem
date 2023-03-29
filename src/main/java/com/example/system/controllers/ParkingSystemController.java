@@ -47,14 +47,15 @@ public class ParkingSystemController {
     }
 
     @GetMapping("/parking-time")
-    public String getHoursForMoney(@RequestParam("money") double money, @RequestParam("id") int parkingId, @RequestParam("transactionPaymentType") TransactionPaymentType transactionPaymentType) {
+    public String getHoursForMoney(@RequestParam("money") double money, @RequestParam("id") int parkingId, @RequestParam("transactionPaymentType") TransactionPaymentType transactionPaymentType) throws IllegalArgumentException {
         Optional<ParkingSystemDTO> parkingSystemDTO = parkingSystemService.getParkingSystemById(parkingId);
         if (parkingSystemDTO.isEmpty()) {
             return "Parking system with id " + parkingId + " is not found";
         }
-        return ruleService.getHoursForMoney(money, parkingSystemDTO.get(), transactionPaymentType);
+        return ruleService.getExitTime(money, parkingSystemDTO.get(), transactionPaymentType);
 
     }
+
 }
 
 
