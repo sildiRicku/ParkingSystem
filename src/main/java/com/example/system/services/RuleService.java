@@ -81,7 +81,7 @@ public class RuleService {
             activeRule = rule;
         }
         if (activeRule == null) {
-            return null;
+            return "Error";
         }
         if (transactionPaymentType.equals(CASH)) {
             LocalDateTime now = LocalDateTime.now();
@@ -115,6 +115,8 @@ public class RuleService {
             return "You can park until: " + exitTime.toLocalTime().format(formatter) + " of Date: " + exitTime.toLocalDate();
         } else return "This payment type is not supported yet";
     }
+
+
 }
 
 
