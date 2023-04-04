@@ -4,7 +4,7 @@ import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.entities.Rule;
 import com.example.system.entities.TransactionPaymentType;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -13,11 +13,12 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RuleServiceTest {
+
+class RuleServiceTest {
 
 
     @Test
-    public void testCalculateDailyCost() {
+    void testCalculateDailyCost() {
 
         RuleService ruleService = mock(RuleService.class);
 
@@ -36,4 +37,27 @@ public class RuleServiceTest {
         assertEquals(90.0, dailyCost);
 
     }
+
+    @Test
+    void getExitTime() {
+
+        RuleService ruleService = mock(RuleService.class);
+        ParkingSystemDTO parkingSystemDTO = mock(ParkingSystemDTO.class);
+        Rule rule = mock(Rule.class);
+
+        List<Rule> rules = new ArrayList<>();
+        rules.add(rule);
+        when(parkingSystemDTO.getRules()).thenReturn(rules);
+
+
+        when(rule.getStartTime()).thenReturn(LocalTime.of(8, 0));
+        when(rule.getEndTime()).thenReturn(LocalTime.of(20, 0));
+        when(rule.getCost()).thenReturn(1.0);
+
+        when(ruleService.calculateDailyCost(parkingSystemDTO)).thenReturn(12.0);
+        String exitTime = ruleService.getExitTime(12.0, parkingSystemDTO, TransactionPaymentType.CASH);
+
+        assertEquals("You can park until: 08:00:00 of Date: 2023-04-04", exitTime);
+    }
+
 }
