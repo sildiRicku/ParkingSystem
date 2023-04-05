@@ -4,6 +4,7 @@ import com.example.system.entities.ParkingSystem.workingStatus;
 
 import com.example.system.entities.Rule;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+
 public class ParkingSystemDTO {
     private int id;
 
