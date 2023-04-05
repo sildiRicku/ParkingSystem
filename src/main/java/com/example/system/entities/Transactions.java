@@ -16,7 +16,8 @@ import java.util.Date;
 @Setter
 public class Transactions {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "seq_transactionId", sequenceName = "seq_transactionId", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_transactionId")
 
     private int transId;
     @Enumerated(EnumType.STRING)

@@ -17,9 +17,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ParkingSystem {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "parking_system_seq", sequenceName = "parking_system_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "parking_system_seq")
 
     private int systemId;
 
