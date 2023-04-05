@@ -16,12 +16,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+
 public class ParkingSystem {
     @Id
-    @SequenceGenerator(name = "parking_system_seq", sequenceName = "parking_system_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "parking_system_seq")
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int systemId;
+
+    @Column(name = "unique_identifier", unique = true, length = 12, nullable = false)
+    private String identifier;
 
     @Column(name = "address")
     private String address;

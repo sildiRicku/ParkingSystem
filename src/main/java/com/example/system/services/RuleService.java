@@ -84,8 +84,8 @@ public class RuleService {
             return "Error";
         }
         if (transactionPaymentType.equals(CASH)) {
-//            LocalDateTime now = LocalDateTime.now();
-            LocalDateTime now = LocalDateTime.of(2023, 04, 5, 0, 0, 1); //USE THIS AS OPTIONAL DATE TIME
+            LocalDateTime now = LocalDateTime.now();
+//            LocalDateTime now = LocalDateTime.of(2023, 04, 5, 0, 0, 1); //USE THIS AS OPTIONAL DATE TIME
             double dailyCost = calculateDailyCost(parkingSystemDTO);
             int daysToAdd = (int) (money / dailyCost);
             double secondsRemaining = (money % dailyCost) * 3600;

@@ -19,11 +19,11 @@ import java.util.List;
 public class Rule {
 
     @Id
-    @SequenceGenerator(name = "seq_ruleId", sequenceName = "seq_ruleId", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_ruleId")
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private int ruleId;
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "details")
     private String details;
