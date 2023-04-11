@@ -16,8 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Holiday {
     @Id
-    @SequenceGenerator(name = "seq_holidayId", sequenceName = "seq_holidayId", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_holidayId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private int holidayId;
     @Column(name = "holiday_name")

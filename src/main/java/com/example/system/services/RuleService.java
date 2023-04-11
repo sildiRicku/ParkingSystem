@@ -59,64 +59,61 @@ public class RuleService {
         return ruleDTO;
     }
 
-
-    public double calculateDailyCost(ParkingSystemDTO parkingSystemDTO) throws IllegalArgumentException {
-        Rule activeRule = null;
-        for (Rule rule : parkingSystemDTO.getRules()) {
-            activeRule = rule;
-        }
-        if (activeRule == null) {
-            throw new IllegalArgumentException("No rule here");
-        }
+    public double calculateDailyCost(Rule activeRule) {
         LocalTime startTime = activeRule.getStartTime();
         LocalTime endTime = activeRule.getEndTime();
         double hoursAvailable = Duration.between(startTime, endTime).toHours();
         return activeRule.getCost() * hoursAvailable;
     }
 
+    public int calculateDaysToAdd(double money, double dailyCost) {
+        return (int) (money / dailyCost);
+    }
 
-    public String getExitTime(double money, ParkingSystemDTO parkingSystemDTO, TransactionPaymentType transactionPaymentType) throws IllegalArgumentException {
-        Rule activeRule = null;
-        for (Rule rule : parkingSystemDTO.getRules()) {
-            activeRule = rule;
+    public LocalDateTime calculateExitTime(LocalDateTime now, Rule activeRule, int daysToAdd, double secondsRemaining) {
+        LocalDateTime exitTime = now.plusDays(daysToAdd).plusSeconds((long) secondsRemaining);
+        LocalTime ruleStartTime = activeRule.getStartTime();
+        LocalTime ruleEndTime = activeRule.getEndTime();
+
+        if (now.toLocalTime().isAfter(ruleEndTime) && now.toLocalTime().isBefore(LocalTime.MAX)) {
+            Duration durationUntilExitTime = Duration.between(now.toLocalTime(), exitTime.toLocalTime());
+            exitTime = ruleStartTime.atDate(exitTime.toLocalDate()).plusDays(1).plus(durationUntilExitTime);
         }
+        if (now.toLocalTime().isBefore(ruleEndTime) && exitTime.toLocalTime().isAfter(ruleEndTime)) {
+            Duration duration = Duration.between(activeRule.getEndTime(), exitTime.toLocalTime());
+            exitTime = ruleStartTime.atDate(exitTime.toLocalDate()).plusDays(1).plus(duration);
+        }
+
+        if (now.toLocalTime().isBefore(LocalTime.MAX) && now.toLocalTime().isAfter(ruleStartTime) && exitTime.toLocalTime().isBefore(ruleStartTime) && exitTime.toLocalTime().isAfter(LocalTime.MIDNIGHT)) {
+            Duration durationAfterMid = Duration.between(LocalTime.MIDNIGHT, exitTime.toLocalTime());
+            Duration durationUntilMid = Duration.between(ruleEndTime, LocalTime.MIDNIGHT);
+            exitTime = ruleStartTime.atDate(exitTime.toLocalDate()).plusDays(1).plus(durationAfterMid).plus(durationUntilMid);
+        }
+
+        if (now.toLocalTime().isAfter(LocalTime.MIDNIGHT) && now.toLocalTime().isBefore(ruleStartTime)) {
+            Duration duration = Duration.between(now.toLocalTime(), exitTime.toLocalTime());
+            exitTime = ruleStartTime.atDate(exitTime.toLocalDate()).plus(duration);
+        }
+        return exitTime;
+    }
+
+    public String getExitTime(LocalDateTime now, double money, String plateNumber, ParkingSystemDTO parkingSystemDTO, TransactionPaymentType transactionPaymentType) {
+        Rule activeRule = parkingSystemDTO.getRules().stream().findFirst().orElse(null);
+
         if (activeRule == null) {
             return "Error";
         }
+
+        double dailyCost = calculateDailyCost(activeRule);
+        int daysToAdd = calculateDaysToAdd(money, dailyCost);
+        double secondsRemaining = (money % dailyCost) * 3600;
+        LocalDateTime exitTime = calculateExitTime(now, activeRule, daysToAdd, secondsRemaining);
+
         if (transactionPaymentType.equals(CASH)) {
-            LocalDateTime now = LocalDateTime.now();
-//            LocalDateTime now = LocalDateTime.of(2023, 04, 5, 0, 0, 1); //USE THIS AS OPTIONAL DATE TIME
-            double dailyCost = calculateDailyCost(parkingSystemDTO);
-            int daysToAdd = (int) (money / dailyCost);
-            double secondsRemaining = (money % dailyCost) * 3600;
-            LocalDateTime exitTime = now.plusDays(daysToAdd).plusSeconds((long) secondsRemaining);
-
-            if (now.toLocalTime().isAfter(activeRule.getEndTime()) && now.toLocalTime().isBefore(LocalTime.MAX)) {
-                Duration durationUntilExitTime = Duration.between(now.toLocalTime(), exitTime.toLocalTime());
-                exitTime = activeRule.getStartTime().atDate(exitTime.toLocalDate()).plusDays(1).plus(durationUntilExitTime);
-            }
-            if (now.toLocalTime().isBefore(activeRule.getEndTime()) && exitTime.toLocalTime().isAfter(activeRule.getEndTime())) {
-                Duration duration = Duration.between(activeRule.getEndTime(), exitTime.toLocalTime());
-                exitTime = activeRule.getStartTime().atDate(exitTime.toLocalDate()).plusDays(1).plus(duration);
-            }
-
-            if (now.toLocalTime().isBefore(LocalTime.MAX) && now.toLocalTime().isAfter(activeRule.getStartTime()) && exitTime.toLocalTime().isBefore(activeRule.getStartTime()) && exitTime.toLocalTime().isAfter(LocalTime.MIDNIGHT)) {
-                Duration durationAfterMid = Duration.between(LocalTime.MIDNIGHT, exitTime.toLocalTime());
-                Duration durationUntilMid = Duration.between(activeRule.getEndTime(), LocalTime.MIDNIGHT);
-                exitTime = activeRule.getStartTime().atDate(exitTime.toLocalDate()).plusDays(1).plus(durationAfterMid).plus(durationUntilMid);
-            }
-
-            if (now.toLocalTime().isAfter(LocalTime.MIDNIGHT) && now.toLocalTime().isBefore(activeRule.getStartTime())) {
-                Duration duration = Duration.between(now.toLocalTime(), exitTime.toLocalTime());
-                exitTime = activeRule.getStartTime().atDate(exitTime.toLocalDate()).plus(duration);
-            }
-
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-            return "You can park until: " + exitTime.toLocalTime().format(formatter) + " of Date: " + exitTime.toLocalDate();
-        } else return "This payment type is not supported yet";
+            return "Vehicle with plate number: " + plateNumber + " can park until: " + exitTime.toLocalTime().format(formatter) + " of Date: " + exitTime.toLocalDate();
+        } else {
+            return "This payment type is not supported yet";
+        }
     }
-
-
 }
-
-

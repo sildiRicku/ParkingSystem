@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,12 +48,16 @@ public class ParkingSystemController {
     }
 
     @GetMapping("/parking-time")
-    public String getHoursForMoney(@RequestParam("money") double money, @RequestParam("id") int parkingId, @RequestParam("transactionPaymentType") TransactionPaymentType transactionPaymentType) throws IllegalArgumentException {
+    public String getHoursForMoney(@RequestParam(value = "dateTime", required = false, defaultValue = "${date.now}") LocalDateTime dateTime,
+                                   @RequestParam("money") double money,
+                                   @RequestParam("plateNumber") String plateNumber,
+                                   @RequestParam("id") int parkingId,
+                                   @RequestParam("transactionPaymentType") TransactionPaymentType transactionPaymentType) throws IllegalArgumentException {
         Optional<ParkingSystemDTO> parkingSystemDTO = parkingSystemService.getParkingSystemById(parkingId);
         if (parkingSystemDTO.isEmpty()) {
             return "Parking system with id " + parkingId + " is not found";
         }
-        return ruleService.getExitTime(money, parkingSystemDTO.get(), transactionPaymentType);
+        return ruleService.getExitTime(dateTime, money, plateNumber, parkingSystemDTO.get(), transactionPaymentType);
 
     }
 
