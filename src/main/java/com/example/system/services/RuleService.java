@@ -66,10 +66,6 @@ public class RuleService {
         return activeRule.getCost() * hoursAvailable;
     }
 
-    public int calculateDaysToAdd(double money, double dailyCost) {
-        return (int) (money / dailyCost);
-    }
-
     public LocalDateTime calculateExitTime(LocalDateTime now, Rule activeRule, int daysToAdd, double secondsRemaining) {
         LocalDateTime exitTime = now.plusDays(daysToAdd).plusSeconds((long) secondsRemaining);
         LocalTime ruleStartTime = activeRule.getStartTime();
@@ -105,7 +101,7 @@ public class RuleService {
         }
 
         double dailyCost = calculateDailyCost(activeRule);
-        int daysToAdd = calculateDaysToAdd(money, dailyCost);
+        int daysToAdd = (int) (money / dailyCost);
         double secondsRemaining = (money % dailyCost) * 3600;
         LocalDateTime exitTime = calculateExitTime(now, activeRule, daysToAdd, secondsRemaining);
 
