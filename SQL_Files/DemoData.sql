@@ -22,13 +22,13 @@ VALUES ('1', 'Payment Everyday', '20:00', 'R3', '08:00');
 
 #assign rule to parking system#
 INSERT INTO parkingdb.parking_system_rule(parking_system_id, rule_id)
-values ((SELECT system_id FROM parking_system WHERE unique_identifier = 'PSYSTEM001'),
+VALUES ((SELECT system_id FROM parking_system WHERE unique_identifier = 'PSYSTEM001'),
         (SELECT rule_id FROM rule WHERE name = 'R1'));
 INSERT INTO parkingdb.parking_system_rule(parking_system_id, rule_id)
-values ((SELECT system_id FROM parking_system WHERE unique_identifier = 'PSYSTEM001'),
+VALUES ((SELECT system_id FROM parking_system WHERE unique_identifier = 'PSYSTEM001'),
         (SELECT rule_id FROM rule WHERE name = 'R2'));
 INSERT INTO parkingdb.parking_system_rule(parking_system_id, rule_id)
-values ((SELECT system_id FROM parking_system WHERE unique_identifier = 'PSYSTEM002'),
+VALUES ((SELECT system_id FROM parking_system WHERE unique_identifier = 'PSYSTEM002'),
         (SELECT rule_id FROM rule WHERE name = 'R3'));
 
 #assign period to rule#
