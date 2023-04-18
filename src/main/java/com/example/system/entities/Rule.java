@@ -19,11 +19,10 @@ import java.util.List;
 public class Rule {
 
     @Id
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private int ruleId;
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
     @Column(name = "details")
     private String details;
