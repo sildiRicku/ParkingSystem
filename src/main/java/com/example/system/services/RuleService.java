@@ -93,7 +93,7 @@ public class RuleService {
         Rule activeRule = parkingSystemDTO.getRules().stream().findFirst().orElse(null);
 
         if (activeRule == null) {
-            return null;
+            throw new NullPointerException("No Rule for parking system");
         }
 
         double dailyCost = calculateDailyCost(activeRule);
@@ -103,7 +103,8 @@ public class RuleService {
         if (transactionPaymentType.equals(CASH)) {
             return new ParkingResponse(plateNumber, exitTime);
         } else {
-            return null;
+            throw new IllegalArgumentException("This payment type is not available yet");
+
         }
     }
 }

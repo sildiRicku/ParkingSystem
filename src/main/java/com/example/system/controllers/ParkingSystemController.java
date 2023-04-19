@@ -54,9 +54,12 @@ public class ParkingSystemController {
                                             @RequestParam("plateNumber") String plateNumber,
                                             @RequestParam("id") int parkingId,
                                             @RequestParam("transactionPaymentType") TransactionPaymentType transactionPaymentType) throws IllegalArgumentException {
+        if (money < 0) {
+            throw new IllegalArgumentException("Cannot use negative numbers");
+        }
         Optional<ParkingSystemDTO> parkingSystemDTO = parkingSystemService.getParkingSystemById(parkingId);
         if (parkingSystemDTO.isEmpty()) {
-            return null;
+            throw new NullPointerException("Could not find parking system");
         }
         return ruleService.getExitTime(dateTime, money, plateNumber, parkingSystemDTO.get(), transactionPaymentType);
 
