@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,7 @@ import static com.example.system.entities.TransactionPaymentType.*;
 
 @Service
 public class RuleService {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     private final RuleRepo ruleRepo;
     private final ModelMapper modelMapper;
 
@@ -103,7 +105,7 @@ public class RuleService {
         double secondsRemaining = (money % dailyCost) * 3600;
         LocalDateTime exitTime = calculateExitTime(now, activeRule, daysToAdd, secondsRemaining);
         if (transactionPaymentType.equals(CASH)) {
-            return new ParkingResponse(plateNumber, exitTime);
+            return new ParkingResponse(plateNumber, exitTime.format(formatter));
         } else {
             throw new InvalidArgument("Sorry, this payment type is not available yet");
 
