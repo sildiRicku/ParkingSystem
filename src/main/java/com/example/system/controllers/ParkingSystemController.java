@@ -3,6 +3,8 @@ package com.example.system.controllers;
 import com.example.system.classes.ParkingResponse;
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.entities.TransactionPaymentType;
+import com.example.system.exceptionhandlers.InvalidArgument;
+import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.services.ParkingSystemService;
 import com.example.system.services.RuleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,11 +57,11 @@ public class ParkingSystemController {
                                             @RequestParam("id") int parkingId,
                                             @RequestParam("transactionPaymentType") TransactionPaymentType transactionPaymentType) throws IllegalArgumentException {
         if (money < 0) {
-            throw new IllegalArgumentException("Cannot use negative numbers");
+            throw new InvalidArgument("You cannot use a negative money value");
         }
         Optional<ParkingSystemDTO> parkingSystemDTO = parkingSystemService.getParkingSystemById(parkingId);
         if (parkingSystemDTO.isEmpty()) {
-            throw new NullPointerException("Could not find parking system");
+            throw new NotFoundException("Parking system with id: " + parkingId + "  not found");
         }
         return ruleService.getExitTime(dateTime, money, plateNumber, parkingSystemDTO.get(), transactionPaymentType);
 

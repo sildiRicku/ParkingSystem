@@ -5,6 +5,8 @@ import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.dto.RuleDTO;
 import com.example.system.entities.Rule;
 import com.example.system.entities.TransactionPaymentType;
+import com.example.system.exceptionhandlers.InvalidArgument;
+import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.repositories.RuleRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +95,7 @@ public class RuleService {
         Rule activeRule = parkingSystemDTO.getRules().stream().findFirst().orElse(null);
 
         if (activeRule == null) {
-            throw new NullPointerException("No Rule for parking system");
+            throw new NotFoundException("This parking system does not have any rule applied ");
         }
 
         double dailyCost = calculateDailyCost(activeRule);
@@ -103,7 +105,7 @@ public class RuleService {
         if (transactionPaymentType.equals(CASH)) {
             return new ParkingResponse(plateNumber, exitTime);
         } else {
-            throw new IllegalArgumentException("This payment type is not available yet");
+            throw new InvalidArgument("Sorry, this payment type is not available yet");
 
         }
     }
