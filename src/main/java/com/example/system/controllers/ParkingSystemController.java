@@ -1,5 +1,6 @@
 package com.example.system.controllers;
 
+import com.example.system.classes.ParkingResponse;
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.entities.TransactionPaymentType;
 import com.example.system.services.ParkingSystemService;
@@ -48,14 +49,17 @@ public class ParkingSystemController {
     }
 
     @GetMapping("/parking-time")
-    public String getHoursForMoney(@RequestParam(value = "dateTime", required = false, defaultValue = "${date.now}") LocalDateTime dateTime,
-                                   @RequestParam("money") double money,
-                                   @RequestParam("plateNumber") String plateNumber,
-                                   @RequestParam("id") int parkingId,
-                                   @RequestParam("transactionPaymentType") TransactionPaymentType transactionPaymentType) throws IllegalArgumentException {
+    public ParkingResponse getHoursForMoney(@RequestParam(value = "dateTime", required = false, defaultValue = "${date.now}") LocalDateTime dateTime,
+                                            @RequestParam("money") double money,
+                                            @RequestParam("plateNumber") String plateNumber,
+                                            @RequestParam("id") int parkingId,
+                                            @RequestParam("transactionPaymentType") TransactionPaymentType transactionPaymentType) throws IllegalArgumentException {
+        if (money < 0) {
+            throw new IllegalArgumentException("Cannot use negative numbers");
+        }
         Optional<ParkingSystemDTO> parkingSystemDTO = parkingSystemService.getParkingSystemById(parkingId);
         if (parkingSystemDTO.isEmpty()) {
-            return "Parking system with id " + parkingId + " is not found";
+            throw new NullPointerException("Could not find parking system");
         }
         return ruleService.getExitTime(dateTime, money, plateNumber, parkingSystemDTO.get(), transactionPaymentType);
 
