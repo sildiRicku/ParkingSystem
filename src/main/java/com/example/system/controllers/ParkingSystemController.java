@@ -51,11 +51,11 @@ public class ParkingSystemController {
     }
 
     @GetMapping("/parking-time")
-    public ParkingResponse getHoursForMoney(@RequestParam(value = "dateTime", required = false, defaultValue = "${date.now}") LocalDateTime dateTime,
-                                            @RequestParam("money") double money,
-                                            @RequestParam("plateNumber") String plateNumber,
-                                            @RequestParam("id") int parkingId,
-                                            @RequestParam("transactionPaymentType") TransactionPaymentType transactionPaymentType) throws IllegalArgumentException {
+    public ParkingResponse getExitTime(@RequestParam(value = "dateTime", required = false, defaultValue = "${date.now}") LocalDateTime dateTime,
+                                       @RequestParam("money") double money,
+                                       @RequestParam("plateNumber") String plateNumber,
+                                       @RequestParam("id") int parkingId,
+                                       @RequestParam("transactionPaymentType") TransactionPaymentType transactionPaymentType) throws IllegalArgumentException {
         if (money < 0) {
             throw new InvalidArgument("You cannot use a negative money value");
         }
