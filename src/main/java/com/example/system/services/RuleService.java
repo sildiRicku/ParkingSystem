@@ -5,8 +5,7 @@ import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.dto.RuleDTO;
 import com.example.system.entities.Rule;
 import com.example.system.entities.TransactionPaymentType;
-import com.example.system.exceptionhandlers.InvalidArgument;
-import com.example.system.exceptionhandlers.NotFoundException;
+import com.example.system.exceptionhandlers.*;
 import com.example.system.repositories.RuleRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,33 +76,20 @@ public class RuleService {
     }
 
     public boolean timeIsInsideInterval(LocalDateTime time, Rule rule) {
-        if (time.toLocalTime().isAfter(rule.getStartTime().minusNanos(1)) && time.toLocalTime().isBefore(rule.getEndTime().plusNanos(1))) {
-            return true;
-        }
-        return false;
+
+        return (time.toLocalTime().isAfter(rule.getStartTime().minusNanos(1)) && time.toLocalTime().isBefore(rule.getEndTime().plusNanos(1)));
+
     }
 
     public LocalDateTime calculateExitTime(LocalDateTime now, List<Rule> activeRules, int daysToAdd, double secondsRemaining) {
-        LocalDateTime exitTime = now.plusDays(daysToAdd).plusSeconds((long) secondsRemaining);
-
-        for (Rule activeRule : activeRules) {
-            LocalTime ruleStartTime = activeRule.getStartTime();
-            LocalTime ruleEndTime = activeRule.getEndTime();
-            boolean isInsideInterval = timeIsInsideInterval(now, activeRule);
-
-            if (now.toLocalTime().isAfter(ruleEndTime)) {
-                Duration durationUntilExitTime = Duration.between(now.toLocalTime(), exitTime.toLocalTime());
-                exitTime = ruleStartTime.atDate(exitTime.toLocalDate()).plusDays(1).plus(durationUntilExitTime);
-            } else if (now.toLocalTime().isBefore(ruleStartTime)) {
-                Duration duration = Duration.between(now.toLocalTime(), exitTime.toLocalTime());
-                exitTime = ruleStartTime.atDate(exitTime.toLocalDate()).plus(duration);
-            } else if (now.toLocalTime().isBefore(ruleEndTime) && exitTime.toLocalTime().isAfter(ruleEndTime)) {
-                Duration duration = Duration.between(ruleEndTime, exitTime.toLocalTime());
-                exitTime = ruleStartTime.atDate(exitTime.toLocalDate()).plusDays(1).plus(duration);
-            } else if (now.toLocalTime().isAfter(ruleStartTime) && exitTime.toLocalTime().isBefore(ruleStartTime)) {
-                Duration durationAfterMid = Duration.between(LocalTime.MIDNIGHT, exitTime.toLocalTime());
-                Duration durationUntilMid = Duration.between(ruleEndTime, LocalTime.MIDNIGHT);
-                exitTime = ruleStartTime.atDate(exitTime.toLocalDate()).plusDays(1).plus(durationAfterMid).plus(durationUntilMid);
+        LocalDateTime exitTime = null;
+        for (Rule rule : activeRules) {
+            double cost;
+            if (timeIsInsideInterval(now, rule)) {
+                cost = rule.getCost();
+                double durationUntilEndTime = Duration.between(now.toLocalTime(), exitTime.toLocalTime()).toHours() / cost;
+                exitTime = now.plusHours((long) durationUntilEndTime);
+                return exitTime;
             }
         }
         return exitTime;
@@ -113,7 +99,7 @@ public class RuleService {
         List<Rule> activeRules = parkingSystemDTO.getRules();
 
         if (activeRules == null) {
-            throw new NotFoundException("This parking system does not have any rule applied ");
+            throw new NotFoundException("This parking system does not have any rule applied");
         }
 
         double dailyCost = calculateDailyCost(activeRules);
