@@ -89,7 +89,6 @@ public class RuleService {
                 cost = rule.getCost();
                 double durationUntilEndTime = Duration.between(now.toLocalTime(), exitTime.toLocalTime()).toHours() / cost;
                 exitTime = now.plusHours((long) durationUntilEndTime);
-                return exitTime;
             }
         }
         return exitTime;
