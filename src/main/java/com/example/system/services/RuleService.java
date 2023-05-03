@@ -5,6 +5,8 @@ import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.dto.RuleDTO;
 import com.example.system.entities.Rule;
 import com.example.system.entities.TransactionPaymentType;
+import com.example.system.exceptionhandlers.InvalidArgument;
+import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.repositories.RuleRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +25,7 @@ import static com.example.system.entities.TransactionPaymentType.*;
 
 @Service
 public class RuleService {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     private final RuleRepo ruleRepo;
     private final ModelMapper modelMapper;
 
@@ -93,7 +97,7 @@ public class RuleService {
         Rule activeRule = parkingSystemDTO.getRules().stream().findFirst().orElse(null);
 
         if (activeRule == null) {
-            throw new NullPointerException("No Rule for parking system");
+            throw new NotFoundException("This parking system does not have any rule applied ");
         }
 
         double dailyCost = calculateDailyCost(activeRule);
@@ -101,9 +105,9 @@ public class RuleService {
         double secondsRemaining = (money % dailyCost) * 3600;
         LocalDateTime exitTime = calculateExitTime(now, activeRule, daysToAdd, secondsRemaining);
         if (transactionPaymentType.equals(CASH)) {
-            return new ParkingResponse(plateNumber, exitTime);
+            return new ParkingResponse(plateNumber, exitTime.format(formatter));
         } else {
-            throw new IllegalArgumentException("This payment type is not available yet");
+            throw new InvalidArgument("Sorry, this payment type is not available yet");
 
         }
     }
