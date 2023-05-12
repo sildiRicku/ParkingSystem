@@ -85,3 +85,4 @@ INSERT INTO parkingdb.period (day_number, period_id, rule_applied_id)
 VALUES ('2', '4', (SELECT rule_id FROM rule WHERE name = 'R4'));
 INSERT INTO parkingdb.period (day_number, period_id, rule_applied_id)
 VALUES ('1', '4', (SELECT rule_id FROM rule WHERE name = 'R4'));
+
