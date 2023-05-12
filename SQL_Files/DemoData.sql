@@ -14,6 +14,7 @@ INSERT INTO parkingdb.parking_system(address, firmware_version, first_install_da
 VALUES ('Downtown', '1.2', '2023-01-01', 'PSYSTEM003', 'never', '3000', 'WORKING');
 
 
+
 #insert into rule #
 INSERT INTO parkingdb.rule(cost, details, name)
 VALUES ('0', 'Free on Weekend', 'R1');
