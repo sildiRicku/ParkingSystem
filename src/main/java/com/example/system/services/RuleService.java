@@ -1,6 +1,6 @@
 package com.example.system.services;
 
-import com.example.system.classes.ParkingResponse;
+import com.example.system.helperclasses.ParkingResponse;
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.dto.RuleDTO;
 import com.example.system.entities.Rule;
@@ -111,23 +111,6 @@ public class RuleService {
 
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
