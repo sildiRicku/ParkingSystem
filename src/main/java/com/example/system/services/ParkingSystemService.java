@@ -3,7 +3,11 @@ package com.example.system.services;
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.entities.ParkingSystem;
 import com.example.system.entities.Rule;
+import com.example.system.entities.TransactionPaymentType;
+import com.example.system.exceptionhandlers.InvalidArgument;
+import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.helperclasses.MutableDouble;
+import com.example.system.helperclasses.ParkingResponse;
 import com.example.system.repositories.ParkingSystemRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +26,8 @@ import java.util.Optional;
 public class ParkingSystemService {
     private final ParkingSystemRepo parkingSystemRepo;
     private final ModelMapper modelMapper;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
 
     @Autowired
     public ParkingSystemService(ParkingSystemRepo parkingSystemRepo, ModelMapper modelMapper) {
@@ -96,8 +103,7 @@ public class ParkingSystemService {
 
         List<Rule> newRules = new ArrayList<>();
         for (Rule rule : rules) {
-            if (!(sameRangeTimes(rule.getStartTime(), rule.getEndTime(), LocalTime.MIN, LocalTime.NOON)
-                    || sameRangeTimes(rule.getStartTime(), rule.getEndTime(), LocalTime.NOON, LocalTime.MAX))) {
+            if (!(sameRangeTimes(rule.getStartTime(), rule.getEndTime(), LocalTime.MIN, LocalTime.NOON) || sameRangeTimes(rule.getStartTime(), rule.getEndTime(), LocalTime.NOON, LocalTime.MAX))) {
 
                 if (isBetween(rule.getStartTime(), LocalTime.MIN, LocalTime.NOON)) {
                     newRules.add(new Rule(rule.getCost(), rule.getStartTime(), LocalTime.NOON));
@@ -142,11 +148,14 @@ public class ParkingSystemService {
     }
 
 
-    public LocalDateTime getExitTime(ParkingSystemDTO parkingSystemDTO, MutableDouble money) {
+    public ParkingResponse getExitTime(LocalDateTime now, ParkingSystemDTO parkingSystemDTO, MutableDouble money, String plateNumber, TransactionPaymentType transactionPaymentType) {
         List<Rule> rules = parkingSystemDTO.getRules();
-        LocalDateTime now = LocalDateTime.now();
-
+        if (parkingSystemDTO.getRules() == null) {
+            throw new NotFoundException("This parking system has no rule ");
+        }
         LocalDateTime exittime = calExitTime(now, money, rules);
-        return exittime;
+        if (transactionPaymentType.equals(TransactionPaymentType.CASH)) {
+            return new ParkingResponse(plateNumber, exittime.format(formatter));
+        } else throw new InvalidArgument("Sorry, this payment type is not available yet");
     }
 }
