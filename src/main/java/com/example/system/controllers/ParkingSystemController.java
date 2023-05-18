@@ -1,6 +1,6 @@
 package com.example.system.controllers;
 
-import com.example.system.classes.ParkingResponse;
+import com.example.system.helperclasses.ParkingResponse;
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.entities.TransactionPaymentType;
 import com.example.system.exceptionhandlers.InvalidArgument;
