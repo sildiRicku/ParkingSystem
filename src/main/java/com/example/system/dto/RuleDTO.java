@@ -19,4 +19,10 @@ public class RuleDTO {
     private LocalTime startTime;
     private LocalTime endTime;
     private Period period;
+
+    public RuleDTO(double cost, LocalTime startTime, LocalTime endTime) {
+        this.cost = cost;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 }

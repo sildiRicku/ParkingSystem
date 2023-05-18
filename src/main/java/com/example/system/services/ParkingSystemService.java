@@ -59,7 +59,6 @@ public class ParkingSystemService {
 
     private LocalDateTime calulateRemainTimePerRule(LocalDateTime now, Rule rule, MutableDouble remainMoney) {
 
-
         if (rule.getCost() == 0) {
             double dif = Duration.between(now.toLocalTime(), rule.getEndTime()).toNanos();
             return roundToMinutes(now.plusNanos((long) dif));
@@ -83,7 +82,6 @@ public class ParkingSystemService {
             }
         }
 
-
     }
 
     private boolean isBetween(LocalTime myTime, LocalTime start, LocalTime end) {
@@ -94,8 +92,7 @@ public class ParkingSystemService {
         return isBetween(t1, start, end) && isBetween(t2, start, end);
     }
 
-
-    public LocalDateTime calExitTime(MutableDouble money, List<Rule> rules) {
+    public LocalDateTime calExitTime(LocalDateTime now, MutableDouble money, List<Rule> rules) {
 
         List<Rule> newRules = new ArrayList<>();
         for (Rule rule : rules) {
@@ -119,15 +116,18 @@ public class ParkingSystemService {
             }
         }
 
-        LocalDateTime now = LocalDateTime.now();
         boolean remainMoney = true;
         while (remainMoney) {
             for (Rule rule : newRules) {
-                now = calulateRemainTimePerRule(now, rule, money);
-                if (money.getValue() == 0) {
+                if (!((now.toLocalTime().equals(rule.getStartTime()) || now.toLocalTime().isAfter(rule.getStartTime())) && (now.toLocalTime().equals(rule.getEndTime()) || now.toLocalTime().isBefore(rule.getEndTime())))) {
+                    continue;
+                }
+                if (money.getValue() == 0 && rule.getCost() != 0) {
                     remainMoney = false;
                     break;
                 }
+                now = calulateRemainTimePerRule(now, rule, money);
+
             }
         }
 
@@ -141,10 +141,12 @@ public class ParkingSystemService {
         return time.withSecond(0).withNano(0);
     }
 
+
     public LocalDateTime getExitTime(ParkingSystemDTO parkingSystemDTO, MutableDouble money) {
         List<Rule> rules = parkingSystemDTO.getRules();
+        LocalDateTime now = LocalDateTime.now();
 
-        LocalDateTime exittime = calExitTime(money, rules);
+        LocalDateTime exittime = calExitTime(now, money, rules);
         return exittime;
     }
 }
