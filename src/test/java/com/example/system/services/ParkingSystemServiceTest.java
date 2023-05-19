@@ -100,6 +100,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -117,12 +118,31 @@ class ParkingSystemServiceTest {
     @InjectMocks
     private ParkingSystemService parkingSystemService;
 
-
+    @Mock
+    private MutableDouble money;
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
+    @Test
+    void testCalExitTime() {
+        LocalDateTime now = LocalDateTime.now();
+
+
+        List<Rule> rules = new ArrayList<>();
+        Rule rule1 = new Rule(10, LocalTime.of(8, 0), LocalTime.of(12, 0));
+        Rule rule2 = new Rule(20, LocalTime.of(12, 0), LocalTime.of(16, 0));
+        rules.add(rule1);
+        rules.add(rule2);
+
+        when(money.getValue()).thenReturn(50.0);
+
+        LocalDateTime exitTime = parkingSystemService.calExitTime(now, money, rules);
+
+        LocalDateTime expectedExitTime = now.plusHours(2);
+        assertEquals(expectedExitTime, exitTime);
+    }
     @Test
     void getExitTime_ReturnsParkingResponse() {
         LocalDateTime now = LocalDateTime.now();
