@@ -64,7 +64,7 @@ public class ParkingSystemService {
         return parkingSystemDTO;
     }
 
-    private LocalDateTime calulateRemainTimePerRule(LocalDateTime now, Rule rule, MutableDouble remainMoney) {
+    LocalDateTime calulateRemainTimePerRule(LocalDateTime now, Rule rule, MutableDouble remainMoney) {
 
         if (rule.getCost() == 0) {
             double dif = Duration.between(now.toLocalTime(), rule.getEndTime()).toNanos();
