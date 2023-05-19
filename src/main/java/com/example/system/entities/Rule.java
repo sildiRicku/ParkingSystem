@@ -37,4 +37,10 @@ public class Rule {
     @OneToMany(mappedBy = "rule")
     @JsonIgnore
     private List<Period> periods;
+
+    public Rule(double cost, LocalTime startTime, LocalTime endTime) {
+        this.cost = cost;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 }

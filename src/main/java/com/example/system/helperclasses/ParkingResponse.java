@@ -1,4 +1,4 @@
-package com.example.system.classes;
+package com.example.system.helperclasses;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
