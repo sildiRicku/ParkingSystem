@@ -5,20 +5,18 @@ import com.example.system.helperclasses.MutableDouble;
 import com.example.system.repositories.ParkingSystemRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class ParkingSystemServiceTest {
+class ParkingSystemServiceTest {
     @InjectMocks
     private ParkingSystemService parkingSystemService;
     @Mock
@@ -33,7 +31,6 @@ public class ParkingSystemServiceTest {
 
     @Test
     void testCalulateRemainTimePerRule() {
-        // Create mock objects
         Rule rule = mock(Rule.class);
         MutableDouble remainMoney = mock(MutableDouble.class);
 
@@ -56,33 +53,63 @@ public class ParkingSystemServiceTest {
         assertEquals(10.0, argumentCaptor.getValue());
     }
 
+
     @Test
-    void testCalExitTime() {
-        // Create mock objects
-        MutableDouble money = mock(MutableDouble.class);
-        Rule rule = mock(Rule.class);
+    void calExitTime_shouldReturnExpectedExitTime() {
+        // Arrange
+        LocalDateTime now = LocalDateTime.of(2023, 5, 19, 10, 0); // Set your test date and time
+        MutableDouble money = new MutableDouble(100.0); // Set initial money value
         List<Rule> rules = new ArrayList<>();
-        rules.add(rule);
+        Rule r1 = new Rule();
+        r1.setCost(1);
+        r1.setDetails("R1");
+        r1.setName("R1");
+        r1.setStartTime(LocalTime.of(8, 0));
+        r1.setEndTime(LocalTime.of(20, 0));
 
-        // Set up the mock objects
-        LocalDateTime now = LocalDateTime.now();
-        when(money.getValue()).thenReturn(10.0);
-        when(rule.getCost()).thenReturn(5.0);
-        when(rule.getStartTime()).thenReturn(now.toLocalTime().minusHours(1));
-        when(rule.getEndTime()).thenReturn(now.toLocalTime().plusHours(1));
-
-        // Create an instance of the class under test
+        Rule r2 = new Rule();
+        r2.setCost(0.0);
+        r2.setDetails("R1");
+        r2.setName("R1");
+        r2.setStartTime(LocalTime.of(20, 0));
+        r2.setEndTime(LocalTime.of(8, 0));
+        rules.add(r2);
+        rules.add(r1);
         ParkingSystemService yourClass = new ParkingSystemService(parkingSystemRepo, modelMapper);
 
-        // Call the method
-        LocalDateTime result = yourClass.calExitTime(now, money, rules);
+        LocalDateTime exitTime = yourClass.calExitTime(now, money, rules);
 
-        // Verify the behavior and assertions
-        assertEquals(now.plusHours(1), result);
 
-        // Verify that the calulateRemainTimePerRule method was called with the correct arguments
-        verify(yourClass, atLeastOnce()).calulateRemainTimePerRule(any(), any(), any());
+        assertEquals(LocalDateTime.of(2023, 05, 27, 14, 0), exitTime);
     }
 
+    @Test
+    void calExitTime_shouldExitImmediatelyIfNoMoneyLeft() {
+        // Arrange
+        LocalDateTime now = LocalDateTime.of(2023, 5, 19, 10, 0);
+        MutableDouble money = new MutableDouble(0.0); // No money left
+        List<Rule> rules = new ArrayList<>();
+        Rule r1 = new Rule();
+        r1.setCost(1);
+        r1.setDetails("R1");
+        r1.setName("R1");
+        r1.setStartTime(LocalTime.of(8, 0));
+        r1.setEndTime(LocalTime.of(20, 0));
+
+        Rule r2 = new Rule();
+        r2.setCost(0.0);
+        r2.setDetails("R1");
+        r2.setName("R1");
+        r2.setStartTime(LocalTime.of(20, 0));
+        r2.setEndTime(LocalTime.of(8, 0));
+        rules.add(r2);
+        rules.add(r1);
+        ParkingSystemService yourClass = new ParkingSystemService(parkingSystemRepo, modelMapper);
+
+        LocalDateTime exitTime = yourClass.calExitTime(now, money, rules);
+
+        assertEquals(now, exitTime);
+    }
 }
+
 
