@@ -41,13 +41,10 @@ class ParkingSystemServiceTest {
         when(rule.getEndTime()).thenReturn(endTime.toLocalTime());
         when(remainMoney.getValue()).thenReturn(20.0);
 
-        // Call the method
         LocalDateTime result = parkingSystemService.calulateRemainTimePerRule(now, rule, remainMoney);
 
-        // Verify the behavior and assertions
         assertEquals(now.plusHours(1).withSecond(0).withNano(0), result);
 
-        // Verify that the remainMoney.setValue() method was called with the correct argument
         ArgumentCaptor<Double> argumentCaptor = ArgumentCaptor.forClass(Double.class);
         verify(remainMoney).setValue(argumentCaptor.capture());
         assertEquals(10.0, argumentCaptor.getValue());
@@ -56,7 +53,6 @@ class ParkingSystemServiceTest {
 
     @Test
     void calExitTime_shouldReturnExpectedExitTime() {
-        // Arrange
         LocalDateTime now = LocalDateTime.of(2023, 5, 19, 10, 0); // Set your test date and time
         MutableDouble money = new MutableDouble(100.0); // Set initial money value
         List<Rule> rules = new ArrayList<>();
@@ -85,7 +81,6 @@ class ParkingSystemServiceTest {
 
     @Test
     void calExitTime_shouldExitImmediatelyIfNoMoneyLeft() {
-        // Arrange
         LocalDateTime now = LocalDateTime.of(2023, 5, 19, 10, 0);
         MutableDouble money = new MutableDouble(0.0); // No money left
         List<Rule> rules = new ArrayList<>();
