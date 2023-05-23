@@ -3,6 +3,8 @@ package com.example.system.services;
 import com.example.system.entities.Rule;
 import com.example.system.helperclasses.MutableDouble;
 import com.example.system.repositories.ParkingSystemRepo;
+import com.example.system.serviceimplementations.ParkingSystemServiceImpl;
+import com.example.system.serviceimplementations.RuleCalculations;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -24,6 +26,7 @@ class ParkingSystemServiceTest {
     @Mock
     private ModelMapper modelMapper;
 
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -33,6 +36,8 @@ class ParkingSystemServiceTest {
     void testCalulateRemainTimePerRule() {
         Rule rule = mock(Rule.class);
         MutableDouble remainMoney = mock(MutableDouble.class);
+        RuleCalculations ruleCalculations = new RuleCalculations();
+
 
         // Set up the mock objects
         LocalDateTime now = LocalDateTime.now();
@@ -41,7 +46,7 @@ class ParkingSystemServiceTest {
         when(rule.getEndTime()).thenReturn(endTime.toLocalTime());
         when(remainMoney.getValue()).thenReturn(20.0);
 
-        LocalDateTime result = parkingSystemService.calulateRemainTimePerRule(now, rule, remainMoney);
+        LocalDateTime result = ruleCalculations.calculateRemainTimePerRule(now, rule, remainMoney);
 
         assertEquals(now.plusHours(1).withSecond(0).withNano(0), result);
 
@@ -71,9 +76,9 @@ class ParkingSystemServiceTest {
         r2.setEndTime(LocalTime.of(8, 0));
         rules.add(r2);
         rules.add(r1);
-        ParkingSystemService yourClass = new ParkingSystemService(parkingSystemRepo, modelMapper);
+        ParkingSystemServiceImpl implementation = new ParkingSystemServiceImpl();
 
-        LocalDateTime exitTime = yourClass.calExitTime(now, money, rules);
+        LocalDateTime exitTime = implementation.calculateExitTime(now, money, rules);
 
 
         assertEquals(LocalDateTime.of(2023, 05, 27, 14, 0), exitTime);
@@ -99,9 +104,9 @@ class ParkingSystemServiceTest {
         r2.setEndTime(LocalTime.of(8, 0));
         rules.add(r2);
         rules.add(r1);
-        ParkingSystemService yourClass = new ParkingSystemService(parkingSystemRepo, modelMapper);
+        ParkingSystemServiceImpl implementation = new ParkingSystemServiceImpl();
 
-        LocalDateTime exitTime = yourClass.calExitTime(now, money, rules);
+        LocalDateTime exitTime = implementation.calculateExitTime(now, money, rules);
 
         assertEquals(now, exitTime);
     }

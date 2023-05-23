@@ -9,14 +9,13 @@ import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.helperclasses.MutableDouble;
 import com.example.system.helperclasses.ParkingResponse;
 import com.example.system.repositories.ParkingSystemRepo;
+import com.example.system.serviceimplementations.ParkingSystemServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,98 +63,16 @@ public class ParkingSystemService {
         return parkingSystemDTO;
     }
 
-    LocalDateTime calulateRemainTimePerRule(LocalDateTime now, Rule rule, MutableDouble remainMoney) {
-
-        if (rule.getCost() == 0) {
-            double dif = Duration.between(now.toLocalTime(), rule.getEndTime()).toNanos();
-            return roundToMinutes(now.plusNanos((long) dif));
-        } else {
-            double nanoDiff = Duration.between(now.toLocalTime(), rule.getEndTime()).toNanos();
-            remainMoney.setValue(remainMoney.getValue() - (nanoDiff / 3600000000000.0) * rule.getCost());
-            if (remainMoney.getValue() < 0) {
-                long nanoToRemove = (long) ((remainMoney.getValue() * 3600000000000.0) / rule.getCost());
-                remainMoney.setValue(0.0);
-                now = now.plusNanos((long) nanoDiff + nanoToRemove);
-                if (now.toLocalTime().equals(LocalTime.MAX)) {
-                    now = LocalDateTime.of(now.toLocalDate(), LocalTime.MIN);
-                }
-                return roundToMinutes(now);
-            } else {
-                now = now.plusNanos((long) nanoDiff);
-                if (now.toLocalTime().equals(LocalTime.MAX)) {
-                    now = LocalDateTime.of(now.toLocalDate(), LocalTime.MIN);
-                }
-                return roundToMinutes(now);
-            }
-        }
-
-    }
-
-    private boolean isBetween(LocalTime myTime, LocalTime start, LocalTime end) {
-        return (myTime.equals(start) || myTime.isAfter(start)) && (myTime.equals(end) || myTime.isBefore(end));
-    }
-
-    private boolean sameRangeTimes(LocalTime t1, LocalTime t2, LocalTime start, LocalTime end) {
-        return isBetween(t1, start, end) && isBetween(t2, start, end);
-    }
-
-    public LocalDateTime calExitTime(LocalDateTime now, MutableDouble money, List<Rule> rules) {
-
-        List<Rule> newRules = new ArrayList<>();
-        for (Rule rule : rules) {
-            if (!(sameRangeTimes(rule.getStartTime(), rule.getEndTime(), LocalTime.MIN, LocalTime.NOON) || sameRangeTimes(rule.getStartTime(), rule.getEndTime(), LocalTime.NOON, LocalTime.MAX))) {
-
-                if (isBetween(rule.getStartTime(), LocalTime.MIN, LocalTime.NOON)) {
-                    newRules.add(new Rule(rule.getCost(), rule.getStartTime(), LocalTime.NOON));
-                } else {
-                    newRules.add(new Rule(rule.getCost(), rule.getStartTime(), LocalTime.MAX));
-                }
-
-                if (isBetween(rule.getEndTime(), LocalTime.MIN, LocalTime.NOON)) {
-                    newRules.add(new Rule(rule.getCost(), LocalTime.MIN, rule.getEndTime()));
-                } else {
-                    newRules.add(new Rule(rule.getCost(), LocalTime.NOON, rule.getEndTime()));
-                }
-
-            } else {
-                newRules.add(rule);
-            }
-        }
-
-        boolean remainMoney = true;
-        while (remainMoney) {
-            for (Rule rule : newRules) {
-                if (!((now.toLocalTime().equals(rule.getStartTime()) || now.toLocalTime().isAfter(rule.getStartTime())) && (now.toLocalTime().equals(rule.getEndTime()) || now.toLocalTime().isBefore(rule.getEndTime())))) {
-                    continue;
-                }
-                if (money.getValue() == 0 && rule.getCost() != 0) {
-                    remainMoney = false;
-                    break;
-                }
-                now = calulateRemainTimePerRule(now, rule, money);
-
-            }
-        }
-
-        return now;
-    }
-
-    private LocalDateTime roundToMinutes(LocalDateTime time) {
-        if (time.getSecond() >= 30 && time.getMinute() == 59) {
-            time = time.plusMinutes(1);
-        }
-        return time.withSecond(0).withNano(0);
-    }
-
 
     public ParkingResponse getExitTime(LocalDateTime now, ParkingSystemDTO parkingSystemDTO, MutableDouble money, String plateNumber, TransactionPaymentType transactionPaymentType) {
         List<Rule> rules = parkingSystemDTO.getRules();
+        ParkingSystemServiceImpl implementation = new ParkingSystemServiceImpl();
         if (parkingSystemDTO.getRules() == null) {
             throw new NotFoundException("This parking system has no rule ");
         }
-        LocalDateTime exittime = calExitTime(now, money, rules);
+        LocalDateTime exitTime = implementation.calculateExitTime(now, money, rules);
         if (transactionPaymentType.equals(TransactionPaymentType.CASH)) {
-            return new ParkingResponse(plateNumber, exittime.format(formatter));
+            return new ParkingResponse(plateNumber, exitTime.format(formatter));
         } else throw new InvalidArgument("Sorry, this payment type is not available yet");
     }
 }
