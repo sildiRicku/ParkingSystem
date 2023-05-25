@@ -7,6 +7,11 @@ import com.example.system.helperclasses.MutableDouble;
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.helperclasses.ParkingResponse;
 import com.example.system.services.ParkingSystemService;
+import org.springframework.batch.core.*;
+import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +27,11 @@ public class ParkingSystemController {
 
     private final ParkingSystemService parkingSystemService;
 
+
     @Autowired
     public ParkingSystemController(ParkingSystemService parkingSystemService) {
         this.parkingSystemService = parkingSystemService;
+
     }
 
     @GetMapping("/{id}")
@@ -65,6 +72,7 @@ public class ParkingSystemController {
         return parkingSystemService.getExitTime(dateTime, parkingSystem.get(), moneyObject, platenumber, transactionPaymentType);
 
     }
+
 
 }
 
