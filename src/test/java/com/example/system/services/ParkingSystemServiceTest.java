@@ -4,7 +4,7 @@ import com.example.system.entities.Rule;
 import com.example.system.helperclasses.MutableDouble;
 import com.example.system.repositories.ParkingSystemRepo;
 import com.example.system.serviceimplementations.ParkingSystemServiceImpl;
-import com.example.system.serviceimplementations.RuleCalculations;
+import com.example.system.serviceimplementations.Calculations;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -36,7 +36,7 @@ class ParkingSystemServiceTest {
     void testCalulateRemainTimePerRule() {
         Rule rule = mock(Rule.class);
         MutableDouble remainMoney = mock(MutableDouble.class);
-        RuleCalculations ruleCalculations = new RuleCalculations();
+        Calculations calculations = new Calculations();
 
 
         // Set up the mock objects
@@ -46,7 +46,7 @@ class ParkingSystemServiceTest {
         when(rule.getEndTime()).thenReturn(endTime.toLocalTime());
         when(remainMoney.getValue()).thenReturn(20.0);
 
-        LocalDateTime result = ruleCalculations.calculateRemainTimePerRule(now, rule, remainMoney);
+        LocalDateTime result = calculations.calculateRemainTimePerRule(now, rule, remainMoney);
 
         assertEquals(now.plusHours(1).withSecond(0).withNano(0), result);
 

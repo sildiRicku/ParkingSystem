@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class RuleCalculations {
+public class Calculations {
     TimeUtils timeUtils = new TimeUtils();
 
     public LocalDateTime calculateRemainTimePerRule(LocalDateTime now, Rule rule, MutableDouble remainMoney) {

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ParkingSystemServiceImpl {
 
-    RuleCalculations rulecalculations = new RuleCalculations();
+    Calculations rulecalculations = new Calculations();
     Validations validations=new Validations();
 
     public LocalDateTime calculateExitTime(LocalDateTime now, MutableDouble money, List<Rule> rules) {
