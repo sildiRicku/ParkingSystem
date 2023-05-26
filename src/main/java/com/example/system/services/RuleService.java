@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @Service
 public class RuleService {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     private final RuleRepo ruleRepo;
     private final ModelMapper modelMapper;
 
