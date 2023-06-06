@@ -1,14 +1,18 @@
-package com.example.system.serviceimplementations;
+package com.example.system.serviceimplementations.parkingsystem;
 
-import com.example.system.entities.Rule;
+import com.example.system.models.Rule;
 import com.example.system.helperclasses.MutableDouble;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class Calculations {
-    TimeUtils timeUtils = new TimeUtils();
+    private TimeUtils timeUtils;
 
     public LocalDateTime calculateRemainTimePerRule(LocalDateTime now, Rule rule, MutableDouble remainMoney) {
 

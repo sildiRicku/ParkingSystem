@@ -1,7 +1,8 @@
-package com.example.system.serviceimplementations;
+package com.example.system.serviceimplementations.parkingsystem;
+
+
 
 import java.time.LocalTime;
-
 public class Validations {
     boolean isBetween(LocalTime myTime, LocalTime start, LocalTime end) {
         return (myTime.equals(start) || myTime.isAfter(start)) && (myTime.equals(end) || myTime.isBefore(end));

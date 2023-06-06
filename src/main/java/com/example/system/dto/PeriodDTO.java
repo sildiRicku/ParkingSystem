@@ -1,7 +1,7 @@
 package com.example.system.dto;
 
-import com.example.system.entities.PeriodKey;
-import com.example.system.entities.Rule;
+import com.example.system.models.PeriodKey;
+import com.example.system.models.Rule;
 import lombok.*;
 
 @AllArgsConstructor

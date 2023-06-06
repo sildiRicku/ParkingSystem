@@ -1,8 +1,8 @@
 package com.example.system.services;
 
 import com.example.system.dto.PeriodDTO;
-import com.example.system.entities.Period;
-import com.example.system.entities.PeriodKey;
+import com.example.system.models.Period;
+import com.example.system.models.PeriodKey;
 import com.example.system.repositories.PeriodRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

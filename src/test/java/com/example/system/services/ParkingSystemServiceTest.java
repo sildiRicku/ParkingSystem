@@ -1,10 +1,10 @@
 package com.example.system.services;
 
-import com.example.system.entities.Rule;
+import com.example.system.models.Rule;
 import com.example.system.helperclasses.MutableDouble;
 import com.example.system.repositories.ParkingSystemRepo;
-import com.example.system.serviceimplementations.ParkingSystemServiceImpl;
-import com.example.system.serviceimplementations.Calculations;
+import com.example.system.serviceimplementations.parkingsystem.ParkingSystemServiceImpl;
+import com.example.system.serviceimplementations.parkingsystem.Calculations;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;

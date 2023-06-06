@@ -2,7 +2,7 @@ package com.example.system.services;
 
 
 import com.example.system.dto.RuleDTO;
-import com.example.system.entities.Rule;
+import com.example.system.models.Rule;
 
 import com.example.system.repositories.RuleRepo;
 import org.modelmapper.ModelMapper;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

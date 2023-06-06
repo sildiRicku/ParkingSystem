@@ -1,6 +1,6 @@
 package com.example.system.repositories;
 
-import com.example.system.entities.ParkingSystem;
+import com.example.system.models.ParkingSystem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

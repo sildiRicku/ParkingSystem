@@ -1,18 +1,24 @@
-package com.example.system.serviceimplementations;
+package com.example.system.serviceimplementations.parkingsystem;
 
-import com.example.system.entities.Rule;
+import com.example.system.interfaces.ParkingSystemServicee;
+import com.example.system.models.Rule;
 import com.example.system.helperclasses.MutableDouble;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+@AllArgsConstructor
+@NoArgsConstructor
+public class ParkingSystemServiceImpl implements ParkingSystemServicee {
+    private Calculations ruleCalculations;
+    private Validations validations;
 
-public class ParkingSystemServiceImpl {
 
-    Calculations rulecalculations = new Calculations();
-    Validations validations=new Validations();
 
+    @Override
     public LocalDateTime calculateExitTime(LocalDateTime now, MutableDouble money, List<Rule> rules) {
         List<Rule> newRules = new ArrayList<>();
         for (Rule rule : rules) {
@@ -45,7 +51,7 @@ public class ParkingSystemServiceImpl {
                     remainMoney = false;
                     break;
                 }
-                now = rulecalculations.calculateRemainTimePerRule(now, rule, money);
+                now = ruleCalculations.calculateRemainTimePerRule(now, rule, money);
 
             }
         }

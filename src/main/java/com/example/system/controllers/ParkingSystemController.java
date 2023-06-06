@@ -1,17 +1,12 @@
 package com.example.system.controllers;
 
-import com.example.system.entities.TransactionPaymentType;
+import com.example.system.models.TransactionPaymentType;
 import com.example.system.exceptionhandlers.InvalidArgument;
 import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.helperclasses.MutableDouble;
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.helperclasses.ParkingResponse;
 import com.example.system.services.ParkingSystemService;
-import org.springframework.batch.core.*;
-import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
-import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
-import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
