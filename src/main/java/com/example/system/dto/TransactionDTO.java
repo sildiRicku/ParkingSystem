@@ -1,8 +1,8 @@
 package com.example.system.dto;
 
-import com.example.system.entities.ParkingSystem;
-import com.example.system.entities.TransactionPaymentType;
-import com.example.system.entities.TransactionStatus;
+import com.example.system.models.ParkingSystem;
+import com.example.system.models.TransactionPaymentType;
+import com.example.system.models.TransactionStatus;
 
 import lombok.*;
 

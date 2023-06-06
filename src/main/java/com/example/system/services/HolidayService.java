@@ -1,7 +1,7 @@
 package com.example.system.services;
 
 import com.example.system.dto.HolidayDTO;
-import com.example.system.entities.Holiday;
+import com.example.system.models.Holiday;
 import com.example.system.repositories.HolidayRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,11 @@ import java.util.Optional;
 
 @Service
 public class HolidayService {
+    @Autowired
     private final HolidayRepo holidayRepo;
+    @Autowired
     private final ModelMapper modelMapper;
 
-    @Autowired
     public HolidayService(HolidayRepo holidayRepo, ModelMapper modelMapper) {
         this.holidayRepo = holidayRepo;
         this.modelMapper = modelMapper;

@@ -1,15 +1,15 @@
 package com.example.system.services;
 
 import com.example.system.dto.ParkingSystemDTO;
-import com.example.system.entities.ParkingSystem;
-import com.example.system.entities.Rule;
-import com.example.system.entities.TransactionPaymentType;
+import com.example.system.factory.ParkingSystemServiceFactory;
+import com.example.system.models.ParkingSystem;
+import com.example.system.models.Rule;
+import com.example.system.models.TransactionPaymentType;
 import com.example.system.exceptionhandlers.InvalidArgument;
 import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.helperclasses.MutableDouble;
 import com.example.system.helperclasses.ParkingResponse;
 import com.example.system.repositories.ParkingSystemRepo;
-import com.example.system.serviceimplementations.ParkingSystemServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import com.example.system.interfaces.ParkingSystemServicee;
 
 @Service
 public class ParkingSystemService {
@@ -66,11 +67,11 @@ public class ParkingSystemService {
 
     public ParkingResponse getExitTime(LocalDateTime now, ParkingSystemDTO parkingSystemDTO, MutableDouble money, String plateNumber, TransactionPaymentType transactionPaymentType) {
         List<Rule> rules = parkingSystemDTO.getRules();
-        ParkingSystemServiceImpl implementation = new ParkingSystemServiceImpl();
+        ParkingSystemServicee service=ParkingSystemServiceFactory.createParkingSystemService();
         if (parkingSystemDTO.getRules() == null) {
             throw new NotFoundException("This parking system has no rule ");
         }
-        LocalDateTime exitTime = implementation.calculateExitTime(now, money, rules);
+        LocalDateTime exitTime = service.calculateExitTime(now, money, rules);
         if (transactionPaymentType.equals(TransactionPaymentType.CASH)) {
             return new ParkingResponse(plateNumber, exitTime.format(formatter));
         } else throw new InvalidArgument("Sorry, this payment type is not available yet");

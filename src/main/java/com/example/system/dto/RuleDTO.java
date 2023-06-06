@@ -1,6 +1,6 @@
 package com.example.system.dto;
 
-import com.example.system.entities.Period;
+import com.example.system.models.Period;
 import lombok.*;
 
 

@@ -1,8 +1,8 @@
 package com.example.system.dto;
 
-import com.example.system.entities.ParkingSystem.workingStatus;
+import com.example.system.models.ParkingSystem.workingStatus;
 
-import com.example.system.entities.Rule;
+import com.example.system.models.Rule;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
