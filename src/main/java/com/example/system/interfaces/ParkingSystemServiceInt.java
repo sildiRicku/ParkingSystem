@@ -6,6 +6,6 @@ import com.example.system.models.Rule;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface ParkingSystemServicee {
+public interface ParkingSystemServiceInt {
     LocalDateTime calculateExitTime(LocalDateTime now, MutableDouble money, List<Rule> rules);
 }

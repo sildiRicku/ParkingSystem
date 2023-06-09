@@ -1,6 +1,6 @@
 package com.example.system.serviceimplementations;
 
-import com.example.system.interfaces.ParkingSystemServicee;
+import com.example.system.interfaces.ParkingSystemServiceInt;
 import com.example.system.models.Rule;
 import com.example.system.helperclasses.MutableDouble;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
-public class ParkingSystemServiceImpl implements ParkingSystemServicee {
+public class ParkingSystemServiceImpl implements ParkingSystemServiceInt {
     private Calculations ruleCalculations;
     private Validations validations;
 

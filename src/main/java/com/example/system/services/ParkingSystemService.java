@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import com.example.system.interfaces.ParkingSystemServicee;
+import com.example.system.interfaces.ParkingSystemServiceInt;
 
 @Service
 public class ParkingSystemService {
@@ -67,7 +67,7 @@ public class ParkingSystemService {
 
     public ParkingResponse getExitTime(LocalDateTime now, ParkingSystemDTO parkingSystemDTO, MutableDouble money, String plateNumber, TransactionPaymentType transactionPaymentType) {
         List<Rule> rules = parkingSystemDTO.getRules();
-        ParkingSystemServicee service=ParkingSystemServiceFactory.createParkingSystemService();
+        ParkingSystemServiceInt service=ParkingSystemServiceFactory.createParkingSystemService();
         if (parkingSystemDTO.getRules() == null) {
             throw new NotFoundException("This parking system has no rule ");
         }
