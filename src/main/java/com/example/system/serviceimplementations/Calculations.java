@@ -1,4 +1,4 @@
-package com.example.system.serviceimplementations.parkingsystem;
+package com.example.system.serviceimplementations;
 
 import com.example.system.models.Rule;
 import com.example.system.helperclasses.MutableDouble;
