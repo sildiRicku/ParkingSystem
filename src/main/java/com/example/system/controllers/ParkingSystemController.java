@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/parking-system")
+@CrossOrigin
 public class ParkingSystemController {
 
     private final ParkingSystemService parkingSystemService;

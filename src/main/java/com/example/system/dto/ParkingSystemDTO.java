@@ -18,6 +18,8 @@ import java.util.List;
 public class ParkingSystemDTO {
     private int id;
 
+    private String identifier;
+
     private String address;
 
     private workingStatus workingStatus;
