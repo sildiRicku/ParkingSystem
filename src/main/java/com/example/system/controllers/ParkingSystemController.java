@@ -41,7 +41,7 @@ public class ParkingSystemController {
 
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all")        //naming conventions
     public List<ParkingSystemDTO> getAllParkingSystems() {
         return parkingSystemService.getAllParkingSystems();
     }
@@ -68,8 +68,4 @@ public class ParkingSystemController {
         return parkingSystemService.getExitTime(dateTime, parkingSystem.get(), moneyObject, platenumber, transactionPaymentType);
 
     }
-
-
 }
-
-
