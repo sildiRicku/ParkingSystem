@@ -24,9 +24,9 @@ public class TransactionsService {
     }
 
     public List<TransactionDTO> getAllTransactions() {
-        List<Transactions> transactionss = transactionsRepo.findAll();
+        List<Transactions> transactionsList = transactionsRepo.findAll();
         List<TransactionDTO> transactionDTOS = new ArrayList<>();
-        for (Transactions transactions : transactionss) {
+        for (Transactions transactions : transactionsList) {
             TransactionDTO transactionDTO = modelMapper.map(transactions, TransactionDTO.class);
             transactionDTOS.add(transactionDTO);
         }
@@ -44,9 +44,9 @@ public class TransactionsService {
     }
 
     public TransactionDTO addTransactions(TransactionDTO transactionDTO) {
-        Transactions transactions = modelMapper.map(transactionDTO, Transactions.class);
-        transactionsRepo.save(transactions);
-        transactionDTO = modelMapper.map(transactions, TransactionDTO.class);
+        Transactions transaction = modelMapper.map(transactionDTO, Transactions.class);
+        transactionsRepo.save(transaction);
+        transactionDTO = modelMapper.map(transaction, TransactionDTO.class);
         return transactionDTO;
     }
 }
