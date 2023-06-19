@@ -25,3 +25,7 @@ To add Spring Profile(dev / test) run this commands:
  - Java 17 Oracle OpenJDK version 17.0.6
  - Framework Spring Boot 3.0.4
  - MySQL Database Oracle
+# Testing
+- Mockito 4.8.1
+- JaCoCo 0.8.9 plugin for code coverage
+- To run JaCoCo for the code coverage: navigate to "target" folder, then the "site" folder, then open the index.html file inside that folder in browser.
