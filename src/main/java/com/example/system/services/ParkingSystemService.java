@@ -12,6 +12,7 @@ import com.example.system.helperclasses.ParkingResponse;
 import com.example.system.repositories.ParkingSystemRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -20,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import com.example.system.interfaces.ParkingSystemServiceInt;
+import com.example.system.interfaces.IParkingSystemService;
 
 @Service
 public class ParkingSystemService {
@@ -37,7 +38,8 @@ public class ParkingSystemService {
 
 
     public List<ParkingSystemDTO> getAllParkingSystems() {
-        List<ParkingSystem> parkingSystems = parkingSystemRepo.findAll();
+        Sort sort = Sort.by(Sort.Direction.ASC,"identifier");
+        List<ParkingSystem> parkingSystems = parkingSystemRepo.findAll(sort);
         List<ParkingSystemDTO> parkingSystemDTOS = new ArrayList<>();
         for (ParkingSystem parkingSystem : parkingSystems) {
             ParkingSystemDTO parkingSystemDTO = modelMapper.map(parkingSystem, ParkingSystemDTO.class);
@@ -67,7 +69,7 @@ public class ParkingSystemService {
 
     public ParkingResponse getExitTime(LocalDateTime now, ParkingSystemDTO parkingSystemDTO, MutableDouble money, String plateNumber, TransactionPaymentType transactionPaymentType) {
         List<Rule> rules = parkingSystemDTO.getRules();
-        ParkingSystemServiceInt service=ParkingSystemServiceFactory.createParkingSystemService();
+        IParkingSystemService service=ParkingSystemServiceFactory.createParkingSystemService();
         if (parkingSystemDTO.getRules() == null) {
             throw new NotFoundException("This parking system has no rule ");
         }
