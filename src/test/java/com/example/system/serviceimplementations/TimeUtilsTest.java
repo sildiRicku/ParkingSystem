@@ -1,26 +1,24 @@
 package com.example.system.serviceimplementations;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(MockitoJUnitRunner.class)
-public class TimeUtilsTest {
+class TimeUtilsTest {
 
     private TimeUtils timeUtils;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         timeUtils = new TimeUtils();
     }
 
     @Test
-    public void testRoundToMinutes() {
+     void testRoundToMinutes() {
         LocalDateTime time = LocalDateTime.of(2023, 6, 9, 23, 59, 30);
         LocalDateTime expected = LocalDateTime.of(2023, 6, 10, 0, 0, 0);
 
@@ -28,6 +26,4 @@ public class TimeUtilsTest {
 
         assertEquals(expected, result);
     }
-
-
 }

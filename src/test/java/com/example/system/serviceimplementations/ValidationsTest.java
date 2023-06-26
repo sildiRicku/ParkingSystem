@@ -1,22 +1,16 @@
 package com.example.system.serviceimplementations;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(MockitoJUnitRunner.class)
-public class ValidationsTest {
-
+class ValidationsTest {
     private Validations validations;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         validations = new Validations();
     }
@@ -39,5 +33,4 @@ public class ValidationsTest {
 
         assertTrue(validations.sameRangeTimes(t1, t2, start, end));
     }
-
 }
