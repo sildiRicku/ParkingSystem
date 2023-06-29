@@ -58,15 +58,6 @@ public class ParkingSystemService {
         }
     }
 
-
-    public ParkingSystemDTO addParkingSystem(ParkingSystemDTO parkingSystemDTO) {
-        ParkingSystem parkingSystem = modelMapper.map(parkingSystemDTO, ParkingSystem.class);
-        parkingSystemRepo.save(parkingSystem);
-        parkingSystemDTO = modelMapper.map(parkingSystem, ParkingSystemDTO.class);
-        return parkingSystemDTO;
-    }
-
-
     public ParkingResponse getExitTime(LocalDateTime now, ParkingSystemDTO parkingSystemDTO, MutableDouble money, String plateNumber, TransactionPaymentType transactionPaymentType) {
         List<Rule> rules = parkingSystemDTO.getRules();
         IParkingSystemService service=ParkingSystemServiceFactory.createParkingSystemService();

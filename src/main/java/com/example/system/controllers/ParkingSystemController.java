@@ -46,10 +46,7 @@ public class ParkingSystemController {
         return parkingSystemService.getAllParkingSystems();
     }
 
-    @PostMapping("/new")
-    public ParkingSystemDTO addParkingSystem(@RequestBody ParkingSystemDTO parkingSystemDTO) {
-        return parkingSystemService.addParkingSystem(parkingSystemDTO);
-    }
+
 
     @GetMapping("/parking-time")
     public ParkingResponse getExitTime(@RequestParam("money") double money,

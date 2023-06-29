@@ -16,7 +16,7 @@ class ValidationsTest {
     }
 
     @Test
-    public void testIsBetween_ReturnsTrueWhenMyTimeIsBetweenStartAndEnd() {
+     void testIsBetween_ReturnsTrueWhenMyTimeIsBetweenStartAndEnd() {
         LocalTime start = LocalTime.of(9, 0);
         LocalTime end = LocalTime.of(18, 0);
         LocalTime myTime = LocalTime.of(12, 0);
@@ -25,7 +25,7 @@ class ValidationsTest {
     }
 
     @Test
-    public void testSameRangeTimes_ReturnsTrueWhenBothTimesAreInRange() {
+     void testSameRangeTimes_ReturnsTrueWhenBothTimesAreInRange() {
         LocalTime start = LocalTime.of(9, 0);
         LocalTime end = LocalTime.of(18, 0);
         LocalTime t1 = LocalTime.of(12, 0);
