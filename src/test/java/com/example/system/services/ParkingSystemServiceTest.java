@@ -1,22 +1,16 @@
 package com.example.system.services;
 
 import com.example.system.dto.ParkingSystemDTO;
-import com.example.system.exceptionhandlers.InvalidArgument;
 import com.example.system.exceptionhandlers.NotFoundException;
-import com.example.system.factory.ParkingSystemServiceFactory;
 import com.example.system.helperclasses.MutableDouble;
-import com.example.system.helperclasses.ParkingResponse;
 import com.example.system.interfaces.IParkingSystemService;
 import com.example.system.models.ParkingSystem;
 import com.example.system.models.Rule;
 import com.example.system.models.TransactionPaymentType;
-import com.example.system.models.Transactions;
 import com.example.system.repositories.ParkingSystemRepo;
-import com.example.system.serviceimplementations.ParkingSystemServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
@@ -24,11 +18,9 @@ import org.springframework.data.domain.Sort;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.any;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -53,7 +45,7 @@ class ParkingSystemServiceTest {
 
 
     @Test
-    public void testGetParkingSystemById_ExistingId_ReturnsOptionalParkingSystemDTO() {
+     void testGetParkingSystemById_ExistingId_ReturnsOptionalParkingSystemDTO() {
         int id = 1;
         ParkingSystem parkingSystem = new ParkingSystem(/* add required data here */);
         Optional<ParkingSystem> optionalParkingSystem = Optional.of(parkingSystem);
@@ -70,7 +62,7 @@ class ParkingSystemServiceTest {
     }
 
     @Test
-    public void testGetParkingSystemById_NonExistingId_ReturnsEmptyOptional() {
+     void testGetParkingSystemById_NonExistingId_ReturnsEmptyOptional() {
         int id = 1;
         Optional<ParkingSystem> optionalParkingSystem = Optional.empty();
 
@@ -84,7 +76,7 @@ class ParkingSystemServiceTest {
 
 
     @Test
-    public void testGetExitTime_NoRules_ThrowsNotFoundException() {
+     void testGetExitTime_NoRules_ThrowsNotFoundException() {
         LocalDateTime now = LocalDateTime.now();
         ParkingSystemDTO parkingSystemDTO = new ParkingSystemDTO(/* add required data here */);
         double money = 10.0;
@@ -98,7 +90,7 @@ class ParkingSystemServiceTest {
     }
 
     @Test
-    public void testGetExitTime_InvalidPaymentType_ThrowsInvalidArgument() {
+     void testGetExitTime_InvalidPaymentType_ThrowsInvalidArgument() {
         ParkingSystemDTO parkingSystemDTO = new ParkingSystemDTO();
         LocalDateTime now = LocalDateTime.now();
         double money = 10.0;
@@ -112,7 +104,7 @@ class ParkingSystemServiceTest {
                 parkingSystemService.getExitTime(now, parkingSystemDTO, moneyObject, plateNumber, paymentType));
     }
     @Test
-    public void testGetAllParkingSystems() {
+     void testGetAllParkingSystems() {
         // Create test data
         List<ParkingSystem> parkingSystems = new ArrayList<>();
         parkingSystems.add(new ParkingSystem(/* add required data here */));
@@ -137,7 +129,7 @@ class ParkingSystemServiceTest {
 
 
     @Test
-    public void testGetExitTime_NonCashPaymentType_ThrowsInvalidArgument() {
+     void testGetExitTime_NonCashPaymentType_ThrowsInvalidArgument() {
         LocalDateTime now = LocalDateTime.now();
         ParkingSystemDTO parkingSystemDTO = new ParkingSystemDTO(/* add required data here */);
         double money = 10.0;

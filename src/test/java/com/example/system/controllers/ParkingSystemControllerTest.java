@@ -34,7 +34,7 @@ class ParkingSystemControllerTest {
     }
 
     @Test
-    public void testGetParkingSystemById_ExistingId_ReturnsParkingSystemDTO() {
+     void testGetParkingSystemById_ExistingId_ReturnsParkingSystemDTO() {
         int id = 1;
         ParkingSystemDTO parkingSystemDTO = new ParkingSystemDTO(/* add required data here */);
         Optional<ParkingSystemDTO> optionalParkingSystemDTO = Optional.of(parkingSystemDTO);
@@ -47,7 +47,7 @@ class ParkingSystemControllerTest {
     }
 
     @Test
-    public void testGetParkingSystemById_NonExistingId_ThrowsResponseStatusException() {
+     void testGetParkingSystemById_NonExistingId_ThrowsResponseStatusException() {
         int id = 1;
         Optional<ParkingSystemDTO> optionalParkingSystemDTO = Optional.empty();
 
@@ -57,7 +57,7 @@ class ParkingSystemControllerTest {
     }
 
     @Test
-    public void testGetAllParkingSystems_ReturnsListOfParkingSystemDTOs() {
+     void testGetAllParkingSystems_ReturnsListOfParkingSystemDTOs() {
         List<ParkingSystemDTO> parkingSystems = new ArrayList<>();
         parkingSystems.add(new ParkingSystemDTO(/* add required data here */));
         parkingSystems.add(new ParkingSystemDTO(/* add required data here */));
@@ -72,7 +72,7 @@ class ParkingSystemControllerTest {
     }
 
     @Test
-    public void testGetExitTime_InvalidId_ThrowsNotFoundException() {
+     void testGetExitTime_InvalidId_ThrowsNotFoundException() {
         double money = 10.0;
         int id = 1;
         String plateNumber = "ABC123";
@@ -88,7 +88,7 @@ class ParkingSystemControllerTest {
     }
 
     @Test
-    public void testGetExitTime_NegativeMoney_ThrowsInvalidArgument() {
+     void testGetExitTime_NegativeMoney_ThrowsInvalidArgument() {
         double money = -10.0;
         int id = 1;
         String plateNumber = "ABC123";

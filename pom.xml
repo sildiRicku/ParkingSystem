@@ -101,7 +101,6 @@
                         <exclude>**/models/**</exclude>
                         <exclude>**/dto/**</exclude>
                         <exclude>**/helperclasses/**</exclude>
-                        <exclude>**/Application.class</exclude>
                     </excludes>
                 </configuration>
             </plugin>

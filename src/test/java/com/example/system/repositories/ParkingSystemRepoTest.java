@@ -23,7 +23,7 @@ class ParkingSystemRepoTest {
     }
 
     @Test
-    public void testFindAllWithSort() {
+     void testFindAllWithSort() {
         List<ParkingSystem> parkingSystems = new ArrayList<>();
         parkingSystems.add(new ParkingSystem());
         parkingSystems.add(new ParkingSystem());
