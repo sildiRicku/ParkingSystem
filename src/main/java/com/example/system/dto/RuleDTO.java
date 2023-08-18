@@ -10,7 +10,6 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Getter
 @Setter
-
 public class RuleDTO {
     private int id;
     private String name;
@@ -20,9 +19,4 @@ public class RuleDTO {
     private LocalTime endTime;
     private Period period;
 
-    public RuleDTO(double cost, LocalTime startTime, LocalTime endTime) {
-        this.cost = cost;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
 }
