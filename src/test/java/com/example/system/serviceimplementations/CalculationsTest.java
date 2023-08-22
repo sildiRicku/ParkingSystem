@@ -31,7 +31,7 @@ class CalculationsTest {
     }
 
     @Test
-    void testCalculateRemainTimePerRule_ReturnsRoundedTimeWhenRuleCostIsZero() {
+    void calculateRemainTimePerRule_ReturnsRoundedTimeWhenRuleCostIsZero() {
         LocalDateTime now = LocalDateTime.of(2023, 6, 9, 12, 0, 0);
         Rule rule = new Rule();
         rule.setCost(0);
