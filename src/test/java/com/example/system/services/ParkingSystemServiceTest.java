@@ -1,6 +1,7 @@
 package com.example.system.services;
 
 import com.example.system.dto.ParkingSystemDTO;
+import com.example.system.dto.RuleDTO;
 import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.helperclasses.MutableDouble;
 import com.example.system.interfaces.IParkingSystemService;
@@ -11,6 +12,7 @@ import com.example.system.repositories.ParkingSystemRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
@@ -18,6 +20,7 @@ import org.springframework.data.domain.Sort;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +40,7 @@ class ParkingSystemServiceTest {
     private ParkingSystemService parkingSystemService;
     @Mock
     private IParkingSystemService parkingSystemServiceMock;
+
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
@@ -45,7 +49,7 @@ class ParkingSystemServiceTest {
 
 
     @Test
-     void testGetParkingSystemById_ExistingId_ReturnsOptionalParkingSystemDTO() {
+    void testGetParkingSystemById_ExistingId_ReturnsOptionalParkingSystemDTO() {
         int id = 1;
         ParkingSystem parkingSystem = new ParkingSystem(/* add required data here */);
         Optional<ParkingSystem> optionalParkingSystem = Optional.of(parkingSystem);
@@ -62,7 +66,7 @@ class ParkingSystemServiceTest {
     }
 
     @Test
-     void testGetParkingSystemById_NonExistingId_ReturnsEmptyOptional() {
+    void testGetParkingSystemById_NonExistingId_ReturnsEmptyOptional() {
         int id = 1;
         Optional<ParkingSystem> optionalParkingSystem = Optional.empty();
 
@@ -74,9 +78,8 @@ class ParkingSystemServiceTest {
     }
 
 
-
     @Test
-     void testGetExitTime_NoRules_ThrowsNotFoundException() {
+    void testGetExitTime_NoRules_ThrowsNotFoundException() {
         LocalDateTime now = LocalDateTime.now();
         ParkingSystemDTO parkingSystemDTO = new ParkingSystemDTO(/* add required data here */);
         double money = 10.0;
@@ -90,7 +93,7 @@ class ParkingSystemServiceTest {
     }
 
     @Test
-     void testGetExitTime_InvalidPaymentType_ThrowsInvalidArgument() {
+    void testGetExitTime_InvalidPaymentType_ThrowsInvalidArgument() {
         ParkingSystemDTO parkingSystemDTO = new ParkingSystemDTO();
         LocalDateTime now = LocalDateTime.now();
         double money = 10.0;
@@ -103,8 +106,9 @@ class ParkingSystemServiceTest {
         assertThrows(NotFoundException.class, () ->
                 parkingSystemService.getExitTime(now, parkingSystemDTO, moneyObject, plateNumber, paymentType));
     }
+
     @Test
-     void testGetAllParkingSystems() {
+    void testGetAllParkingSystems() {
         // Create test data
         List<ParkingSystem> parkingSystems = new ArrayList<>();
         parkingSystems.add(new ParkingSystem(/* add required data here */));
@@ -129,7 +133,7 @@ class ParkingSystemServiceTest {
 
 
     @Test
-     void testGetExitTime_NonCashPaymentType_ThrowsInvalidArgument() {
+    void testGetExitTime_NonCashPaymentType_ThrowsInvalidArgument() {
         LocalDateTime now = LocalDateTime.now();
         ParkingSystemDTO parkingSystemDTO = new ParkingSystemDTO(/* add required data here */);
         double money = 10.0;
@@ -141,4 +145,41 @@ class ParkingSystemServiceTest {
 
         assertThrows(NotFoundException.class, () -> parkingSystemService.getExitTime(now, parkingSystemDTO, moneyObject, plateNumber, paymentType));
     }
+
+    @Test
+    public void testGetRulesForParkingSystem_ExistingParkingSystem() {
+        int parkingSystemId = 1;
+        ParkingSystem parkingSystem = Mockito.mock(ParkingSystem.class); // Mock the ParkingSystem
+        Rule r1 = Mockito.mock(Rule.class);
+        Rule r2 = Mockito.mock(Rule.class);
+        List<Rule> rules = Arrays.asList(r2, r1);
+
+        when(parkingSystemRepo.findById(parkingSystemId)).thenReturn(Optional.of(parkingSystem));
+        when(parkingSystem.getRules()).thenReturn(rules);
+        when(modelMapper.map(any(), eq(RuleDTO.class))).thenReturn(new RuleDTO());
+
+        // Act
+        List<RuleDTO> result = parkingSystemService.getRulesForParkingSystem(parkingSystemId);
+
+        // Assert
+        assertEquals(rules.size(), result.size());
+        verify(parkingSystemRepo).findById(parkingSystemId);
+        verify(parkingSystem).getRules();
+        verify(modelMapper, times(rules.size())).map(any(), eq(RuleDTO.class));
+    }
+
+    @Test
+    public void testGetRulesForParkingSystem_NonExistingParkingSystem() {
+        // Arrange
+        int parkingSystemId = 1;
+
+        when(parkingSystemRepo.findById(parkingSystemId)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(NotFoundException.class, () -> parkingSystemService.getRulesForParkingSystem(parkingSystemId));
+
+        // Verify interactions (if needed)
+        verify(parkingSystemRepo).findById(parkingSystemId);
+    }
+
 }
