@@ -4,6 +4,8 @@ import com.example.system.helperclasses.MutableDouble;
 import com.example.system.models.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,6 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@RunWith(MockitoJUnitRunner.class)
 class ParkingSystemServiceImplTest {
 
     private ParkingSystemServiceImpl parkingSystem;
@@ -19,14 +22,14 @@ class ParkingSystemServiceImplTest {
     @BeforeEach
     void setUp() {
         Validations validations = new Validations();
-        TimeUtils timeUtils=new TimeUtils();
+        TimeUtils timeUtils = new TimeUtils();
         Calculations calculations = new Calculations(timeUtils);
         parkingSystem = new ParkingSystemServiceImpl(calculations, validations);
     }
 
 
     @Test
-    void testCalculateExitTime() {
+    void calculateExitTime() {
         List<Rule> rules = new ArrayList<>();
         rules.add(new Rule(10, LocalTime.of(8, 0), LocalTime.of(12, 0)));
         rules.add(new Rule(20, LocalTime.of(12, 0), LocalTime.of(18, 0)));

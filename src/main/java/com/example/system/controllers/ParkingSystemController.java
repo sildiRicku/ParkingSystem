@@ -1,5 +1,6 @@
 package com.example.system.controllers;
 
+import com.example.system.dto.RuleDTO;
 import com.example.system.models.TransactionPaymentType;
 import com.example.system.exceptionhandlers.InvalidArgument;
 import com.example.system.exceptionhandlers.NotFoundException;
@@ -9,6 +10,7 @@ import com.example.system.helperclasses.ParkingResponse;
 import com.example.system.services.ParkingSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -41,12 +43,16 @@ public class ParkingSystemController {
 
     }
 
-    @GetMapping("/all")        //naming conventions
+    @GetMapping("/all")
     public List<ParkingSystemDTO> getAllParkingSystems() {
         return parkingSystemService.getAllParkingSystems();
     }
 
-
+    @GetMapping("/parking-systems/{id}/rules")
+    public ResponseEntity<List<RuleDTO>> getRulesForParkingSystem(@PathVariable int id) {
+        List<RuleDTO> rules = parkingSystemService.getRulesForParkingSystem(id);
+        return ResponseEntity.ok(rules);
+    }
 
     @GetMapping("/parking-time")
     public ParkingResponse getExitTime(@RequestParam("money") double money,

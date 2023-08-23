@@ -1,6 +1,7 @@
 package com.example.system.services;
 
 import com.example.system.dto.ParkingSystemDTO;
+import com.example.system.dto.RuleDTO;
 import com.example.system.factory.ParkingSystemServiceFactory;
 import com.example.system.models.ParkingSystem;
 import com.example.system.models.Rule;
@@ -21,6 +22,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import com.example.system.interfaces.IParkingSystemService;
 
 @Service
@@ -38,7 +41,7 @@ public class ParkingSystemService {
 
 
     public List<ParkingSystemDTO> getAllParkingSystems() {
-        Sort sort = Sort.by(Sort.Direction.ASC,"identifier");
+        Sort sort = Sort.by(Sort.Direction.ASC, "identifier");
         List<ParkingSystem> parkingSystems = parkingSystemRepo.findAll(sort);
         List<ParkingSystemDTO> parkingSystemDTOS = new ArrayList<>();
         for (ParkingSystem parkingSystem : parkingSystems) {
@@ -58,9 +61,17 @@ public class ParkingSystemService {
         }
     }
 
+    public List<RuleDTO> getRulesForParkingSystem(int parkingSystemId) {
+        return parkingSystemRepo.findById(parkingSystemId)
+                .map(parkingSystem -> parkingSystem.getRules().stream()
+                        .map(rule -> modelMapper.map(rule, RuleDTO.class))
+                        .toList())
+                .orElseThrow(() -> new NotFoundException("Parking system not found"));
+    }
+
     public ParkingResponse getExitTime(LocalDateTime now, ParkingSystemDTO parkingSystemDTO, MutableDouble money, String plateNumber, TransactionPaymentType transactionPaymentType) {
         List<Rule> rules = parkingSystemDTO.getRules();
-        IParkingSystemService service=ParkingSystemServiceFactory.createParkingSystemService();
+        IParkingSystemService service = ParkingSystemServiceFactory.createParkingSystemService();
         if (parkingSystemDTO.getRules() == null) {
             throw new NotFoundException("This parking system has no rule ");
         }
