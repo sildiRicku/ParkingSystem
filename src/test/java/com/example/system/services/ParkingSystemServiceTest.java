@@ -4,6 +4,7 @@ import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.dto.RuleDTO;
 import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.helperclasses.MutableDouble;
+import com.example.system.helperclasses.TransactionBuilder;
 import com.example.system.models.ParkingSystem;
 import com.example.system.models.Rule;
 import com.example.system.models.TransactionPaymentType;
@@ -35,7 +36,10 @@ class ParkingSystemServiceTest {
 
     @Mock
     private ParkingSystemRepo parkingSystemRepo;
-
+    @Mock
+    private TransactionBuilder builder;
+    @Mock
+    private TransactionService transactionService;
     @Mock
     private ModelMapper modelMapper;
 
@@ -45,7 +49,7 @@ class ParkingSystemServiceTest {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        parkingSystemService = new ParkingSystemService(parkingSystemRepo, modelMapper);
+        parkingSystemService = new ParkingSystemService(builder, parkingSystemRepo, transactionService, modelMapper);
     }
 
 
@@ -141,7 +145,7 @@ class ParkingSystemServiceTest {
     }
 
     @Test
-    public void getRulesForParkingSystem_ExistingParkingSystem() {
+    void getRulesForParkingSystem_ExistingParkingSystem() {
         int parkingSystemId = 1;
         ParkingSystem parkingSystem = Mockito.mock(ParkingSystem.class); // Mock the ParkingSystem
         Rule r1 = Mockito.mock(Rule.class);
@@ -161,7 +165,7 @@ class ParkingSystemServiceTest {
     }
 
     @Test
-    public void getRulesForParkingSystem_NonExistingParkingSystem() {
+    void getRulesForParkingSystem_NonExistingParkingSystem() {
         int parkingSystemId = 1;
 
         when(parkingSystemRepo.findById(parkingSystemId)).thenReturn(Optional.empty());

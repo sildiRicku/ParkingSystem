@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Transactions")
@@ -22,11 +22,10 @@ public class Transactions {
     @Enumerated(EnumType.STRING)
     @Column(name = "paymentType")
     private TransactionPaymentType transactionPaymentType;
-    @Column(name = "platenumber")
+    @Column(name = "plateNumber")
     private String plateNumber;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "dateOfTransaction")
-    private Date dateOfTransaction;
+    @Column(name = "entryTime")
+    private LocalDateTime entryTime;
     @Column(name = "value")
     private double transactionValue;
     @Enumerated(EnumType.STRING)

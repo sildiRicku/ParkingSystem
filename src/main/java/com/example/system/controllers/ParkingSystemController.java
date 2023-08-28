@@ -1,6 +1,7 @@
 package com.example.system.controllers;
 
 import com.example.system.dto.RuleDTO;
+import com.example.system.dto.TransactionDTO;
 import com.example.system.models.TransactionPaymentType;
 import com.example.system.exceptionhandlers.InvalidArgument;
 import com.example.system.exceptionhandlers.NotFoundException;
@@ -29,7 +30,6 @@ public class ParkingSystemController {
     @Autowired
     public ParkingSystemController(ParkingSystemService parkingSystemService) {
         this.parkingSystemService = parkingSystemService;
-
     }
 
     @GetMapping("/{id}")
@@ -70,5 +70,19 @@ public class ParkingSystemController {
         }
         return parkingSystemService.getExitTime(dateTime, parkingSystem.get(), moneyObject, platenumber, transactionPaymentType);
 
+    }
+
+    @PostMapping("/addTrans")
+    public ResponseEntity<TransactionDTO> addTransaction(
+            @RequestParam int parkingSystemId,
+            @RequestParam TransactionPaymentType transactionPaymentType,
+            @RequestParam double money,
+            @RequestParam String plateNumber) {
+        LocalDateTime entryTime = LocalDateTime.now();
+        MutableDouble mutableMoney = new MutableDouble(money);
+        ParkingSystemDTO parkingSystemDTO = getParkingSystemById(parkingSystemId);
+        TransactionDTO savedTransaction = parkingSystemService.saveTransactionForParkingSystem(parkingSystemDTO, transactionPaymentType, entryTime, mutableMoney, plateNumber);
+
+        return ResponseEntity.ok(savedTransaction);
     }
 }
