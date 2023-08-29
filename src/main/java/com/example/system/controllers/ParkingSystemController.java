@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,7 +38,7 @@ public class ParkingSystemController {
         if (parkingSystemDTO.isPresent()) {
             return parkingSystemDTO.get();
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        throw new NotFoundException("Parking system with this ID not found");
 
     }
 
@@ -55,15 +54,11 @@ public class ParkingSystemController {
     }
 
     @GetMapping("/parking-time")
-    public ParkingResponse getExitTime(@RequestParam("money") double money,
-                                       @RequestParam("id") int id,
-                                       @RequestParam("plateNumber") String platenumber,
-                                       @RequestParam("paymentType") TransactionPaymentType transactionPaymentType,
-                                       @RequestParam(value = "dateTime", required = false, defaultValue = "${date.now}") LocalDateTime dateTime) {
+    public ParkingResponse getExitTime(@RequestParam("money") double money, @RequestParam("id") int id, @RequestParam("plateNumber") String platenumber, @RequestParam("paymentType") TransactionPaymentType transactionPaymentType, @RequestParam(value = "dateTime", required = false, defaultValue = "${date.now}") LocalDateTime dateTime) {
         MutableDouble moneyObject = new MutableDouble(money);
         Optional<ParkingSystemDTO> parkingSystem = parkingSystemService.getParkingSystemById(id);
-        if (parkingSystem.isEmpty()) {
-            throw new NotFoundException("Parking system with id: " + id + " is not found");
+        if (!parkingSystem.isPresent()) {
+            throw new NotFoundException("No parking system found");
         }
         if (money < 0) {
             throw new InvalidArgument("You can not use a negative money value");
@@ -73,16 +68,13 @@ public class ParkingSystemController {
     }
 
     @PostMapping("/addTrans")
-    public ResponseEntity<TransactionDTO> addTransaction(
-            @RequestParam int parkingSystemId,
-            @RequestParam TransactionPaymentType transactionPaymentType,
-            @RequestParam double money,
-            @RequestParam String plateNumber) {
+    public ResponseEntity<TransactionDTO> addTransaction(@RequestParam int parkingSystemId, @RequestParam TransactionPaymentType transactionPaymentType, @RequestParam double money, @RequestParam String plateNumber) {
         LocalDateTime entryTime = LocalDateTime.now();
         MutableDouble mutableMoney = new MutableDouble(money);
-        ParkingSystemDTO parkingSystemDTO = getParkingSystemById(parkingSystemId);
-        TransactionDTO savedTransaction = parkingSystemService.saveTransactionForParkingSystem(parkingSystemDTO, transactionPaymentType, entryTime, mutableMoney, plateNumber);
-
-        return ResponseEntity.ok(savedTransaction);
+        if (money >= 0) {
+            ParkingSystemDTO parkingSystemDTO = getParkingSystemById(parkingSystemId);
+            TransactionDTO savedTransaction = parkingSystemService.saveTransactionForParkingSystem(parkingSystemDTO, transactionPaymentType, entryTime, mutableMoney, plateNumber);
+            return ResponseEntity.ok(savedTransaction);
+        } else throw new InvalidArgument("You can not input a negative money value");
     }
 }

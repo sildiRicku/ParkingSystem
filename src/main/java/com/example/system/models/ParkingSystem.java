@@ -46,7 +46,7 @@ public class ParkingSystem {
 
     @OneToMany(mappedBy = "parkingSystem")
     @JsonIgnoreProperties
-    private List<Transactions> transactions;
+    private List<Transaction> transactions;
 
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(

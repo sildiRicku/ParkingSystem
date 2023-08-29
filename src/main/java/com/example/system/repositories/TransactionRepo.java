@@ -1,7 +1,7 @@
 package com.example.system.repositories;
 
-import com.example.system.models.Transactions;
+import com.example.system.models.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TransactionRepo extends JpaRepository<Transactions, Integer> {
+public interface TransactionRepo extends JpaRepository<Transaction, Integer> {
 }

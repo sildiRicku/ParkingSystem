@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class TransactionDTO {
-    private int transId;
+    private int transactionId;
     private TransactionPaymentType transactionPaymentType;
     private String plateNumber;
     private LocalDateTime entryTime;
+    private LocalDateTime exitTime;
     private double transactionValue;
     private TransactionStatus transactionStatus;
-    private LocalDateTime exitTime;
     private ParkingSystem parkingSystem;
 }

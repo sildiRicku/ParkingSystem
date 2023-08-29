@@ -3,7 +3,7 @@ package com.example.system.dto;
 import com.example.system.models.ParkingSystem.workingStatus;
 
 import com.example.system.models.Rule;
-import com.example.system.models.Transactions;
+import com.example.system.models.Transaction;
 
 import lombok.*;
 
@@ -31,7 +31,7 @@ public class ParkingSystemDTO {
     private double totalMoney;
 
     private String firmwareVersion;
-    private List<Transactions> transactions;
+    private List<Transaction> transactions;
 
     private List<Rule> rules;
 

@@ -14,11 +14,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Transactions {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private int transId;
+    private int transactionId;
     @Enumerated(EnumType.STRING)
     @Column(name = "paymentType")
     private TransactionPaymentType transactionPaymentType;
@@ -26,6 +25,8 @@ public class Transactions {
     private String plateNumber;
     @Column(name = "entryTime")
     private LocalDateTime entryTime;
+    @Column(name = "exitTime")
+    private LocalDateTime exitTime;
     @Column(name = "value")
     private double transactionValue;
     @Enumerated(EnumType.STRING)

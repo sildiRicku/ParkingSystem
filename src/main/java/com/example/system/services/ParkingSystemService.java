@@ -93,8 +93,8 @@ public class ParkingSystemService {
 
         TransactionDTO transactionDTO = builder.buildTransactionDTO(parkingSystem, transactionPaymentType, entryTime, transactionValue, response.getExitTime(), plateNumber);
 
-        Transactions transactions = modelMapper.map(transactionDTO, Transactions.class);
-        transactionService.saveTransaction(transactions);
+        Transaction transaction = modelMapper.map(transactionDTO, Transaction.class);
+        transactionService.saveTransaction(transaction);
 
         parkingSystemRepo.save(parkingSystem);
 
