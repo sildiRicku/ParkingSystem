@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Transactions")
@@ -14,19 +14,19 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Transactions {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private int transId;
+    private int transactionId;
     @Enumerated(EnumType.STRING)
     @Column(name = "paymentType")
     private TransactionPaymentType transactionPaymentType;
-    @Column(name = "platenumber")
+    @Column(name = "plateNumber")
     private String plateNumber;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "dateOfTransaction")
-    private Date dateOfTransaction;
+    @Column(name = "entryTime")
+    private LocalDateTime entryTime;
+    @Column(name = "estimatedExitTime")
+    private LocalDateTime estimatedExitTime;
     @Column(name = "value")
     private double transactionValue;
     @Enumerated(EnumType.STRING)

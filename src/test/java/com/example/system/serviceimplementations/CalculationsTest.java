@@ -27,7 +27,7 @@ class CalculationsTest {
     @BeforeEach
     public void setUp() {
         timeUtils = mock(TimeUtils.class);
-        calculations = new Calculations(timeUtils);
+        calculations = new Calculations();
     }
 
     @Test

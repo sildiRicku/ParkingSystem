@@ -10,9 +10,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @AllArgsConstructor
-@NoArgsConstructor
 public class Calculations {
-    private TimeUtils timeUtils;
+    private final TimeUtils timeUtils = new TimeUtils();
 
     public LocalDateTime calculateRemainTimePerRule(LocalDateTime now, Rule rule, MutableDouble remainMoney) {
 

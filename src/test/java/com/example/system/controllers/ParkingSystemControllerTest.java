@@ -2,17 +2,21 @@ package com.example.system.controllers;
 
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.dto.RuleDTO;
+import com.example.system.dto.TransactionDTO;
 import com.example.system.exceptionhandlers.InvalidArgument;
 import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.helperclasses.MutableDouble;
+import com.example.system.models.ParkingSystem;
 import com.example.system.models.TransactionPaymentType;
 import com.example.system.services.ParkingSystemService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,9 +35,10 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 class ParkingSystemControllerTest {
-    private MockMvc mockMvc;
     @Mock
     private ParkingSystemService parkingSystemService;
+    @Mock
+    private ModelMapper modelMapper;
     @Mock
 
     private ParkingSystemController parkingSystemController;
@@ -41,15 +46,14 @@ class ParkingSystemControllerTest {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        parkingSystemController = new ParkingSystemController(parkingSystemService);
-        mockMvc = MockMvcBuilders.standaloneSetup(parkingSystemController).build();
+        parkingSystemController = new ParkingSystemController(parkingSystemService, modelMapper);
 
     }
 
     @Test
     void getParkingSystemById_ExistingId_ReturnsParkingSystemDTO() {
         int id = 1;
-        ParkingSystemDTO parkingSystemDTO = new ParkingSystemDTO(/* add required data here */);
+        ParkingSystemDTO parkingSystemDTO = new ParkingSystemDTO();
         Optional<ParkingSystemDTO> optionalParkingSystemDTO = Optional.of(parkingSystemDTO);
 
         when(parkingSystemService.getParkingSystemById(id)).thenReturn(optionalParkingSystemDTO);
@@ -66,15 +70,14 @@ class ParkingSystemControllerTest {
 
         when(parkingSystemService.getParkingSystemById(id)).thenReturn(optionalParkingSystemDTO);
 
-        assertThrows(ResponseStatusException.class, () -> parkingSystemController.getParkingSystemById(id));
+        assertThrows(NotFoundException.class, () -> parkingSystemController.getParkingSystemById(id));
     }
 
     @Test
     void getAllParkingSystems_ReturnsListOfParkingSystemDTOs() {
         List<ParkingSystemDTO> parkingSystems = new ArrayList<>();
-        parkingSystems.add(new ParkingSystemDTO(/* add required data here */));
-        parkingSystems.add(new ParkingSystemDTO(/* add required data here */));
-        // Add more ParkingSystemDTOs as needed
+        parkingSystems.add(new ParkingSystemDTO());
+        parkingSystems.add(new ParkingSystemDTO());
 
         when(parkingSystemService.getAllParkingSystems()).thenReturn(parkingSystems);
 
@@ -96,8 +99,7 @@ class ParkingSystemControllerTest {
 
         when(parkingSystemService.getParkingSystemById(id)).thenReturn(optionalParkingSystemDTO);
 
-        assertThrows(NotFoundException.class, () ->
-                parkingSystemController.getExitTime(money, id, plateNumber, paymentType, dateTime));
+        assertThrows(NotFoundException.class, () -> parkingSystemController.getExitTime(money, id, plateNumber, paymentType, dateTime));
     }
 
     @Test
@@ -113,8 +115,7 @@ class ParkingSystemControllerTest {
 
         when(parkingSystemService.getParkingSystemById(id)).thenReturn(optionalParkingSystemDTO);
 
-        assertThrows(InvalidArgument.class, () ->
-                parkingSystemController.getExitTime(money, id, plateNumber, paymentType, dateTime));
+        assertThrows(InvalidArgument.class, () -> parkingSystemController.getExitTime(money, id, plateNumber, paymentType, dateTime));
     }
 
     @Test
@@ -133,4 +134,6 @@ class ParkingSystemControllerTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(mockRules, responseEntity.getBody());
     }
+
+
 }

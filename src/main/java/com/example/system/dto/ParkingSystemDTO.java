@@ -3,7 +3,7 @@ package com.example.system.dto;
 import com.example.system.models.ParkingSystem.workingStatus;
 
 import com.example.system.models.Rule;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.system.models.Transaction;
 
 import lombok.*;
 
@@ -31,6 +31,8 @@ public class ParkingSystemDTO {
     private double totalMoney;
 
     private String firmwareVersion;
-    @JsonIgnore
+    private List<Transaction> transactions;
+
     private List<Rule> rules;
+
 }

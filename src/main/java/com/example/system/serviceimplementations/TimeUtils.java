@@ -1,7 +1,8 @@
 package com.example.system.serviceimplementations;
 
-import java.time.LocalDateTime;
+import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 public class TimeUtils {
     LocalDateTime roundToMinutes(LocalDateTime time) {
         if (time.getSecond() >= 30 && time.getMinute() == 59) {

@@ -2,10 +2,10 @@ package com.example.system.services;
 
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.dto.RuleDTO;
+import com.example.system.dto.TransactionDTO;
 import com.example.system.factory.ParkingSystemServiceFactory;
-import com.example.system.models.ParkingSystem;
-import com.example.system.models.Rule;
-import com.example.system.models.TransactionPaymentType;
+import com.example.system.helperclasses.TransactionBuilder;
+import com.example.system.models.*;
 import com.example.system.exceptionhandlers.InvalidArgument;
 import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.helperclasses.MutableDouble;
@@ -22,20 +22,22 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.example.system.interfaces.IParkingSystemService;
 
 @Service
 public class ParkingSystemService {
+    private final TransactionBuilder builder;
     private final ParkingSystemRepo parkingSystemRepo;
+    private final TransactionService transactionService;
     private final ModelMapper modelMapper;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-
     @Autowired
-    public ParkingSystemService(ParkingSystemRepo parkingSystemRepo, ModelMapper modelMapper) {
+    public ParkingSystemService(TransactionBuilder builder, ParkingSystemRepo parkingSystemRepo, TransactionService transactionService, ModelMapper modelMapper) {
+        this.builder = builder;
         this.parkingSystemRepo = parkingSystemRepo;
+        this.transactionService = transactionService;
         this.modelMapper = modelMapper;
     }
 
@@ -79,5 +81,20 @@ public class ParkingSystemService {
         if (transactionPaymentType.equals(TransactionPaymentType.CASH)) {
             return new ParkingResponse(plateNumber, exitTime.format(formatter));
         } else throw new InvalidArgument("Sorry, this payment type is not available yet");
+    }
+
+    public TransactionDTO saveTransactionForParkingSystem(ParkingSystem parkingSystem,TransactionDTO transactionDTO) {
+        TransactionDTO transaction=builder.buildTransactionDTO(parkingSystem
+                ,transactionDTO.getTransactionPaymentType()
+                ,transactionDTO.getEntryTime()
+                ,transactionDTO.getTransactionValue()
+                ,transactionDTO.getEstimatedExitTime()
+                ,transactionDTO.getPlateNumber());
+        double newTotalMoney=parkingSystem.getTotalMoney()+transactionDTO.getTransactionValue();
+        parkingSystem.setTotalMoney(newTotalMoney);
+        Transaction tr=modelMapper.map(transaction, Transaction.class);
+        transactionService.saveTransaction(tr);
+        parkingSystemRepo.save(parkingSystem);
+        return transaction;
     }
 }
