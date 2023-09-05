@@ -2,6 +2,7 @@ package com.example.system.controllers;
 
 import com.example.system.dto.RuleDTO;
 import com.example.system.dto.TransactionDTO;
+import com.example.system.models.ParkingSystem;
 import com.example.system.models.TransactionPaymentType;
 import com.example.system.exceptionhandlers.InvalidArgument;
 import com.example.system.exceptionhandlers.NotFoundException;
@@ -9,6 +10,7 @@ import com.example.system.helperclasses.MutableDouble;
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.helperclasses.ParkingResponse;
 import com.example.system.services.ParkingSystemService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +26,13 @@ import java.util.Optional;
 public class ParkingSystemController {
 
     private final ParkingSystemService parkingSystemService;
+    private final ModelMapper modelMapper;
 
 
     @Autowired
-    public ParkingSystemController(ParkingSystemService parkingSystemService) {
+    public ParkingSystemController(ParkingSystemService parkingSystemService, ModelMapper modelMapper) {
         this.parkingSystemService = parkingSystemService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/{id}")
@@ -68,13 +72,10 @@ public class ParkingSystemController {
     }
 
     @PostMapping("/addTrans")
-    public ResponseEntity<TransactionDTO> addTransaction(@RequestParam int parkingSystemId, @RequestParam TransactionPaymentType transactionPaymentType, @RequestParam double money, @RequestParam String plateNumber) {
-        LocalDateTime entryTime = LocalDateTime.now();
-        MutableDouble mutableMoney = new MutableDouble(money);
-        if (money >= 0) {
-            ParkingSystemDTO parkingSystemDTO = getParkingSystemById(parkingSystemId);
-            TransactionDTO savedTransaction = parkingSystemService.saveTransactionForParkingSystem(parkingSystemDTO, transactionPaymentType, entryTime, mutableMoney, plateNumber);
-            return ResponseEntity.ok(savedTransaction);
-        } else throw new InvalidArgument("You can not input a negative money value");
+    public ResponseEntity<TransactionDTO> addTransaction(@RequestParam int parkingSystemId, @RequestBody TransactionDTO transactionDTO) {
+        ParkingSystemDTO parkingSystemDTO = getParkingSystemById(parkingSystemId);
+        ParkingSystem parkingSystem = modelMapper.map(parkingSystemDTO, ParkingSystem.class);
+        TransactionDTO savedTransaction = parkingSystemService.saveTransactionForParkingSystem(parkingSystem,transactionDTO);
+        return ResponseEntity.ok(savedTransaction);
     }
 }

@@ -25,8 +25,8 @@ public class Transaction {
     private String plateNumber;
     @Column(name = "entryTime")
     private LocalDateTime entryTime;
-    @Column(name = "exitTime")
-    private LocalDateTime exitTime;
+    @Column(name = "estimatedExitTime")
+    private LocalDateTime estimatedExitTime;
     @Column(name = "value")
     private double transactionValue;
     @Enumerated(EnumType.STRING)

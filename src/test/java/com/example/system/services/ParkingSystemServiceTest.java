@@ -2,13 +2,16 @@ package com.example.system.services;
 
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.dto.RuleDTO;
+import com.example.system.dto.TransactionDTO;
 import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.helperclasses.MutableDouble;
 import com.example.system.helperclasses.TransactionBuilder;
 import com.example.system.models.ParkingSystem;
 import com.example.system.models.Rule;
 import com.example.system.models.TransactionPaymentType;
+import com.example.system.models.TransactionStatus;
 import com.example.system.repositories.ParkingSystemRepo;
+import com.example.system.serviceimplementations.ParkingSystemServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +39,8 @@ class ParkingSystemServiceTest {
 
     @Mock
     private ParkingSystemRepo parkingSystemRepo;
+    @Mock
+    private ParkingSystemServiceImpl parkingSystemServiceImpl;
     @Mock
     private TransactionBuilder builder;
     @Mock
@@ -175,4 +180,19 @@ class ParkingSystemServiceTest {
         verify(parkingSystemRepo).findById(parkingSystemId);
     }
 
+    @Test
+    void saveTransactionForParkingSystem() {
+        ParkingSystem parkingSystem = Mockito.mock(ParkingSystem.class);
+        TransactionDTO transactionDTO = Mockito.mock(TransactionDTO.class);
+
+        when(parkingSystemServiceImpl.calculateExitTime(any(), any(), any())).thenReturn(LocalDateTime.now());
+
+        TransactionDTO result = parkingSystemService.saveTransactionForParkingSystem(parkingSystem, transactionDTO);
+
+        verify(transactionService).saveTransaction(any());
+        verify(parkingSystemRepo).save(any());
+        TransactionDTO expectedResult = Mockito.mock(TransactionDTO.class);
+
+//         assertEquals(expectedResult, result);
+    }
 }

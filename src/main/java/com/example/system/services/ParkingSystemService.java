@@ -83,21 +83,18 @@ public class ParkingSystemService {
         } else throw new InvalidArgument("Sorry, this payment type is not available yet");
     }
 
-    public TransactionDTO saveTransactionForParkingSystem(ParkingSystemDTO parkingSystemDTO, TransactionPaymentType transactionPaymentType, LocalDateTime entryTime, MutableDouble money, String plateNumber) {
-        ParkingSystem parkingSystem = modelMapper.map(parkingSystemDTO, ParkingSystem.class);
-
-        double transactionValue = money.getValue();
-        parkingSystem.setTotalMoney(parkingSystemDTO.getTotalMoney() + transactionValue);
-
-        ParkingResponse response = getExitTime(entryTime, parkingSystemDTO, money, plateNumber, transactionPaymentType);
-
-        TransactionDTO transactionDTO = builder.buildTransactionDTO(parkingSystem, transactionPaymentType, entryTime, transactionValue, response.getExitTime(), plateNumber);
-
-        Transaction transaction = modelMapper.map(transactionDTO, Transaction.class);
-        transactionService.saveTransaction(transaction);
-
+    public TransactionDTO saveTransactionForParkingSystem(ParkingSystem parkingSystem,TransactionDTO transactionDTO) {
+        TransactionDTO transaction=builder.buildTransactionDTO(parkingSystem
+                ,transactionDTO.getTransactionPaymentType()
+                ,transactionDTO.getEntryTime()
+                ,transactionDTO.getTransactionValue()
+                ,transactionDTO.getEstimatedExitTime()
+                ,transactionDTO.getPlateNumber());
+        double newTotalMoney=parkingSystem.getTotalMoney()+transactionDTO.getTransactionValue();
+        parkingSystem.setTotalMoney(newTotalMoney);
+        Transaction tr=modelMapper.map(transaction, Transaction.class);
+        transactionService.saveTransaction(tr);
         parkingSystemRepo.save(parkingSystem);
-
-        return transactionDTO;
+        return transaction;
     }
 }

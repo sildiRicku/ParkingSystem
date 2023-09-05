@@ -21,10 +21,7 @@ class ParkingSystemServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        Validations validations = new Validations();
-        TimeUtils timeUtils = new TimeUtils();
-        Calculations calculations = new Calculations(timeUtils);
-        parkingSystem = new ParkingSystemServiceImpl(calculations, validations);
+        parkingSystem = new ParkingSystemServiceImpl();
     }
 
 

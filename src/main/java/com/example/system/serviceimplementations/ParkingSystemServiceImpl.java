@@ -5,16 +5,17 @@ import com.example.system.models.Rule;
 import com.example.system.helperclasses.MutableDouble;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 @AllArgsConstructor
-@NoArgsConstructor
+@Component
 public class ParkingSystemServiceImpl implements IParkingSystemService {
-    private Calculations ruleCalculations;
-    private Validations validations;
+    private final Calculations ruleCalculations=new Calculations();
+    private final Validations validations=new Validations();
 
 
 

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class TransactionService {
     private final TransactionRepo transactionRepo;
-    private ModelMapper modelMapper;
 
 
     public Transaction saveTransaction(Transaction transaction) {
