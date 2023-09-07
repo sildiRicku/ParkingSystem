@@ -3,6 +3,7 @@ package com.example.system.models;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -58,6 +59,8 @@ public class ParkingSystem {
     private List<Rule> rules;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "adminId", referencedColumnName = "id")
+    @JsonIgnore
+
     private Admin admin;
 
     public enum workingStatus {
