@@ -43,4 +43,16 @@ public class Rule {
         this.startTime = startTime;
         this.endTime = endTime;
     }
+
+    @Override
+    public String toString() {
+        return "Rule{" +
+                "ruleId=" + ruleId + "\n" +
+                ", name='" + name + '\'' + "\n" +
+                ", details='" + details + '\'' + "\n" +
+                ", cost=" + cost + "\n" +
+                ", startTime=" + startTime + "\n" +
+                ", endTime=" + endTime + "\n" +
+                '}';
+    }
 }

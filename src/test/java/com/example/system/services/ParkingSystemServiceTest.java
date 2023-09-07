@@ -9,7 +9,7 @@ import com.example.system.helperclasses.TransactionBuilder;
 import com.example.system.models.ParkingSystem;
 import com.example.system.models.Rule;
 import com.example.system.models.TransactionPaymentType;
-import com.example.system.models.TransactionStatus;
+import com.example.system.repositories.AdminRepo;
 import com.example.system.repositories.ParkingSystemRepo;
 import com.example.system.serviceimplementations.ParkingSystemServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,6 +49,7 @@ class ParkingSystemServiceTest {
     private ModelMapper modelMapper;
 
     private ParkingSystemService parkingSystemService;
+
 
 
     @BeforeEach
@@ -184,6 +185,7 @@ class ParkingSystemServiceTest {
     void saveTransactionForParkingSystem() {
         ParkingSystem parkingSystem = Mockito.mock(ParkingSystem.class);
         TransactionDTO transactionDTO = Mockito.mock(TransactionDTO.class);
+        transactionDTO.setTransactionId(22);
 
         when(parkingSystemServiceImpl.calculateExitTime(any(), any(), any())).thenReturn(LocalDateTime.now());
 

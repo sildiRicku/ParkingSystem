@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+
 @ControllerAdvice
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -23,4 +24,14 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleInvalidArguments(InvalidArgument ex, WebRequest request) {
         return new ResponseEntity<>(new ApiError(ex.getMessage(), LocalDateTime.now().format(formatter), HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
     }
+
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public Map<String, String> handleInvalidMethodArgument(MethodArgumentNotValidException ex) {
+//        Map<String, String> errorMap = new HashMap<>();
+//        ex.getBindingResult().getFieldErrors().forEach(error ->
+//                errorMap.put(error.getField(), error.getDefaultMessage())
+//        );
+//        return errorMap;
+//    }
 }

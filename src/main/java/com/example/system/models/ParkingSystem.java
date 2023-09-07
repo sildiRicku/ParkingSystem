@@ -56,6 +56,9 @@ public class ParkingSystem {
     )
 
     private List<Rule> rules;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "adminId", referencedColumnName = "id")
+    private Admin admin;
 
     public enum workingStatus {
         WORKING,

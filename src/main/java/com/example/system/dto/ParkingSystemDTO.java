@@ -1,5 +1,6 @@
 package com.example.system.dto;
 
+import com.example.system.models.Admin;
 import com.example.system.models.ParkingSystem.workingStatus;
 
 import com.example.system.models.Rule;
@@ -34,5 +35,6 @@ public class ParkingSystemDTO {
     private List<Transaction> transactions;
 
     private List<Rule> rules;
+    private Admin admin;
 
 }

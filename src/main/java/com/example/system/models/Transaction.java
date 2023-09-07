@@ -38,5 +38,16 @@ public class Transaction {
     @JsonIgnore
     private ParkingSystem parkingSystem;
 
-
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "transactionId=" + transactionId + "\n" +
+                ", transactionPaymentType=" + transactionPaymentType + "\n" +
+                ", plateNumber='" + plateNumber + '\'' + "\n" +
+                ", entryTime=" + entryTime + "\n" +
+                ", estimatedExitTime=" + estimatedExitTime + "\n" +
+                ", transactionValue=" + transactionValue + "\n" +
+                ", transactionStatus=" + transactionStatus + "\n" +
+                '}';
+    }
 }

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +19,7 @@ public class TransactionDTO {
     private TransactionPaymentType transactionPaymentType;
     private String plateNumber;
     @JsonIgnore
-    private LocalDateTime entryTime=LocalDateTime.now();
+    private LocalDateTime entryTime= LocalDateTime.now();
     @JsonIgnore
     private LocalDateTime estimatedExitTime;
     private double transactionValue;
