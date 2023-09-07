@@ -33,7 +33,7 @@ public class Transaction {
     @Column(name = "transactionStatus")
     private TransactionStatus transactionStatus;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "parking_system_id", referencedColumnName = "systemId")
     @JsonIgnore
     private ParkingSystem parkingSystem;

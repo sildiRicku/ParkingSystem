@@ -13,12 +13,12 @@ INSERT INTO parkingdb.parking_system (address, firmware_version, first_install_d
                                       total_money,
                                       working_status, admin_id)
 VALUES ('Main Street', '1.0', '2022-05-10', 'PSYSTEM001', 'never', '1500', 'WORKING',
-        (SELECT id FROM admin WHERE full_name = 'Klea Prifti'));
+        (SELECT id FROM admin WHERE email = 'romeisaaliu1@gmail.com'));
 INSERT INTO parkingdb.parking_system(address, firmware_version, first_install_date, unique_identifier, last_update,
                                      total_money,
                                      working_status, admin_id)
 VALUES ('Downtown', '1.2', '2023-01-01', 'PSYSTEM002', 'never', '3000', 'WORKING',
-        (SELECT id FROM admin WHERE full_name = 'Romeisa Aliu'));
+        (SELECT id FROM admin WHERE email = 'kleaprifti21@gmail.com'));
 
 
 #insert into rule #
@@ -28,6 +28,7 @@ INSERT INTO parkingdb.rule (cost, details, end_time, name, start_time)
 VALUES ('0.5', 'Discount during night', '08:00', 'R2', '20:00');
 INSERT INTO parkingdb.rule (cost, details, end_time, name, start_time)
 VALUES ('0', 'Free during night', '08:00', 'R3', '20:00');
+
 
 
 #assign rule to parking system#
@@ -92,4 +93,5 @@ INSERT INTO parkingdb.period (day_number, period_id, rule_applied_id)
 VALUES ('2', '3', (SELECT rule_id FROM rule WHERE name = 'R3'));
 INSERT INTO parkingdb.period (day_number, period_id, rule_applied_id)
 VALUES ('1', '3', (SELECT rule_id FROM rule WHERE name = 'R3'));
+
 

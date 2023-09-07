@@ -56,7 +56,7 @@ public class ParkingSystem {
     )
 
     private List<Rule> rules;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "adminId", referencedColumnName = "id")
     private Admin admin;
 

@@ -10,6 +10,7 @@ import com.example.system.exceptionhandlers.InvalidArgument;
 import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.helperclasses.MutableDouble;
 import com.example.system.helperclasses.ParkingResponse;
+import com.example.system.repositories.AdminRepo;
 import com.example.system.repositories.ParkingSystemRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,16 +84,17 @@ public class ParkingSystemService {
         } else throw new InvalidArgument("Sorry, this payment type is not available yet");
     }
 
-    public TransactionDTO saveTransactionForParkingSystem(ParkingSystem parkingSystem,TransactionDTO transactionDTO) {
-        TransactionDTO transaction=builder.buildTransactionDTO(parkingSystem
-                ,transactionDTO.getTransactionPaymentType()
-                ,transactionDTO.getEntryTime()
-                ,transactionDTO.getTransactionValue()
-                ,transactionDTO.getEstimatedExitTime()
-                ,transactionDTO.getPlateNumber());
-        double newTotalMoney=parkingSystem.getTotalMoney()+transactionDTO.getTransactionValue();
+    public TransactionDTO saveTransactionForParkingSystem(ParkingSystem parkingSystem, TransactionDTO transactionDTO) {
+        TransactionDTO transaction = builder.buildTransactionDTO(parkingSystem
+                , transactionDTO.getTransactionPaymentType()
+                , transactionDTO.getEntryTime()
+                , transactionDTO.getTransactionValue()
+                , transactionDTO.getEstimatedExitTime()
+                , transactionDTO.getPlateNumber());
+        transaction.setTransactionId(22);
+        double newTotalMoney = parkingSystem.getTotalMoney() + transactionDTO.getTransactionValue();
         parkingSystem.setTotalMoney(newTotalMoney);
-        Transaction tr=modelMapper.map(transaction, Transaction.class);
+        Transaction tr = modelMapper.map(transaction, Transaction.class);
         transactionService.saveTransaction(tr);
         parkingSystemRepo.save(parkingSystem);
         return transaction;

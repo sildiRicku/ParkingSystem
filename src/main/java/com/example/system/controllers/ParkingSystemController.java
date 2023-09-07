@@ -3,6 +3,7 @@ package com.example.system.controllers;
 import com.example.system.dto.RuleDTO;
 import com.example.system.dto.TransactionDTO;
 import com.example.system.models.ParkingSystem;
+import com.example.system.models.Transaction;
 import com.example.system.models.TransactionPaymentType;
 import com.example.system.exceptionhandlers.InvalidArgument;
 import com.example.system.exceptionhandlers.NotFoundException;
@@ -77,5 +78,11 @@ public class ParkingSystemController {
         ParkingSystem parkingSystem = modelMapper.map(parkingSystemDTO, ParkingSystem.class);
         TransactionDTO savedTransaction = parkingSystemService.saveTransactionForParkingSystem(parkingSystem,transactionDTO);
         return ResponseEntity.ok(savedTransaction);
+    }
+
+    @GetMapping("/getTrans")
+    public List<Transaction> getAllTransactionsForParkingSystem(int id){
+        Optional<ParkingSystemDTO> parkingSystem=parkingSystemService.getParkingSystemById(id);
+        return parkingSystem.get().getTransactions();
     }
 }
