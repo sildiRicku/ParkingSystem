@@ -185,6 +185,7 @@ class ParkingSystemServiceTest {
     void saveTransactionForParkingSystem() {
         ParkingSystem parkingSystem = Mockito.mock(ParkingSystem.class);
         TransactionDTO transactionDTO = Mockito.mock(TransactionDTO.class);
+        transactionDTO.setTransactionId(22);
 
         when(parkingSystemServiceImpl.calculateExitTime(any(), any(), any())).thenReturn(LocalDateTime.now());
 
