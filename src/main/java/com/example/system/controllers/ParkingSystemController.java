@@ -76,13 +76,15 @@ public class ParkingSystemController {
     public ResponseEntity<TransactionDTO> addTransaction(@RequestParam int parkingSystemId, @RequestBody TransactionDTO transactionDTO) {
         ParkingSystemDTO parkingSystemDTO = getParkingSystemById(parkingSystemId);
         ParkingSystem parkingSystem = modelMapper.map(parkingSystemDTO, ParkingSystem.class);
-        TransactionDTO savedTransaction = parkingSystemService.saveTransactionForParkingSystem(parkingSystem,transactionDTO);
+        TransactionDTO savedTransaction = parkingSystemService.saveTransactionForParkingSystem(parkingSystem, transactionDTO);
         return ResponseEntity.ok(savedTransaction);
     }
 
     @GetMapping("/getTrans")
-    public List<Transaction> getAllTransactionsForParkingSystem(int id){
-        Optional<ParkingSystemDTO> parkingSystem=parkingSystemService.getParkingSystemById(id);
-        return parkingSystem.get().getTransactions();
+    public List<Transaction> getAllTransactionsForParkingSystem(int id) {
+        Optional<ParkingSystemDTO> parkingSystem = parkingSystemService.getParkingSystemById(id);
+        if (parkingSystem.isPresent()) {
+            return parkingSystem.get().getTransactions();
+        } else throw new NotFoundException("Parking System with this Id is not available");
     }
 }
