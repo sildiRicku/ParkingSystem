@@ -8,8 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface TransactionRepo extends JpaRepository<Transaction, Integer> {
-//    @Query(value = "SELECT * FROM transactions t WHERE t.entry_time >= DATE_SUB(NOW(), INTERVAL 24 HOUR)", nativeQuery = true)
-//    List<Transaction> findTransactionsInLast24Hours();
     @Query(value = "SELECT * FROM transactions t WHERE t.parking_system_id = :parkingSystemId AND t.entry_time >= DATE_SUB(NOW(), INTERVAL 24 HOUR)", nativeQuery = true)
     List<Transaction> findTransactionsInLast24HoursForParkingSystem(@Param("parkingSystemId") int parkingSystemId);
 

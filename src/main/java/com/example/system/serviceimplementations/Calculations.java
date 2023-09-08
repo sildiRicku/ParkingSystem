@@ -3,7 +3,6 @@ package com.example.system.serviceimplementations;
 import com.example.system.models.Rule;
 import com.example.system.helperclasses.MutableDouble;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

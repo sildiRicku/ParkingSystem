@@ -4,7 +4,6 @@ import com.example.system.interfaces.IParkingSystemService;
 import com.example.system.models.Rule;
 import com.example.system.helperclasses.MutableDouble;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

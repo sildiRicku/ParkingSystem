@@ -33,8 +33,7 @@ public class TransactionBuilder {
 
     public LocalDateTime calculateExitTime(ParkingSystem parkingSystem,TransactionDTO transactionDTO){
         MutableDouble money = new MutableDouble(transactionDTO.getTransactionValue());
-        LocalDateTime exitTime = parkingSystemService.calculateExitTime(transactionDTO.getEntryTime(),money,parkingSystem.getRules());
-        return exitTime;
+        return parkingSystemService.calculateExitTime(transactionDTO.getEntryTime(),money,parkingSystem.getRules());
     }
 
 }

@@ -1,6 +1,5 @@
 package com.example.system.serviceimplementations;
 
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 public class TimeUtils {
