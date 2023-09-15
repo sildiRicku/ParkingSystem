@@ -5,6 +5,7 @@ import com.example.system.models.TransactionPaymentType;
 import com.example.system.models.TransactionStatus;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ public class TransactionDTO {
     private TransactionPaymentType transactionPaymentType;
     private String plateNumber;
     @JsonIgnore
-    private LocalDateTime entryTime= LocalDateTime.now();
+    private LocalDateTime entryTime = LocalDateTime.now();
     @JsonIgnore
     private LocalDateTime estimatedExitTime;
     private double transactionValue;

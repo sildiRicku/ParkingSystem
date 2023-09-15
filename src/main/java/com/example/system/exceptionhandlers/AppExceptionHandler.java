@@ -1,7 +1,10 @@
 package com.example.system.exceptionhandlers;
 
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -12,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 
 
 @ControllerAdvice
+@Order(Ordered.HIGHEST_PRECEDENCE) // Set the highest precedence
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
@@ -24,4 +28,6 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleInvalidArguments(InvalidArgument ex, WebRequest request) {
         return new ResponseEntity<>(new ApiError(ex.getMessage(), LocalDateTime.now().format(formatter), HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
     }
+
+
 }

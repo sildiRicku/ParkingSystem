@@ -10,6 +10,7 @@ import com.example.system.helperclasses.MutableDouble;
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.helperclasses.ParkingResponse;
 import com.example.system.services.ParkingSystemService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -71,7 +72,7 @@ public class ParkingSystemController {
     }
 
     @PostMapping("/confirm-transaction")
-    public ResponseEntity<TransactionDTO> addTransaction(@RequestParam int parkingSystemId, @RequestBody TransactionDTO transactionDTO) {
+    public ResponseEntity<TransactionDTO> addTransaction(@RequestParam int parkingSystemId, @RequestBody @Valid TransactionDTO transactionDTO) {
         ParkingSystemDTO parkingSystemDTO = getParkingSystemById(parkingSystemId);
         ParkingSystem parkingSystem = modelMapper.map(parkingSystemDTO, ParkingSystem.class);
         TransactionDTO savedTransaction = parkingSystemService.saveTransactionForParkingSystem(parkingSystem, transactionDTO);
