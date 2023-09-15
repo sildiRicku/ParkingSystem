@@ -3,7 +3,6 @@ package com.example.system.controllers;
 import com.example.system.dto.RuleDTO;
 import com.example.system.dto.TransactionDTO;
 import com.example.system.models.ParkingSystem;
-import com.example.system.models.Transaction;
 import com.example.system.models.TransactionPaymentType;
 import com.example.system.exceptionhandlers.InvalidArgument;
 import com.example.system.exceptionhandlers.NotFoundException;
@@ -58,7 +57,7 @@ public class ParkingSystemController {
         return ResponseEntity.ok(rules);
     }
 
-    @GetMapping("/parking-time")
+    @GetMapping("/exitTime-preview")
     public ParkingResponse getExitTime(@RequestParam("money") double money, @RequestParam("id") int id, @RequestParam("plateNumber") String platenumber, @RequestParam("paymentType") TransactionPaymentType transactionPaymentType, @RequestParam(value = "dateTime", required = false, defaultValue = "${date.now}") LocalDateTime dateTime) {
         MutableDouble moneyObject = new MutableDouble(money);
         Optional<ParkingSystemDTO> parkingSystem = parkingSystemService.getParkingSystemById(id);
@@ -69,22 +68,13 @@ public class ParkingSystemController {
             throw new InvalidArgument("You can not use a negative money value");
         }
         return parkingSystemService.getExitTime(dateTime, parkingSystem.get(), moneyObject, platenumber, transactionPaymentType);
-
     }
 
-    @PostMapping("/addTrans")
+    @PostMapping("/confirm-transaction")
     public ResponseEntity<TransactionDTO> addTransaction(@RequestParam int parkingSystemId, @RequestBody TransactionDTO transactionDTO) {
         ParkingSystemDTO parkingSystemDTO = getParkingSystemById(parkingSystemId);
         ParkingSystem parkingSystem = modelMapper.map(parkingSystemDTO, ParkingSystem.class);
         TransactionDTO savedTransaction = parkingSystemService.saveTransactionForParkingSystem(parkingSystem, transactionDTO);
         return ResponseEntity.ok(savedTransaction);
-    }
-
-    @GetMapping("/getTrans")
-    public List<Transaction> getAllTransactionsForParkingSystem(int id) {
-        Optional<ParkingSystemDTO> parkingSystem = parkingSystemService.getParkingSystemById(id);
-        if (parkingSystem.isPresent()) {
-            return parkingSystem.get().getTransactions();
-        } else throw new NotFoundException("Parking System with this Id is not available");
     }
 }

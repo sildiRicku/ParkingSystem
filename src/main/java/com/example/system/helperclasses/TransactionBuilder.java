@@ -4,36 +4,27 @@ import com.example.system.dto.TransactionDTO;
 import com.example.system.models.ParkingSystem;
 import com.example.system.models.TransactionPaymentType;
 import com.example.system.models.TransactionStatus;
-import com.example.system.serviceimplementations.ParkingSystemServiceImpl;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Component
 public class TransactionBuilder {
-    private final ParkingSystemServiceImpl parkingSystemService;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    private final ExitTimeCalculator exitTimeCalculator;
 
-    public TransactionBuilder(ParkingSystemServiceImpl parkingSystemService) {
-        this.parkingSystemService = parkingSystemService;
+    public TransactionBuilder(ExitTimeCalculator exitTimeCalculator) {
+        this.exitTimeCalculator = exitTimeCalculator;
     }
 
-    public TransactionDTO buildTransactionDTO(ParkingSystem parkingSystem, TransactionPaymentType transactionPaymentType, LocalDateTime entryTime, double transactionValue, LocalDateTime exitTime, String plateNumber) {
+    public TransactionDTO buildTransactionDTO(ParkingSystem parkingSystem, TransactionPaymentType transactionPaymentType, LocalDateTime entryTime, double transactionValue, String plateNumber) {
         TransactionDTO transactionDTO = new TransactionDTO();
         transactionDTO.setParkingSystem(parkingSystem);
         transactionDTO.setTransactionStatus(TransactionStatus.SUCCESS);
         transactionDTO.setTransactionPaymentType(transactionPaymentType);
         transactionDTO.setEntryTime(entryTime);
         transactionDTO.setTransactionValue(transactionValue);
-        transactionDTO.setEstimatedExitTime(calculateExitTime(parkingSystem,transactionDTO));
+        transactionDTO.setEstimatedExitTime(exitTimeCalculator.calculateExitTime(entryTime, transactionValue, parkingSystem.getRules()));
         transactionDTO.setPlateNumber(plateNumber);
         return transactionDTO;
     }
-
-    public LocalDateTime calculateExitTime(ParkingSystem parkingSystem,TransactionDTO transactionDTO){
-        MutableDouble money = new MutableDouble(transactionDTO.getTransactionValue());
-        return parkingSystemService.calculateExitTime(transactionDTO.getEntryTime(),money,parkingSystem.getRules());
-    }
-
 }

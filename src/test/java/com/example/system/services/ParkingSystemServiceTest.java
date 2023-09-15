@@ -4,12 +4,12 @@ import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.dto.RuleDTO;
 import com.example.system.dto.TransactionDTO;
 import com.example.system.exceptionhandlers.NotFoundException;
+import com.example.system.helperclasses.ExitTimeCalculator;
 import com.example.system.helperclasses.MutableDouble;
 import com.example.system.helperclasses.TransactionBuilder;
 import com.example.system.models.ParkingSystem;
 import com.example.system.models.Rule;
 import com.example.system.models.TransactionPaymentType;
-import com.example.system.repositories.AdminRepo;
 import com.example.system.repositories.ParkingSystemRepo;
 import com.example.system.serviceimplementations.ParkingSystemServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +35,6 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 class ParkingSystemServiceTest {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     @Mock
     private ParkingSystemRepo parkingSystemRepo;
@@ -47,9 +46,7 @@ class ParkingSystemServiceTest {
     private TransactionService transactionService;
     @Mock
     private ModelMapper modelMapper;
-
     private ParkingSystemService parkingSystemService;
-
 
 
     @BeforeEach

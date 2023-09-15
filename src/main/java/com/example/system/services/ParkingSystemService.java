@@ -82,12 +82,12 @@ public class ParkingSystemService {
             return new ParkingResponse(plateNumber, exitTime.format(formatter));
         } else throw new InvalidArgument("Sorry, this payment type is not available yet");
     }
+
     public TransactionDTO saveTransactionForParkingSystem(ParkingSystem parkingSystem, TransactionDTO transactionDTO) {
         TransactionDTO transaction = builder.buildTransactionDTO(parkingSystem
                 , transactionDTO.getTransactionPaymentType()
                 , transactionDTO.getEntryTime()
                 , transactionDTO.getTransactionValue()
-                , transactionDTO.getEstimatedExitTime()
                 , transactionDTO.getPlateNumber());
         double newTotalMoney = parkingSystem.getTotalMoney() + transactionDTO.getTransactionValue();
         parkingSystem.setTotalMoney(newTotalMoney);
