@@ -26,7 +26,6 @@ public class TransactionBuilder {
                 transactionDTO.setParkingSystem(parkingSystem);
                 transactionDTO.setTransactionStatus(TransactionStatus.SUCCESS);
                 transactionDTO.setTransactionPaymentType(transactionPaymentType);
-                transactionDTO.setEntryTime(entryTime);
                 transactionDTO.setTransactionValue(transactionValue);
                 transactionDTO.setEstimatedExitTime(exitTimeCalculator.calculateExitTime(entryTime, transactionValue, parkingSystem.getRules()));
                 transactionDTO.setPlateNumber(plateNumber);
