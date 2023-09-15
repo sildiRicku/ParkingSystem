@@ -32,6 +32,6 @@ public class TransactionBuilder {
                 return transactionDTO;
             }
         }
-        throw new InvalidArgument("Only Cash Acepted at the moment");
+        throw new InvalidArgument("Only Cash Accepted at the moment");
     }
 }
