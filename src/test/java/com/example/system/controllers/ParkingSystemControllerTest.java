@@ -13,15 +13,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -135,5 +131,22 @@ class ParkingSystemControllerTest {
         assertEquals(mockRules, responseEntity.getBody());
     }
 
+    @Test
+    void addTransaction_ReturnsTransactionDTO() {
+        int parkingSystemId = 1;
+        TransactionDTO transactionDTO = new TransactionDTO();
+
+        ParkingSystemDTO parkingSystemDTO = new ParkingSystemDTO();
+        ParkingSystem parkingSystem = new ParkingSystem(); // You might need to create a ParkingSystem object here.
+
+        when(parkingSystemService.getParkingSystemById(parkingSystemId)).thenReturn(Optional.of(parkingSystemDTO));
+        when(modelMapper.map(parkingSystemDTO, ParkingSystem.class)).thenReturn(parkingSystem);
+        when(parkingSystemService.saveTransactionForParkingSystem(parkingSystem, transactionDTO)).thenReturn(transactionDTO);
+
+        ResponseEntity<TransactionDTO> responseEntity = parkingSystemController.addTransaction(parkingSystemId, transactionDTO);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(transactionDTO, responseEntity.getBody());
+    }
 
 }
