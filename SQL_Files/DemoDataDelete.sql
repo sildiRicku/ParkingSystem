@@ -1,7 +1,7 @@
 use parkingdb;
 #delete transactions
 DELETE
-FROM parkingdb.transaction;
+FROM parkingdb.transactions;
 #remove period assignment to rule#
 DELETE
 FROM parkingdb.period;

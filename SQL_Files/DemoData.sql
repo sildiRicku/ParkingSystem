@@ -30,7 +30,6 @@ INSERT INTO parkingdb.rule (cost, details, end_time, name, start_time)
 VALUES ('0', 'Free during night', '08:00', 'R3', '20:00');
 
 
-
 #assign rule to parking system#
 INSERT INTO parkingdb.parking_system_rule(parking_system_id, rule_id)
 VALUES ((SELECT system_id FROM parking_system WHERE unique_identifier = 'PSYSTEM001'),
@@ -47,7 +46,6 @@ VALUES ((SELECT system_id FROM parking_system WHERE unique_identifier = 'PSYSTEM
 
 #assign period to rule#
 
-use parkingdb;
 INSERT INTO parkingdb.period (day_number, period_id, rule_applied_id)
 VALUES ('1', '1', (SELECT rule_id FROM rule WHERE name = 'R1'));
 INSERT INTO parkingdb.period (day_number, period_id, rule_applied_id)
