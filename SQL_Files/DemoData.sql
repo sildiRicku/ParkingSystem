@@ -11,9 +11,9 @@ VALUES ('2', 'CSV_FILE');
 #insert into admin#
 
 INSERT INTO admin (full_Name, email, email_preference_id)
-VALUES ('Romeisa aliu', 'romeisaaliu1@gmail.com', 1);
+VALUES ('Romeisa aliu', 'sildiricku3@gmail.com', 1);
 INSERT INTO admin (full_Name, email, email_preference_id)
-VALUES ('Klea Prifti', 'kleaprifti21@gmail.com', 2);
+VALUES ('Klea Prifti', 'sildiricku4@gmail.com', 2);
 
 #insert into parking system#
 
