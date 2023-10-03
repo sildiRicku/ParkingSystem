@@ -1,6 +1,8 @@
 package com.example.system.models;
 
 
+import com.example.system.enums.TransactionPaymentType;
+import com.example.system.enums.TransactionStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;

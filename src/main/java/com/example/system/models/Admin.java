@@ -1,5 +1,6 @@
 package com.example.system.models;
 
+import com.example.system.enums.EmailPreference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -26,7 +27,11 @@ public class Admin {
     @Column(name = "email", nullable = false, unique = true)
     @Email(message = "Bad Email Format")
     private String email;
+    @ManyToOne
+    @JoinColumn(name = "email_preference_id", referencedColumnName = "preferenceId")
+    private AdminEmailPreference emailPreference;
     @OneToMany(mappedBy = "admin")
     @JsonIgnoreProperties
     private List<ParkingSystem> parkingSystems;
 }
+

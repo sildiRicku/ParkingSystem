@@ -1,10 +1,19 @@
 use parkingdb;
+
+
+#insert into preferences
+
+INSERT INTO `parkingdb`.`admin_email_preference` (`preference_id`, `preference`)
+VALUES ('1', 'TEXT');
+INSERT INTO `parkingdb`.`admin_email_preference` (`preference_id`, `preference`)
+VALUES ('2', 'CSV_FILE');
+
 #insert into admin#
 
-INSERT INTO admin (full_Name, email)
-VALUES ('Romeisa aliu', 'romeisaaliu1@gmail.com');
-INSERT INTO admin (full_Name, email)
-VALUES ('Klea Prifti', 'kleaprifti21@gmail.com');
+INSERT INTO admin (full_Name, email, email_preference_id)
+VALUES ('Romeisa aliu', 'romeisaaliu1@gmail.com', 1);
+INSERT INTO admin (full_Name, email, email_preference_id)
+VALUES ('Klea Prifti', 'kleaprifti21@gmail.com', 2);
 
 #insert into parking system#
 

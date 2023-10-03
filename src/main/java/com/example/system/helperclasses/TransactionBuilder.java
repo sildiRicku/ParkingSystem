@@ -3,8 +3,8 @@ package com.example.system.helperclasses;
 import com.example.system.dto.TransactionDTO;
 import com.example.system.exceptionhandlers.InvalidArgument;
 import com.example.system.models.ParkingSystem;
-import com.example.system.models.TransactionPaymentType;
-import com.example.system.models.TransactionStatus;
+import com.example.system.enums.TransactionPaymentType;
+import com.example.system.enums.TransactionStatus;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

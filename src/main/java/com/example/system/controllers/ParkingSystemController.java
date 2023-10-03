@@ -3,7 +3,7 @@ package com.example.system.controllers;
 import com.example.system.dto.RuleDTO;
 import com.example.system.dto.TransactionDTO;
 import com.example.system.models.ParkingSystem;
-import com.example.system.models.TransactionPaymentType;
+import com.example.system.enums.TransactionPaymentType;
 import com.example.system.exceptionhandlers.InvalidArgument;
 import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.helperclasses.MutableDouble;
