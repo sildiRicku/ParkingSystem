@@ -1,6 +1,5 @@
 package com.example.system.models;
 
-import com.example.system.enums.EmailPreference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
