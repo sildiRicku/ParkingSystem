@@ -1,5 +1,6 @@
 package com.example.system.dto;
 
+import com.example.system.models.AdminEmailPreference;
 import com.example.system.models.ParkingSystem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,5 +19,6 @@ public class AdminDTO {
 
     private String fullName;
     private String email;
+    private AdminEmailPreference emailPreference;
     private List<ParkingSystem> parkingSystems;
 }
