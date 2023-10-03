@@ -3,17 +3,13 @@ use parkingdb;
 
 #insert into preferences
 
-INSERT INTO `parkingdb`.`admin_email_preference` (`preference_id`, `preference`)
-VALUES ('1', 'TEXT');
-INSERT INTO `parkingdb`.`admin_email_preference` (`preference_id`, `preference`)
-VALUES ('2', 'CSV_FILE');
 
 #insert into admin#
 
-INSERT INTO admin (full_Name, email, email_preference_id)
-VALUES ('Romeisa aliu', 'sildiricku3@gmail.com', 1);
-INSERT INTO admin (full_Name, email, email_preference_id)
-VALUES ('Klea Prifti', 'sildiricku4@gmail.com', 2);
+INSERT INTO admin (full_Name, email, email_preference)
+VALUES ('Romeisa aliu', 'sildiricku3@gmail.com', 'TEXT');
+INSERT INTO admin (full_Name, email, email_preference)
+VALUES ('Klea Prifti', 'sildiricku4@gmail.com', 'CSV_FILE');
 
 #insert into parking system#
 
@@ -22,12 +18,12 @@ INSERT INTO parkingdb.parking_system (address, firmware_version, first_install_d
                                       total_money,
                                       working_status, admin_id)
 VALUES ('Main Street', '1.0', '2022-05-10', 'PSYSTEM001', 'never', '1500', 'WORKING',
-        (SELECT id FROM admin WHERE email = 'romeisaaliu1@gmail.com'));
+        (SELECT id FROM admin WHERE email = 'sildiricku3@gmail.com'));
 INSERT INTO parkingdb.parking_system(address, firmware_version, first_install_date, unique_identifier, last_update,
                                      total_money,
                                      working_status, admin_id)
 VALUES ('Downtown', '1.2', '2023-01-01', 'PSYSTEM002', 'never', '3000', 'WORKING',
-        (SELECT id FROM admin WHERE email = 'kleaprifti21@gmail.com'));
+        (SELECT id FROM admin WHERE email = 'sildiricku4@gmail.com'));
 
 
 #insert into rule #
