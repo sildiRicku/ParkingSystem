@@ -1,9 +1,4 @@
 use parkingdb;
-
-
-#insert into preferences
-
-
 #insert into admin#
 
 INSERT INTO admin (full_Name, email, email_preference)
