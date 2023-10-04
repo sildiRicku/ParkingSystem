@@ -7,7 +7,7 @@ import com.example.system.exceptionhandlers.InvalidArgument;
 import com.example.system.exceptionhandlers.NotFoundException;
 import com.example.system.helperclasses.MutableDouble;
 import com.example.system.models.ParkingSystem;
-import com.example.system.models.TransactionPaymentType;
+import com.example.system.enums.TransactionPaymentType;
 import com.example.system.services.ParkingSystemService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

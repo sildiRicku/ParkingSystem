@@ -3,6 +3,7 @@ package com.example.system.services;
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.dto.RuleDTO;
 import com.example.system.dto.TransactionDTO;
+import com.example.system.enums.TransactionPaymentType;
 import com.example.system.factory.ParkingSystemServiceFactory;
 import com.example.system.helperclasses.TransactionBuilder;
 import com.example.system.models.*;

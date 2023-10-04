@@ -1,4 +1,4 @@
-package com.example.system.models;
+package com.example.system.enums;
 
 public enum TransactionStatus {
     ERROR,
