@@ -2,8 +2,7 @@ package com.example.system.services;
 
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.dto.RuleDTO;
-import com.example.system.models.ParkingSystem;
-import com.example.system.models.Rule;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
