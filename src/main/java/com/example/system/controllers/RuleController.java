@@ -1,4 +1,4 @@
-package com.example.system.config;
+package com.example.system.controllers;
 
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.models.ParkingSystem;
@@ -25,7 +25,7 @@ public class RuleController {
 
         ParkingSystemDTO parkingSystem = parkingSystemService.getParkingSystemById(systemId).get();
 
-        boolean hasConflict = ruleService.checkRuleConflict(parkingSystem);
+        boolean hasConflict = ruleService.checkRuleConflict(parkingSystem.getRules());
 
         if (hasConflict) {
             return ResponseEntity.ok("Rule conflict detected.");
