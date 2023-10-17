@@ -46,12 +46,9 @@ public class ParkingSystemService {
     public List<ParkingSystemDTO> getAllParkingSystems() {
         Sort sort = Sort.by(Sort.Direction.ASC, "identifier");
         List<ParkingSystem> parkingSystems = parkingSystemRepo.findAll(sort);
-        List<ParkingSystemDTO> parkingSystemDTOS = new ArrayList<>();
-        for (ParkingSystem parkingSystem : parkingSystems) {
-            ParkingSystemDTO parkingSystemDTO = modelMapper.map(parkingSystem, ParkingSystemDTO.class);
-            parkingSystemDTOS.add(parkingSystemDTO);
-        }
-        return parkingSystemDTOS;
+        return parkingSystems.stream()
+                .map(this::convertToDTO).toList();
+
     }
 
     public Optional<ParkingSystemDTO> getParkingSystemById(int id) {
@@ -96,5 +93,20 @@ public class ParkingSystemService {
         transactionService.saveTransaction(tr);
         parkingSystemRepo.save(parkingSystem);
         return transaction;
+    }
+
+    private ParkingSystemDTO convertToDTO(ParkingSystem parkingSystem) {
+        ParkingSystemDTO parkingSystemDTO = new ParkingSystemDTO();
+        parkingSystemDTO.setId(parkingSystem.getSystemId());
+        parkingSystemDTO.setIdentifier(parkingSystem.getIdentifier());
+        parkingSystemDTO.setAddress(parkingSystem.getAddress());
+        parkingSystemDTO.setWorkingStatus(parkingSystem.getWorkingStatus());
+        parkingSystemDTO.setFirstInstallDate(parkingSystem.getFirstInstallDate());
+        parkingSystemDTO.setLastUpdate(parkingSystem.getLastUpdate());
+        parkingSystemDTO.setTotalMoney(parkingSystem.getTotalMoney());
+        parkingSystemDTO.setFirmwareVersion(parkingSystem.getFirmwareVersion());
+        List<Rule> rules = new ArrayList<>(parkingSystem.getRules());
+        parkingSystemDTO.setRules(rules);
+        return parkingSystemDTO;
     }
 }
