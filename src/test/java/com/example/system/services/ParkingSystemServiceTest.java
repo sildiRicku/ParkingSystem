@@ -191,6 +191,5 @@ class ParkingSystemServiceTest {
         verify(parkingSystemRepo).save(any());
         TransactionDTO expectedResult = Mockito.mock(TransactionDTO.class);
 
-//         assertEquals(expectedResult, result);
     }
 }
