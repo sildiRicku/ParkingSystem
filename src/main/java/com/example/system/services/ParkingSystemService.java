@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -105,8 +104,7 @@ public class ParkingSystemService {
         parkingSystemDTO.setLastUpdate(parkingSystem.getLastUpdate());
         parkingSystemDTO.setTotalMoney(parkingSystem.getTotalMoney());
         parkingSystemDTO.setFirmwareVersion(parkingSystem.getFirmwareVersion());
-        List<Rule> rules = new ArrayList<>(parkingSystem.getRules());
-        parkingSystemDTO.setRules(rules);
+        parkingSystemDTO.setRules(parkingSystem.getRules());
         return parkingSystemDTO;
     }
 }

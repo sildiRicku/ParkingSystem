@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.eq;
@@ -112,22 +113,22 @@ class ParkingSystemServiceTest {
 
     @Test
     void getAllParkingSystems() {
-        List<ParkingSystem> parkingSystems = new ArrayList<>();
-        parkingSystems.add(new ParkingSystem(/* add required data here */));
-        parkingSystems.add(new ParkingSystem(/* add required data here */));
-
-        List<ParkingSystemDTO> expectedDTOs = new ArrayList<>();
-        expectedDTOs.add(new ParkingSystemDTO(/* add expected mapping here */));
-        expectedDTOs.add(new ParkingSystemDTO(/* add expected mapping here */));
-
-        Sort sort = Sort.by(Sort.Direction.ASC, "identifier");
-        when(parkingSystemRepo.findAll(sort)).thenReturn(parkingSystems);
-        when(modelMapper.map(parkingSystems.get(0), ParkingSystemDTO.class)).thenReturn(expectedDTOs.get(0));
-        when(modelMapper.map(parkingSystems.get(1), ParkingSystemDTO.class)).thenReturn(expectedDTOs.get(1));
+        List<ParkingSystem> mockParkingSystems = new ArrayList<>();
+        ParkingSystem parkingSystem = new ParkingSystem();
+        parkingSystem.setIdentifier("identifier2");
+        ParkingSystem parkingSystem1 = new ParkingSystem();
+        parkingSystem1.setIdentifier("identifier1");
+        mockParkingSystems.add(parkingSystem1);
+        mockParkingSystems.add(parkingSystem);
+        when(parkingSystemRepo.findAll(any(Sort.class))).thenReturn(mockParkingSystems);
 
         List<ParkingSystemDTO> result = parkingSystemService.getAllParkingSystems();
 
-        assertEquals(expectedDTOs, result);
+        assertEquals(2, result.size());
+        List<String> identifiers = result.stream().map(ParkingSystemDTO::getIdentifier).collect(Collectors.toList());
+        assertEquals(List.of("identifier1", "identifier2"), identifiers);
+
+        verify(parkingSystemRepo).findAll(Sort.by(Sort.Direction.ASC, "identifier"));
     }
 
 
