@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
             plugin = {"pretty", "html:target/cucumber-reports/report.html",
                     "json:target/cucumber.json", "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
             features = "classpath:features",
-            glue = {"com.example.parkingSystem.stepdefinitions", "steps"}
+            glue = {"com.example.ParkingSystem.stepdefinitions", "steps"}
     )
     public class CucumberRunnerTest {
 

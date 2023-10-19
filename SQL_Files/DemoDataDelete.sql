@@ -1,14 +1,11 @@
 use parkingdb;
 #delete transactions
-DELETE
-FROM parkingdb.transactions;
+DELETE FROM parkingdb.transactions;
 #remove period assignment to rule#
-DELETE
-FROM parkingdb.period;
+DELETE FROM parkingdb.period;
 
 #remove rule assignment#
-DELETE
-FROM parkingdb.parking_system_rule;
+DELETE FROM parkingdb.parking_system_rule;
 
 #delete rule#
 DELETE
