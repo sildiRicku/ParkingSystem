@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = {"com.example.system.stepdefinitions", "steps"}
 )
-@CucumberContextConfiguration
 
 public class CucumberRunnerTest {
 
