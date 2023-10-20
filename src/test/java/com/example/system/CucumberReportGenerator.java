@@ -10,7 +10,7 @@ import java.util.List;
 public class CucumberReportGenerator {
 
     public static void main(String[] args) {
-        String reportOutputDirectory = "target/cucumber-html-reports";
+        String reportOutputDirectory = "target/cucumber-reports";
         List<String> jsonFiles = new ArrayList<>();
         jsonFiles.add("target/cucumber-reports/report1.json");
         jsonFiles.add("target/cucumber-reports/report2.json");
