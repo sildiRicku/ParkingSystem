@@ -8,8 +8,8 @@ import org.junit.runner.RunWith;
     @CucumberOptions(
             plugin = {"pretty", "html:target/cucumber-reports/report.html",
                     "json:target/cucumber.json", "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
-            features = "classpath:features",
-            glue = {"com.example.ParkingSystem.stepdefinitions", "steps"}
+            features = "src/test/resources/features",
+            glue = {"com.example.system.stepdefenitions", "steps"}
     )
     public class CucumberRunnerTest {
 
