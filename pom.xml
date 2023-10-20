@@ -72,6 +72,11 @@
             <artifactId>spring-batch-core</artifactId>
             <version>5.0.2</version>
         </dependency>
+        <dependency>
+            <groupId>net.masterthought</groupId>
+            <artifactId>cucumber-reporting</artifactId>
+            <version>5.4.0</version> <!-- Replace with the latest version -->
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
