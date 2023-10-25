@@ -8,17 +8,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class RuleConflictEventListener implements ApplicationListener<ApplicationEvent> {
 
-    private final EventHandler eventHandler;
+    private final RuleConflictHandler ruleConflictHandler;
 
-    public RuleConflictEventListener(EventHandler eventHandler) {
-        this.eventHandler = eventHandler;
+    public RuleConflictEventListener(RuleConflictHandler ruleConflictHandler) {
+        this.ruleConflictHandler = ruleConflictHandler;
     }
 
 
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
         if (event instanceof ContextRefreshedEvent) {
-            eventHandler.handleContextRefreshEvent();
+            ruleConflictHandler.handleContextRefreshEvent();
         }
     }
 
