@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
         features = "src/test/resources/features",
         glue = {"com.example.system.stepdefinitions", "steps"}
 )
-
+//@CucumberOptions(plugin = "pretty", features = "src/test/resources", tags = "", glue = "com.example.system.stepdefinitions", publish = true)
 public class CucumberRunnerTest {
 
 }
