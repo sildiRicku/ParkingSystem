@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class EventHandler {
+public class RuleConflictHandler {
     private final ParkingSystemService parkingSystemService;
     private final RuleService ruleService;
-    private static final Logger logger = LoggerFactory.getLogger(EventHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(RuleConflictHandler.class);
 
     @Autowired
-    public EventHandler(ParkingSystemService parkingSystemService, RuleService ruleService) {
+    public RuleConflictHandler(ParkingSystemService parkingSystemService, RuleService ruleService) {
         this.parkingSystemService = parkingSystemService;
         this.ruleService = ruleService;
     }

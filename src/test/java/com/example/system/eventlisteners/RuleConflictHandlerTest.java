@@ -1,7 +1,5 @@
 package com.example.system.eventlisteners;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.example.system.dto.ParkingSystemDTO;
 import com.example.system.models.Rule;
 import com.example.system.services.ParkingSystemService;
@@ -18,7 +16,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyList;
 
-class EventHandlerTest {
+class RuleConflictHandlerTest {
 
     @Mock
     private ParkingSystemService parkingSystemService;
@@ -27,7 +25,7 @@ class EventHandlerTest {
     private RuleService ruleService;
 
     @InjectMocks
-    private EventHandler eventHandler;
+    private RuleConflictHandler ruleConflictHandler;
 
     @BeforeEach
     public void setup() {
@@ -46,7 +44,7 @@ class EventHandlerTest {
         Mockito.when(parkingSystemService.getAllParkingSystems()).thenReturn(parkingSystemDTOS);
         Mockito.when(ruleService.checkRuleConflict(anyList())).thenReturn(false);
 
-        eventHandler.handleContextRefreshEvent();
+        ruleConflictHandler.handleContextRefreshEvent();
 
     }
 }
