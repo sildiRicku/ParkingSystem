@@ -21,7 +21,7 @@ public class RuleConflictEventListener implements ApplicationListener<Applicatio
             ruleConflictHandler.handleContextRefreshEvent();
         }
     }
-
+    
 
 }
 
