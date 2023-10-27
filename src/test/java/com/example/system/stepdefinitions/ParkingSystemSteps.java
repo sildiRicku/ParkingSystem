@@ -1,31 +1,22 @@
 package com.example.system.stepdefinitions;
 
 import com.example.system.dto.ParkingSystemDTO;
-import com.example.system.models.ParkingSystem;
-import com.example.system.repositories.ParkingSystemRepo;
 import com.example.system.services.ParkingSystemService;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.extern.log4j.Log4j;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @Log4j
 @RunWith(SpringRunner.class)
