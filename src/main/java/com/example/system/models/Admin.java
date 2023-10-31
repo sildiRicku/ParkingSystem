@@ -25,9 +25,6 @@ public class Admin {
 
     @Column(name = "fullName", nullable = false)
     private String fullName;
-    //    @Column(name = "email", nullable = false, unique = true)
-//    @Email(message = "Bad Email Format")
-//    private String email;
     @Valid
     @OneToOne
     @JoinColumn(name = "loginInfoId", referencedColumnName = "id")
