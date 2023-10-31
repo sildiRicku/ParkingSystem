@@ -3,6 +3,7 @@ package com.example.system.models;
 import com.example.system.enums.EmailPreference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,9 +25,13 @@ public class Admin {
 
     @Column(name = "fullName", nullable = false)
     private String fullName;
-    @Column(name = "email", nullable = false, unique = true)
-    @Email(message = "Bad Email Format")
-    private String email;
+    //    @Column(name = "email", nullable = false, unique = true)
+//    @Email(message = "Bad Email Format")
+//    private String email;
+    @Valid
+    @OneToOne
+    @JoinColumn(name = "loginInfoId", referencedColumnName = "id")
+    private UserLoginInfo loginInfo;
     @Enumerated(EnumType.STRING)
     private EmailPreference emailPreference;
     @OneToMany(mappedBy = "admin")
