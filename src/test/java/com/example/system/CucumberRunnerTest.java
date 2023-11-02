@@ -10,8 +10,9 @@ import net.serenitybdd.cucumber.CucumberWithSerenity;
 @Execution(ExecutionMode.CONCURRENT)
 @CucumberOptions(
         plugin = "pretty",
-        features = "src/test/resources" , tags = "",
-        glue = {"com.example.system.stepdefinitions", "steps"}
+        features = "src/test/resources" ,
+        glue = {"com.example.system.stepdefinitions", "steps", "features"},
+        publish = true
 )
 public class CucumberRunnerTest {
 
