@@ -5,10 +5,8 @@ import com.example.system.services.ParkingSystemService;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-//import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.extern.log4j.Log4j;
 import net.thucydides.core.annotations.WithTag;
-import net.thucydides.core.model.DataTable;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Log4j
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-//@CucumberContextConfiguration
 @WithTag("regression")
 public class ParkingSystemSteps {
     private List<ParkingSystemDTO> parkingSystems = new ArrayList<>();
