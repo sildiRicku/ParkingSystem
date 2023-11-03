@@ -5,5 +5,4 @@ Feature: Parking System Service Functionality
 
   Scenario: Retrieve Rules for Parking System
     When I retrieve rules for the parking system with ID 2
-
     Then a list of rules should be returned
