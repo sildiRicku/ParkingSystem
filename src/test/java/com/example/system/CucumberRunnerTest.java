@@ -1,15 +1,18 @@
 package com.example.system;
 
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
-import org.junit.runner.RunWith;
+ import io.cucumber.junit.CucumberOptions;
+ import org.junit.jupiter.api.parallel.Execution;
+ import org.junit.jupiter.api.parallel.ExecutionMode;
+ import org.junit.runner.RunWith;
+import net.serenitybdd.cucumber.CucumberWithSerenity;
 
-@RunWith(Cucumber.class)
+@RunWith(CucumberWithSerenity.class)
+@Execution(ExecutionMode.CONCURRENT)
 @CucumberOptions(
-        plugin = {"pretty", "html:target/cucumber-reports/report.html",
-                "json:target/cucumber.json", "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
-        features = "src/test/resources/features",
-        glue = {"com.example.system.stepdefinitions", "steps"}
+        plugin = "pretty",
+        features = "src/test/resources" ,
+        glue = {"com.example.system.stepdefinitions", "steps", "features"},
+        publish = true
 )
 public class CucumberRunnerTest {
 

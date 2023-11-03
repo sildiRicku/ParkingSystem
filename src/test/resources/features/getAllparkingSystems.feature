@@ -4,3 +4,4 @@ Feature: Testing the getAllParkingSystems method
     Given the parking systems exist in the database
     When I retrieve all parking systems
     Then the list of parking systems should be returned
+
