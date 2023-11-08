@@ -1,13 +1,10 @@
 package com.example.system.services;
 
 import com.example.system.exceptionhandlers.NotFoundException;
-import com.example.system.models.Admin;
 import com.example.system.models.UserLoginInfo;
 import com.example.system.repositories.UserDetailRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 
 @Service
 public class UserDetailService {
