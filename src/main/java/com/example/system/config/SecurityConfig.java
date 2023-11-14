@@ -30,7 +30,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authz) -> authz
                         .anyRequest().authenticated()
                 )
-                .httpBasic(withDefaults());
+                .httpBasic(withDefaults()).csrf(csrf -> csrf.disable());
+
         return http.build();
     }
 
@@ -39,6 +40,8 @@ public class SecurityConfig {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService)
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());
+        //                .passwordEncoder(passwordEncoder);
+        // for the example with passwordEncoder i should use password1
     }
 
 }

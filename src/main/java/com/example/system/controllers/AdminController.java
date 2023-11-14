@@ -1,28 +1,36 @@
 package com.example.system.controllers;
 
+import com.example.system.models.Admin;
 import com.example.system.models.UserLoginInfo;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.example.system.repositories.AdminRepo;
+import com.example.system.repositories.UserDetailRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-    private AuthenticationManager authenticationManager;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserDetailRepo userDetailRepo;
+    @Autowired
+    private AdminRepo adminRepo;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginInfo loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return ResponseEntity.ok("Login Successful");
+    @PostMapping("/addinfo")
+    public UserLoginInfo addInfo(@RequestParam int adminId) {
+        Admin admin = adminRepo.findById(adminId).get();
+        UserLoginInfo loginInfo = new UserLoginInfo();
+        loginInfo.setAdmin(admin);
+        loginInfo.setEmail("sildi@gmail.com");
+        loginInfo.setPassword(passwordEncoder.encode("password1"));
+        userDetailRepo.save(loginInfo);
+        return loginInfo;
     }
 }
 
