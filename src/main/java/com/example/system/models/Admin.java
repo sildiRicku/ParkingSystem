@@ -4,7 +4,6 @@ import com.example.system.enums.EmailPreference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +27,7 @@ public class Admin {
     @Valid
     @OneToOne
     @JoinColumn(name = "loginInfoId", referencedColumnName = "id")
-    private UserLoginInfo loginInfo;
+    private UserCredentials loginInfo;
     @Enumerated(EnumType.STRING)
     private EmailPreference emailPreference;
     @OneToMany(mappedBy = "admin")
