@@ -23,13 +23,14 @@ public class AdminController {
     private AdminRepo adminRepo;
 
     @PostMapping("/addinfo")
-    public UserLoginInfo addInfo(@RequestParam int adminId) {
+    public UserLoginInfo addInfo(@RequestParam int adminId, @RequestParam String username, @RequestParam String password) {
         Admin admin = adminRepo.findById(adminId).get();
         UserLoginInfo loginInfo = new UserLoginInfo();
-        loginInfo.setAdmin(admin);
-        loginInfo.setEmail("sildi@gmail.com");
-        loginInfo.setPassword(passwordEncoder.encode("password1"));
+        loginInfo.setEmail(username);
+        loginInfo.setPassword(passwordEncoder.encode(password));
         userDetailRepo.save(loginInfo);
+        admin.setLoginInfo(loginInfo);
+        adminRepo.save(admin);
         return loginInfo;
     }
 }
