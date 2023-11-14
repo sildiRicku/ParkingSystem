@@ -28,7 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                .authorizeHttpRequests(authz -> authz.requestMatchers("/admin/addinfo").permitAll()
+                .authorizeHttpRequests(authz -> authz.requestMatchers("/admin/assign-credentials").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults()).csrf(csrf -> csrf.disable());
@@ -41,7 +41,7 @@ public class SecurityConfig {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder);
-    
+
     }
 
 }

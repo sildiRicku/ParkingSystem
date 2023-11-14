@@ -22,7 +22,7 @@ public class AdminController {
     @Autowired
     private AdminRepo adminRepo;
 
-    @PostMapping("/addinfo")
+    @PostMapping("/assign-credentials")
     public UserCredentials addInfo(@RequestParam int adminId, @RequestParam String username, @RequestParam String password) {
         Admin admin = adminRepo.findById(adminId).get();
         UserCredentials loginInfo = new UserCredentials();
