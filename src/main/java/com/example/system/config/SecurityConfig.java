@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -31,7 +30,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz.requestMatchers("/admin/assign-credentials").permitAll()
                         .anyRequest().authenticated()
                 )
-                .httpBasic(withDefaults()).csrf(csrf -> csrf.disable());
+                .httpBasic(withDefaults())
+                .csrf(csrf -> csrf.disable());
 
         return http.build();
     }
@@ -41,7 +41,6 @@ public class SecurityConfig {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder);
-
     }
 
 }
