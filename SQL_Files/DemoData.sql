@@ -2,9 +2,9 @@ use parkingdb;
 #insert into login info
 
 INSERT INTO user_login_info (email, password)
-VALUES ('sildiricku3@gmail.com', 'somepassword1');
+VALUES ('sildiricku3@gmail.com', '$2a$12$94elJ.D8EVzytdGrAYmfxeccjYwN0txkOz7i2pThIbGFtGs9WSDYq');
 INSERT INTO user_login_info (email, password)
-VALUES ('sildiricku4@gmail.com', 'somepassword2');
+VALUES ('sildiricku4@gmail.com', '$2a$12$ATAaa4.L18PEo4J2A43mKePl3zw2BqEMsYATHJj36vVCsULj/uEwK');
 
 #insert into admin#
 

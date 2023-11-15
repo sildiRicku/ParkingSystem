@@ -27,7 +27,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                .authorizeHttpRequests(authz -> authz.requestMatchers("/admin/assign-credentials").permitAll()
+                .authorizeHttpRequests(authz -> authz
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults())
