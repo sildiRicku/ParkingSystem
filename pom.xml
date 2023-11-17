@@ -79,16 +79,10 @@
         </dependency>
 
         <dependency>
-            <groupId>net.serenity-bdd</groupId>
-            <artifactId>serenity-core</artifactId>
-            <version>3.6.12</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>cucumber-java</artifactId>
-                    <groupId>io.cucumber</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>net.masterthought</groupId>
+            <artifactId>cucumber-reporting</artifactId>
+            <version>5.4.0</version>
+
         </dependency>
 
         <!-- Serenity With JUnit4 -->
@@ -166,6 +160,10 @@
                     <groupId>org.apiguardian</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
     </dependencies>
     <build>
