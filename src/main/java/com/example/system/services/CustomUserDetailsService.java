@@ -18,6 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws NotFoundException {
         UserCredentials userCredentials = userCredentialsRepo.findByEmail(username);
         if (userCredentials == null) {
+            System.out.println("s");
             throw new NotFoundException("User not found with email: " + username);
         }
         return User.builder().username(userCredentials.getEmail()).password(userCredentials.getPassword()).roles("USER").build();
