@@ -28,7 +28,7 @@ class LoginControllerTest {
     }
 
     @Test
-    void testLoginWithValidCredentials() {
+    void loginWithValidCredentials() {
         when(loginRequestService.authenticateUser("testUser", "password123")).thenReturn(true);
 
         LoginRequest loginRequest = new LoginRequest();
@@ -42,7 +42,7 @@ class LoginControllerTest {
     }
 
     @Test
-    void testLoginWithInvalidCredentials() {
+    void loginWithInvalidCredentials() {
         when(loginRequestService.authenticateUser(anyString(), anyString())).thenReturn(false);
 
         LoginRequest loginRequest = new LoginRequest();

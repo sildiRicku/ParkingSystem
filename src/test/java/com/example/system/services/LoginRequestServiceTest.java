@@ -32,37 +32,29 @@ class LoginRequestServiceTest {
 
     @Test
     void authenticateUserWithValidCredentials() {
-        // Mocking behavior to return a UserCredentials when findByEmail is called
         UserCredentials userCredentials = new UserCredentials();
         userCredentials.setEmail("test@example.com");
         userCredentials.setPassword("encodedPassword"); // Assuming this is encoded password
         when(userCredentialsRepo.findByEmail("test@example.com")).thenReturn(userCredentials);
 
-        // Mocking behavior to return true when passwordEncoder.matches is called
         when(passwordEncoder.matches("password123", "encodedPassword")).thenReturn(true);
 
-        // Performing the test
         boolean result = loginRequestService.authenticateUser("test@example.com", "password123");
 
-        // Validating the result
         assertTrue(result);
     }
 
     @Test
     void authenticateUserWithInvalidUsername() {
-        // Mocking behavior to return null when findByEmail is called
         when(userCredentialsRepo.findByEmail(anyString())).thenReturn(null);
 
-        // Performing the test
         boolean result = loginRequestService.authenticateUser("nonexistent@example.com", "password123");
 
-        // Validating the result
         assertFalse(result);
     }
 
     @Test
     void authenticateUserWithInvalidPassword() {
-        // Mocking behavior to return a UserCredentials when findByEmail is called
         UserCredentials userCredentials = new UserCredentials();
         userCredentials.setEmail("test@example.com");
         userCredentials.setPassword("encodedPassword"); // Assuming this is encoded password
