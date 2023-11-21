@@ -60,11 +60,6 @@ class RuleControllerTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals("No rule conflicts.", responseEntity.getBody());
     }
-
-    @Test
-    void testCheckRuleConflictWithInvalidParkingSystemId() {
-        when(parkingSystemService.getParkingSystemById(3)).thenReturn(Optional.empty());
-    }
 }
 
    
