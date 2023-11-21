@@ -228,6 +228,7 @@
                         <exclude>**/models/**</exclude>
                         <exclude>**/dto/**</exclude>
                         <exclude>**/helperclasses/**</exclude>
+                        <exclude>**/enums/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
