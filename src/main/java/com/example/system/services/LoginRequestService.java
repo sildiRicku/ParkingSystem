@@ -5,26 +5,26 @@ import com.example.system.models.UserCredentials;
 import com.example.system.repositories.UserCredentialsRepo;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Data
-public class LoginService {
+public class LoginRequestService {
     @Autowired
     private UserCredentialsRepo userCredentialsRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    public List<LoginRequest> getAll() {
-        List<UserCredentials> userCredentials = userCredentialsRepo.findAll();
-        List<LoginRequest> requests = new ArrayList<>();
+    public boolean authenticateUser(String username, String password) {
+        UserCredentials userCredentials = userCredentialsRepo.findByEmail(username);
 
-        for (UserCredentials userCredentials1 : userCredentials) {
-            LoginRequest loginRequest = converToDto(userCredentials1);
-            requests.add(loginRequest);
+        if (userCredentials != null) {
+            return passwordEncoder.matches(password, userCredentials.getPassword());
         }
-        return requests;
+
+        return false;
     }
 
     public LoginRequest converToDto(UserCredentials userCredentials) {

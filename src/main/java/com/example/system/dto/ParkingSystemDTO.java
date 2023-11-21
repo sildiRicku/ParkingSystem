@@ -32,9 +32,11 @@ public class ParkingSystemDTO {
     private double totalMoney;
 
     private String firmwareVersion;
+
     private List<Transaction> transactions;
 
     private List<Rule> rules;
+
     private Admin admin;
 
 }
