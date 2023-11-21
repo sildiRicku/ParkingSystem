@@ -18,7 +18,7 @@ public class LoginController {
     private LoginRequestService loginRequestService;
 
     @GetMapping("")
-    public ResponseEntity<String> loginn(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
 
         boolean isAuthenticated = loginRequestService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
 
