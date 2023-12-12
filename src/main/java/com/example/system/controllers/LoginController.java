@@ -15,7 +15,7 @@ public class LoginController {
     @Autowired
     private LoginRequestService loginRequestService;
 
-    @GetMapping("")
+    @PostMapping("")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
 
         boolean isAuthenticated = loginRequestService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
