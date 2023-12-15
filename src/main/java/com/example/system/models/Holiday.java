@@ -17,7 +17,6 @@ import java.util.Date;
 public class Holiday {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int holidayId;
     @Column(name = "holiday_name")
     private String holidayName;
