@@ -1,6 +1,7 @@
 package com.example.system.controllers;
 
 import com.example.system.dto.LoginRequest;
+import com.example.system.dto.LoginResponse;
 import com.example.system.services.LoginRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -18,17 +19,21 @@ public class LoginController {
     private LoginRequestService loginRequestService;
 
     @PostMapping("")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         boolean isAuthenticated = loginRequestService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
 
         if (isAuthenticated) {
             HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.setContentType(MediaType.TEXT_PLAIN);
-            return ResponseEntity.ok("Login successful");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-        }
-    }
+            responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
+            LoginResponse loginResponse = new LoginResponse();
+            loginResponse.setLoggedIn(true);
+            loginResponse.setUsername(loginRequest.getUsername());
+
+            return ResponseEntity.ok().headers(responseHeaders).body(loginResponse);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse());
+        }
+
+    }
 }
