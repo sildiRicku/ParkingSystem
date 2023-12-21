@@ -12,7 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import static org.springframework.security.config.Customizer.withDefaults;
 
-
 @Configuration
 @CrossOrigin
 @EnableWebSecurity
@@ -30,8 +29,13 @@ public class SecurityConfig {
                         .requestMatchers("/login").authenticated()
                         .anyRequest().permitAll()
                 )
+                .formLogin(withDefaults())
                 .httpBasic(withDefaults())
-                .csrf(csrf -> csrf.disable());
+                .csrf(csrf -> csrf.disable())
+                .rememberMe(rememberMe -> rememberMe
+                        .tokenValiditySeconds(86400)
+                        .userDetailsService(customUserDetailsService)
+                );
         return http.build();
     }
 
@@ -40,5 +44,4 @@ public class SecurityConfig {
         auth.userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder);
     }
-
 }
