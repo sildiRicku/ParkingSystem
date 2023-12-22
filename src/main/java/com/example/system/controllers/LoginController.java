@@ -27,4 +27,9 @@ public class LoginController {
         }
     }
 
+    @GetMapping("/login2")
+    public String hello() {
+        return "Hello";
+    }
+
 }
