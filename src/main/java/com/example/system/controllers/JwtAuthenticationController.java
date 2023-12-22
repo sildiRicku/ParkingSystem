@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import com.example.system.config.JwtTokenUtil;
-import com.example.system.models.JwtResponse;
+import com.example.system.security.JwtTokenUtil;
+import com.example.system.security.JwtResponse;
 
 @RestController
 @RequestMapping("/authenticate")

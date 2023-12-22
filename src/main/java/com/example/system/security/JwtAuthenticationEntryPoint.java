@@ -1,4 +1,4 @@
-package com.example.system.config;
+package com.example.system.security;
 
 import java.io.IOException;
 import java.io.Serializable;
