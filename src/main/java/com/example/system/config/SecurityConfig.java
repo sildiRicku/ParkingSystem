@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @EnableWebSecurity
 public class SecurityConfig {
     @Autowired
@@ -24,7 +24,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors(withDefaults())
+                .cors().and()
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/login").authenticated()
                         .anyRequest().permitAll()
@@ -44,4 +44,5 @@ public class SecurityConfig {
         auth.userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder);
     }
+
 }
