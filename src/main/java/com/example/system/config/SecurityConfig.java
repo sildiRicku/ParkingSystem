@@ -49,7 +49,6 @@ public class SecurityConfig {
                     .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-            // Add JWT filter to validate tokens with every request
             http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         } else {
