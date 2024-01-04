@@ -23,7 +23,7 @@ public class JwtAuthenticationController {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
-    @PostMapping("")
+    @GetMapping("/a")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest authenticationRequest) throws Exception {
         boolean isAuthenticated = loginRequestService.authenticateUser(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 

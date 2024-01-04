@@ -4,6 +4,7 @@ import com.example.system.security.JwtAuthenticationEntryPoint;
 import com.example.system.security.JwtRequestFilter;
 import com.example.system.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,35 +30,38 @@ public class SecurityConfig {
     private CustomUserDetailsService customUserDetailsService;
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    @Value("${security.jwt.enabled}")
+    private boolean jwtEnabled;
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        if (jwtEnabled) {
+            http
+                    .authorizeHttpRequests(authorize -> authorize
+                            .requestMatchers("/authenticate/a").permitAll()
+                            .anyRequest().authenticated()
 
-        http
-                .authorizeHttpRequests(authz -> authz.requestMatchers("/login").authenticated()
-//                        .anyRequest().permitAll()
+                    )
+                    .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-                )
-                .httpBasic(withDefaults())
-                .csrf(csrf -> csrf.disable());
+            // Add JWT filter to validate tokens with every request
+            http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.csrf().disable()
-                .authorizeHttpRequests(authz -> {
-                    try {
-                        authz.requestMatchers("/authenticate").permitAll().
-                        requestMatchers("/login/login2").authenticated().and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+        } else {
+            http
+                    .authorizeHttpRequests(authz -> authz
+                            .requestMatchers("/login").authenticated()
+                            .anyRequest().permitAll()
 
-
-        // this filter is to validate the tokens with every request
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
+                    )
+                    .httpBasic(withDefaults())
+                    .csrf(csrf -> csrf.disable());
+        }
 
         return http.build();
     }
@@ -65,9 +69,11 @@ public class SecurityConfig {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService)
-                .passwordEncoder(passwordEncoder);
+        if (jwtEnabled) {
+            auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        } else {
+            auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder);
+        }
     }
-
 
 }
