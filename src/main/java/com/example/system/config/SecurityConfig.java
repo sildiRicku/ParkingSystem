@@ -53,7 +53,7 @@ public class SecurityConfig {
 
         } else {
             http
-                    .authorizeHttpRequests(authz -> authz
+                    .authorizeHttpRequests(authorize -> authorize
                             .requestMatchers("/login").authenticated()
                             .anyRequest().permitAll()
 

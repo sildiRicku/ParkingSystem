@@ -15,7 +15,7 @@ public class LoginController {
     @Autowired
     private LoginRequestService loginRequestService;
 
-    @GetMapping("")
+    @PostMapping("")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
 
         boolean isAuthenticated = loginRequestService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
@@ -25,11 +25,6 @@ public class LoginController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
-    }
-
-    @GetMapping("/login2")
-    public String hello() {
-        return "Hello";
     }
 
 }
