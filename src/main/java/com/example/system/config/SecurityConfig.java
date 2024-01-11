@@ -53,6 +53,7 @@ public class SecurityConfig {
 
         } else {
             http
+                    .cors(withDefaults())
                     .authorizeHttpRequests(authorize -> authorize
                             .requestMatchers("/login").authenticated()
                             .anyRequest().permitAll()

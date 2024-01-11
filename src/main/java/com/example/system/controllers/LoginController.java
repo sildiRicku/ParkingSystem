@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/login")
-@CrossOrigin
+@CrossOrigin()
 public class LoginController {
     @Autowired
     private LoginRequestService loginRequestService;
