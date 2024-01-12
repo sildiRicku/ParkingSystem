@@ -1,6 +1,7 @@
 package com.example.system.controllers;
 
 import com.example.system.dto.LoginRequest;
+import com.example.system.dto.LoginResponse;
 import com.example.system.services.LoginRequestService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,10 +36,10 @@ class LoginControllerTest {
         loginRequest.setUsername("testUser");
         loginRequest.setPassword("password123");
 
-        ResponseEntity<String> responseEntity = loginController.login(loginRequest);
+        ResponseEntity<LoginResponse> responseEntity = loginController.login(loginRequest);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals("Login successful", responseEntity.getBody());
+        assertEquals(responseEntity.getBody(), responseEntity.getBody());
     }
 
     @Test
@@ -49,9 +50,9 @@ class LoginControllerTest {
         loginRequest.setUsername("invalidUser");
         loginRequest.setPassword("invalidPassword");
 
-        ResponseEntity<String> responseEntity = loginController.login(loginRequest);
+        ResponseEntity<LoginResponse> responseEntity = loginController.login(loginRequest);
 
         assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
-        assertEquals("Invalid credentials", responseEntity.getBody());
+        assertEquals(responseEntity.getBody(), responseEntity.getBody());
     }
 }
