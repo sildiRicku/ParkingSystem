@@ -12,16 +12,23 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 
+
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @Configuration
+@CrossOrigin
 @EnableWebSecurity
 public class SecurityConfig {
     @Autowired
@@ -39,6 +46,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         if (jwtEnabled) {
             http
                     .authorizeHttpRequests(authorize -> authorize
@@ -63,9 +71,9 @@ public class SecurityConfig {
                     .csrf(csrf -> csrf.disable());
         }
 
+
         return http.build();
     }
-
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

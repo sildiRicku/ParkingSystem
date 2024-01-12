@@ -20,7 +20,6 @@ public class LoginRequestService {
         if (userCredentials != null) {
             return passwordEncoder.matches(password, userCredentials.getPassword());
         }
-
         return false;
     }
 }
