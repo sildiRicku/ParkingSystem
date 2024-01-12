@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/login")
-@CrossOrigin
+@CrossOrigin()
 public class LoginController {
     @Autowired
     private LoginRequestService loginRequestService;
 
     @PostMapping("")
+
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+
         boolean isAuthenticated = loginRequestService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
 
         if (isAuthenticated) {
