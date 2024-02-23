@@ -1,10 +1,10 @@
 use parkingdb;
 #insert into login info
 
-INSERT INTO user_login_info (email, password)
-VALUES ('sildiricku3@gmail.com', '$2a$12$94elJ.D8EVzytdGrAYmfxeccjYwN0txkOz7i2pThIbGFtGs9WSDYq');
-INSERT INTO user_login_info (email, password)
-VALUES ('sildiricku4@gmail.com', '$2a$12$ATAaa4.L18PEo4J2A43mKePl3zw2BqEMsYATHJj36vVCsULj/uEwK');
+INSERT INTO user_login_info (email, password, role)
+VALUES ('sildiricku3@gmail.com', '$2a$12$94elJ.D8EVzytdGrAYmfxeccjYwN0txkOz7i2pThIbGFtGs9WSDYq', 'ADMIN');
+INSERT INTO user_login_info (email, password, role)
+VALUES ('sildiricku4@gmail.com', '$2a$12$ATAaa4.L18PEo4J2A43mKePl3zw2BqEMsYATHJj36vVCsULj/uEwK', 'USER');
 
 #insert into admin#
 
