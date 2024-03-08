@@ -33,8 +33,7 @@ public class SecurityConfig {
     private CustomUserDetailsService customUserDetailsService;
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    @Value("${security.jwt.enabled}")
-    private boolean jwtEnabled;
+    private boolean jwtEnabled =false;
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
     @Autowired
