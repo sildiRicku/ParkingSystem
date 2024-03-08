@@ -1,6 +1,8 @@
 package com.example.system.services;
 
+import com.example.system.enums.UserAuthority;
 import com.example.system.exceptionhandlers.NotFoundException;
+import com.example.system.models.Authority;
 import com.example.system.models.UserCredentials;
 import com.example.system.repositories.UserCredentialsRepo;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,18 +32,27 @@ class CustomUserDetailsServiceTest {
 
     @Test
     void loadUserByUsernameWithValidUser() throws NotFoundException {
+        // Create Authority instance
+        Authority authority = new Authority();
+        authority.setId(1L); // Assuming you have a valid ID for the authority
+        authority.setUserAuthority(UserAuthority.USER); // Set the user authority
+
+        // Create UserCredentials instance
         UserCredentials userCredentials = new UserCredentials();
         userCredentials.setEmail("test@example.com");
         userCredentials.setPassword("encodedPassword"); // Assuming this is encoded password
-        userCredentials.setRole("USER");
+        userCredentials.setAuthority(authority); // Set the authority
+
+        // Mock the repository call
         when(userCredentialsRepo.findByEmail("test@example.com")).thenReturn(userCredentials);
 
+        // Call the method under test
         UserDetails userDetails = customUserDetailsService.loadUserByUsername("test@example.com");
 
+        // Assertions
         assertEquals("test@example.com", userDetails.getUsername());
         assertEquals("encodedPassword", userDetails.getPassword());
     }
-
     @Test
     void loadUserByUsernameWithInvalidUser() {
         when(userCredentialsRepo.findByEmail(anyString())).thenReturn(null);

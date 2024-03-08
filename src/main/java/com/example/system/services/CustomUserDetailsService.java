@@ -20,6 +20,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (userCredentials == null) {
             throw new NotFoundException("User not found with email: " + username);
         }
-        return User.builder().username(userCredentials.getEmail()).password(userCredentials.getPassword()).roles(userCredentials.getRole()).build();
+        return User.builder().username(userCredentials.getEmail()).password(userCredentials.getPassword()).roles(userCredentials.getAuthority().getUserAuthority().toString()).build();
     }
 }
