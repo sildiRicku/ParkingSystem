@@ -1,12 +1,16 @@
 use parkingdb;
+#Insert into authority
+INSERT INTO `parkingdb`.`authority` (`authority`) VALUES ('ADMIN');
+INSERT INTO `parkingdb`.`authority` (`authority`) VALUES ('USER');
+
 #insert into login info
 
-INSERT INTO user_login_info (email, password, role)
-VALUES ('sildiricku3@gmail.com', '$2a$12$94elJ.D8EVzytdGrAYmfxeccjYwN0txkOz7i2pThIbGFtGs9WSDYq', 'ADMIN');
-INSERT INTO user_login_info (email, password, role)
-VALUES ('sildiricku4@gmail.com', '$2a$12$ATAaa4.L18PEo4J2A43mKePl3zw2BqEMsYATHJj36vVCsULj/uEwK', 'USER');
+INSERT INTO user_login_info (email, password,authority_id)
+VALUES ('sildiricku3@gmail.com', '$2a$12$94elJ.D8EVzytdGrAYmfxeccjYwN0txkOz7i2pThIbGFtGs9WSDYq', (SELECT id FROM authority WHERE authority = 'USER'));
+INSERT INTO user_login_info (email, password,authority_id)
+VALUES ('sildiricku4@gmail.com', '$2a$12$ATAaa4.L18PEo4J2A43mKePl3zw2BqEMsYATHJj36vVCsULj/uEwK', (SELECT id FROM authority WHERE authority = 'ADMIN'));
 
-#insert into admin#
+#insert into user#
 
 INSERT INTO admin (full_Name, email_preference, login_info_id)
 VALUES ('Romeisa aliu', 'TEXT', (SELECT id FROM user_login_info WHERE email = 'sildiricku3@gmail.com'));

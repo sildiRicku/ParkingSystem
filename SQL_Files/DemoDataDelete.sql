@@ -21,6 +21,8 @@ FROM parkingdb.admin;
 #delete loginCredentials#
 DELETE
 FROM parkingdb.user_login_info;
+DELETE
+FROM parkingdb.authority
 
 
 

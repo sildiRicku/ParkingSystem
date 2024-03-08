@@ -18,8 +18,9 @@ public class UserCredentials {
     private String email;
     @Column
     private String password;
-    @Column
-    private String role;
+    @ManyToOne
+    @JoinColumn(name = "authority_id",referencedColumnName = "id")
+    private Authority authority;
     @OneToOne(mappedBy = "loginInfo")
     private Admin admin;
 }
